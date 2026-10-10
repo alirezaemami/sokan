@@ -94,6 +94,8 @@ export interface ForwarderCard {
   review_count: number
   established_year: number | null
   modes?: string[]
+  /** Newest approved review with a comment (directory and home cards). */
+  review?: { author: string; rating: number; comment: string; creation: string } | null
   contact?: { email: string; phone: string | null; website: string | null; address: string | null }
 }
 

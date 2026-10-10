@@ -25,10 +25,11 @@ const bars = [
           <h3 class="font-display mt-3 text-3xl text-ink">{{ $t('home.features.compare.title') }}</h3>
           <p class="mt-3 max-w-md text-muted">{{ $t('home.features.compare.text') }}</p>
           <div class="mt-8 space-y-4">
-            <div v-for="(b, i) in bars" :key="i" class="grid grid-cols-[5.5rem_1fr_auto] items-center gap-3">
+            <!-- The row is observed, not the bar: the bar sits in a clipped track the observer can't see into. -->
+            <div v-for="(b, i) in bars" :key="i" v-reveal="200 + i * 150" class="grid grid-cols-[5.5rem_1fr_auto] items-center gap-3">
               <span class="chart-label text-faint">{{ $t('home.features.compare.quote', { n: i + 1 }) }}</span>
               <div class="h-2.5 overflow-hidden rounded-full bg-sunken">
-                <div v-reveal="200 + i * 150" class="h-full rounded-full" :class="b.best ? 'bg-starboard' : 'bg-line-strong'" :style="{ width: `${b.w}%` }" />
+                <div class="grow-x h-full rounded-full" :class="b.best ? 'bg-starboard' : 'bg-line-strong'" :style="{ width: `${b.w}%` }" />
               </div>
               <span class="font-mono text-sm tabular-nums" :class="b.best ? 'text-starboard' : 'text-muted'">{{ b.price }}</span>
             </div>

@@ -35,3 +35,5 @@ def refresh_rating(forwarder: str, exclude: str | None = None):
 		{"rating": flt(sum(rows) / len(rows), 2) if rows else 0, "review_count": len(rows)},
 		update_modified=False,
 	)
+	# The home page caches forwarder cards (rating, latest review) for a short while.
+	frappe.cache.delete_value("sokan:home")

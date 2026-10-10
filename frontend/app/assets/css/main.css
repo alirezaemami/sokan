@@ -325,6 +325,20 @@
   clip-path: inset(0 0 0 0);
 }
 
+/* A bar that grows to its length when its v-reveal parent comes into view. */
+[data-reveal] .grow-x {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.2s var(--ease-spring);
+  transition-delay: calc(var(--reveal-delay, 0ms) + 150ms);
+}
+[dir='rtl'] [data-reveal] .grow-x {
+  transform-origin: right;
+}
+[data-reveal='in'] .grow-x {
+  transform: scaleX(1);
+}
+
 /* Very slow drift across a photo, like a camera on a long lens. */
 @keyframes drift {
   from { transform: scale(1.04) translate3d(0, 0, 0); }

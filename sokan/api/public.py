@@ -29,16 +29,15 @@ def get_home():
 		return {
 			"stats": get_stats(),
 			"modes": list_transport_modes(),
-			"featured": [
-				forwarder_card(f)
-				for f in frappe.get_all(
+			"featured": _cards(
+				frappe.get_all(
 					"Sokan Forwarder",
 					filters={"status": "Active"},
 					fields=FORWARDER_CARD_FIELDS,
 					order_by="is_featured desc, is_verified desc, rating desc, quotes_won desc",
 					limit=8,
 				)
-			],
+			),
 			"live": recent_requests(),
 			"plans": list_plans(),
 		}
@@ -186,13 +185,48 @@ def list_forwarders(
 		.offset((page - 1) * page_size)
 		.run(as_dict=True)
 	)
-	services = _services_for([r.name for r in rows])
-	items = []
+	return {"items": _cards(rows), "total": total, "page": page, "page_size": page_size}
+
+
+def _cards(rows) -> list[dict]:
+	"""Directory cards with each company's modes and its latest approved review."""
+	names = [r.name for r in rows]
+	services = _services_for(names)
+	reviews = _latest_reviews(names)
+	cards = []
 	for r in rows:
 		card = forwarder_card(r)
 		card["modes"] = services.get(r.name, [])
-		items.append(card)
-	return {"items": items, "total": total, "page": page, "page_size": page_size}
+		card["review"] = reviews.get(r.name)
+		cards.append(card)
+	return cards
+
+
+def public_name(full_name: str | None) -> str:
+	"""Reviewers are private individuals: publish first name and initial only."""
+	parts = (full_name or "").split()
+	return f"{parts[0]} {parts[-1][0]}." if len(parts) > 1 else (parts[0] if parts else "")
+
+
+def _latest_reviews(names: list[str]) -> dict[str, dict]:
+	"""The newest approved review with a written comment, per forwarder."""
+	out: dict[str, dict] = {}
+	if not names:
+		return out
+	for r in frappe.get_all(
+		"Sokan Review",
+		filters={"forwarder": ("in", names), "status": "Approved", "comment": ("is", "set")},
+		fields=["forwarder", "customer_name", "rating", "comment", "creation"],
+		order_by="creation desc",
+	):
+		if r.forwarder not in out:
+			out[r.forwarder] = {
+				"author": public_name(r.customer_name),
+				"rating": r.rating,
+				"comment": r.comment,
+				"creation": r.creation,
+			}
+	return out
 
 
 def _services_for(names: list[str]) -> dict[str, list[str]]:
@@ -232,17 +266,15 @@ def get_forwarder(slug: str):
 			"meta_description": f.meta_description or strip_html(f.about or "")[:158] or f.tagline,
 			"reviews": frappe.get_all(
 				"Sokan Review",
-				filters={"forwarder": name, "is_published": 1},
+				filters={"forwarder": name, "status": "Approved"},
 				fields=["customer_name", "rating", "comment", "creation"],
 				order_by="creation desc",
 				limit=20,
 			),
 		}
 	)
-	# Reviewers are private individuals; publish first name + initial only.
 	for r in data["reviews"]:
-		parts = (r.customer_name or "").split()
-		r.customer_name = f"{parts[0]} {parts[-1][0]}." if len(parts) > 1 else (parts[0] if parts else "")
+		r.customer_name = public_name(r.customer_name)
 	return data
 
 

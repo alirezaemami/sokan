@@ -24,6 +24,14 @@ const modeIcon = (name: string) => modes.value.find((m) => m.name === name)?.ico
       </div>
     </div>
     <p v-if="f.tagline" class="mt-4 line-clamp-2 text-sm text-ink-soft">{{ f.tagline }}</p>
+    <figure v-if="f.review" class="relative mt-4 rounded-xl bg-sunken/70 p-4">
+      <span class="font-display pointer-events-none absolute -top-3 start-3 text-4xl leading-none text-buoy/70" aria-hidden="true">“</span>
+      <blockquote class="line-clamp-3 text-sm leading-relaxed text-ink-soft">{{ f.review.comment }}</blockquote>
+      <figcaption class="mt-2 flex items-center gap-2 text-xs text-faint">
+        <RatingStars :model-value="f.review.rating" :size="12" />
+        <span class="truncate">{{ f.review.author }} · {{ fmt.relative(f.review.creation) }}</span>
+      </figcaption>
+    </figure>
     <div class="mt-auto flex items-center justify-between gap-3 pt-5">
       <div class="flex -space-x-1.5 rtl:space-x-reverse">
         <span v-for="m in (f.modes || []).slice(0, 5)" :key="m" class="grid size-8 place-items-center rounded-full bg-sunken text-ink-soft ring-2 ring-surface" :title="m">
