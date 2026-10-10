@@ -314,7 +314,7 @@ def submit_quote(request: str, data: dict | str):
 
 	from sokan.notifications import notify_new_quote
 
-	notify_new_quote(quote)
+	notify_new_quote(quote, is_new=is_new)
 	return get_lead(request)
 
 
@@ -439,6 +439,9 @@ def request_topup(
 			"receipt": receipt,
 		}
 	).insert(ignore_permissions=True)
+	from sokan.notifications import notify_topup_requested
+
+	notify_topup_requested(doc)
 	return {"name": doc.name, "status": doc.status}
 
 

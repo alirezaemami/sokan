@@ -1,8 +1,8 @@
-"""Sign-up and identity.
+"""Sign-up, identity and password recovery.
 
-Sign-in, sign-out and password reset use Frappe's own endpoints
-(/api/method/login, /api/method/logout, reset_password); these add the two
-Sokan-specific sign-ups and a single "who am I" call the frontend boots from.
+Sign-in and sign-out use Frappe's own endpoints (/api/method/login, logout).
+Sign-up, "who am I" and the password reset flow live here, so every email
+uses the Sokan template and every link points at the website, not Desk.
 """
 
 import frappe
@@ -18,6 +18,12 @@ from sokan.utils import (
 	forwarder_for_user,
 	get_settings,
 )
+
+
+def request_language() -> str:
+	"""The site language the visitor is using (the frontend sends it as Accept-Language)."""
+	header = (frappe.request.headers.get("Accept-Language") if frappe.request else "") or ""
+	return "fa" if header.lower().startswith("fa") else "en"
 
 
 def _create_user(email: str, full_name: str, password: str, phone: str | None, role: str):
@@ -42,6 +48,8 @@ def _create_user(email: str, full_name: str, password: str, phone: str | None, r
 			"user_type": "Website User",
 			"send_welcome_email": 0,
 			"new_password": password,
+			# Emails go out in the language they signed up in.
+			"language": request_language(),
 			"roles": [{"role": role}],
 		}
 	)
@@ -79,6 +87,9 @@ def register_customer(
 		}
 	).insert(ignore_permissions=True)
 	_login(user.name)
+	from sokan.notifications import notify_welcome_shipper
+
+	notify_welcome_shipper(user.name, full_name)
 	return me()
 
 
@@ -106,7 +117,7 @@ def register_forwarder(
 
 	user = _create_user(email, full_name, password, phone, ROLE_FORWARDER)
 	auto = get_settings().auto_approve_forwarders
-	frappe.get_doc(
+	fwd = frappe.get_doc(
 		{
 			"doctype": "Sokan Forwarder",
 			"company_name": company_name.strip(),
@@ -122,6 +133,9 @@ def register_forwarder(
 		}
 	).insert(ignore_permissions=True)
 	_login(user.name)
+	from sokan.notifications import notify_welcome_forwarder
+
+	notify_welcome_forwarder(fwd)
 	return me()
 
 
@@ -171,4 +185,44 @@ def become_customer(company_name: str | None = None, phone: str | None = None):
 			"company_name": company_name,
 		}
 	).insert(ignore_permissions=True)
+	return me()
+
+
+# --------------------------------------------------------------------------- passwords
+
+
+@frappe.whitelist(allow_guest=True, methods=["POST"])
+@rate_limit(limit=5, seconds=60 * 60)
+def forgot_password(email: str):
+	"""Email a reset link to the website. Always answers the same way, so it can't
+	be used to find out which addresses have accounts."""
+	email = (email or "").strip().lower()
+	user = frappe.db.get_value("User", {"name": email, "enabled": 1}, ["name", "user_type"], as_dict=True)
+	# Desk users (Administrator, system users) reset through Frappe itself.
+	if user and user.name not in ("Administrator", "Guest") and user.user_type == "Website User":
+		link = frappe.get_doc("User", user.name)._reset_password(send_email=False)
+		key = link.split("key=", 1)[1].split("&", 1)[0]
+		seconds = frappe.utils.cint(frappe.get_system_settings("reset_password_link_expiry_duration")) or 1200
+		from sokan.notifications import notify_password_reset
+
+		notify_password_reset(user.name, key, max(seconds // 60, 1))
+	return {"ok": True}
+
+
+@frappe.whitelist(allow_guest=True, methods=["POST"])
+@rate_limit(limit=10, seconds=60 * 60)
+def reset_password(key: str, new_password: str):
+	"""Set a new password from an emailed link, sign the user in and confirm by email."""
+	from frappe.core.doctype.user.user import update_password
+
+	result = update_password(new_password=new_password, logout_all_sessions=1, key=key)
+	if frappe.local.response.get("http_status_code") == 410:
+		# Expired or already used: update_password returns the reason.
+		frappe.throw(
+			result or _("This reset link has expired. Please request a new one."), frappe.LinkExpired
+		)
+	user = frappe.session.user
+	from sokan.notifications import notify_password_changed
+
+	notify_password_changed(user)
 	return me()

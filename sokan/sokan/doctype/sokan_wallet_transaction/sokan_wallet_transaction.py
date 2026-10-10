@@ -34,6 +34,7 @@ class SokanWalletTransaction(Document):
 		if self.amount < 0 and self.transaction_type != "Adjustment" and new_balance < -0.005:
 			frappe.throw(_("Insufficient wallet balance."), InsufficientBalance)
 
+		self.balance_before = flt(balance, 2)
 		self.balance_after = flt(new_balance, 2)
 		self.currency = currency or platform_currency()
 		self.posting_date = now_datetime()
@@ -43,6 +44,14 @@ class SokanWalletTransaction(Document):
 			{"wallet_balance": self.balance_after, "wallet_currency": self.currency},
 			update_modified=False,
 		)
+
+	def after_insert(self):
+		# Warn once, at the moment a debit takes the wallet below the threshold.
+		threshold = flt(frappe.db.get_single_value("Sokan Settings", "low_balance_threshold"))
+		if threshold and self.amount < 0 and flt(self.balance_before) >= threshold > flt(self.balance_after):
+			from sokan.notifications import notify_low_balance
+
+			notify_low_balance(self.forwarder)
 
 	def on_trash(self):
 		frappe.throw(_("Wallet transactions cannot be deleted. Post an Adjustment instead."))

@@ -63,3 +63,7 @@ typing-modules = ["frappe.types.DF"]
 quote-style = "double"
 indent-style = "tab"
 docstring-code-format = true
+
+[tool.ruff.lint.per-file-ignores]
+# Persian copy: its letters are not lookalike typos of Latin ones.
+"sokan/emails.py" = ["RUF001"]

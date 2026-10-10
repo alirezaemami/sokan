@@ -14,6 +14,9 @@ def expire_requests():
 		doc.flags.ignore_permissions = True
 		doc.save()
 		frappe.db.commit()
+		from sokan.notifications import notify_request_expired
+
+		notify_request_expired(name)
 
 
 def expire_quotes():
@@ -27,3 +30,10 @@ def charge_subscriptions():
 	from sokan.billing import charge_subscriptions as run
 
 	run()
+
+
+def admin_digest():
+	"""Daily: tell managers what's waiting for them (skipped when nothing is)."""
+	from sokan.notifications import send_admin_digest
+
+	send_admin_digest()

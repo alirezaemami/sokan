@@ -158,6 +158,10 @@ scheduler_events = {
 	"monthly": [
 		"sokan.tasks.charge_subscriptions",
 	],
+	# 08:00 server time: managers' summary of what's waiting.
+	"cron": {
+		"0 8 * * *": ["sokan.tasks.admin_digest"],
+	},
 }
 
 # Portal users (customers / forwarders) live in the Nuxt app, not Frappe's /me.

@@ -842,7 +842,16 @@
     "forgotSubtitle": "Enter your email and we'll send you a reset link.",
     "forgotSent": "If an account exists for that email, a reset link is on its way.",
     "sendLink": "Send reset link",
-    "backToLogin": "Back to sign in"
+    "backToLogin": "Back to sign in",
+    "resetTitle": "Choose a new password",
+    "resetSubtitle": "Pick something you don't use anywhere else. You'll be signed in straight away.",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat new password",
+    "passwordMismatch": "The two passwords don't match.",
+    "showPassword": "Show passwords",
+    "savePassword": "Save and sign in",
+    "requestNewLink": "Request a new link",
+    "resetMissing": "This link is incomplete. Open the link from your email again, or request a new one."
   },
   "footer": {
     "tagline": "The freight marketplace where shippers post once and verified forwarders compete with real quotes.",

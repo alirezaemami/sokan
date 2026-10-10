@@ -60,13 +60,15 @@ def distribute(request_name: str):
 			queue="short",
 			request_name=request_name,
 			forwarders=targets,
+			announce=True,
 			enqueue_after_commit=True,
 		)
 	else:
-		create_leads(request_name, targets)
+		create_leads(request_name, targets, announce=True)
 
 
-def create_leads(request_name: str, forwarders: list[str]):
+def create_leads(request_name: str, forwarders: list[str], announce: bool = False):
+	"""Create missing leads. `announce` tells the shipper how many forwarders were reached (first publish only)."""
 	existing = set(frappe.get_all("Freight Request Lead", {"request": request_name}, pluck="forwarder"))
 	created = []
 	now = now_datetime()
@@ -88,9 +90,11 @@ def create_leads(request_name: str, forwarders: list[str]):
 	total = frappe.db.count("Freight Request Lead", {"request": request_name})
 	frappe.db.set_value("Freight Request", request_name, "leads_sent", total, update_modified=False)
 
-	from sokan.notifications import notify_new_leads
+	from sokan.notifications import notify_new_leads, notify_request_published
 
 	notify_new_leads(request_name, created)
+	if announce:
+		notify_request_published(request_name, total)
 
 
 # A newly approved forwarder is offered this many of the most recent open requests.
@@ -119,6 +123,10 @@ def backfill_leads(forwarder_name: str):
 	):
 		if cint(settings.match_transport_mode) and request.transport_mode not in modes:
 			continue
-		if cint(settings.match_coverage) and countries and not countries & {request.origin_country, request.destination_country}:
+		if (
+			cint(settings.match_coverage)
+			and countries
+			and not countries & {request.origin_country, request.destination_country}
+		):
 			continue
 		create_leads(request.name, [forwarder_name])

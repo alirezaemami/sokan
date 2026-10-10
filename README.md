@@ -64,6 +64,38 @@ Website Users.
 Reviews start as *Pending* and are public, and counted in ratings, only once a
 manager approves them. Editing a review sends it back to Pending.
 
+#### Email
+
+Every email uses one branded template (`sokan/templates/emails/sokan_notification.html`)
+and one catalogue of messages in English and Persian (`sokan/emails.py`). Each
+recipient gets their own language (set from the site language they signed up in).
+`sokan/notifications.py` maps business events to messages:
+
+- **Shippers:** welcome, request published (and how many forwarders it reached),
+  new and revised quotes, booking confirmation with the forwarder's contact
+  details, request expired, request cancelled by Sokan, review published.
+- **Forwarders:** application received, approved (with welcome credit) / rejected /
+  suspended, new lead (opt-out), quote won (with the shipper's contact details),
+  quote not chosen (opt-out), request cancelled (with refund), top-up received /
+  approved / rejected, low balance, wallet adjustment, plan renewed / downgraded,
+  new review (opt-out).
+- **Managers:** new forwarder, top-up to check, review to moderate, contact
+  message, and a daily 08:00 summary when something is waiting.
+- **Account:** password reset (link to the website's `/reset-password`), password
+  changed, manager invitation.
+
+Nothing is sent until a default outgoing **Email Account** exists in Frappe.
+
+#### Go-live check
+
+```bash
+bench --site <site> sokan-check
+```
+
+Lists what must be set before real users arrive (website URL, outgoing email,
+top-up instructions, currencies, default plan, scheduler, managers, Desk access)
+and exits non-zero while anything still fails.
+
 #### Frontend
 
 ```bash

@@ -103,7 +103,13 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#08202a', media: '(prefers-color-scheme: dark)' },
         { name: 'format-detection', content: 'telephone=no' },
       ],
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        // Browsers and crawlers that don't take SVG icons (Safari tabs, some search results).
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: '48x48' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        { rel: 'manifest', href: '/site.webmanifest' },
+      ],
       // Apply the stored theme before first paint so dark-mode users never see a flash.
       script: [
         {
@@ -125,14 +131,14 @@ export default defineNuxtConfig({
     // Forwarder slugs live in Frappe. Deliberately not under /api — the proxy
     // rule above would swallow it.
     sources: ['/__sitemap__/urls'],
-    exclude: ['/account/**', '/partner/**', '/admin', '/admin/**', '/login', '/register/**', '/forgot-password'],
+    exclude: ['/account/**', '/partner/**', '/admin', '/admin/**', '/login', '/register/**', '/forgot-password', '/reset-password'],
   },
 
   robots: {
     disallow: ['/api/', '/account/', '/partner/', '/admin'],
   },
 
-  // Share cards come from public/og-default.png; runtime OG rendering is
+  // Share cards come from public/og-default.jpg; runtime OG rendering is
   // slow to boot and unreliable at shaping Persian text.
   ogImage: { enabled: false },
 

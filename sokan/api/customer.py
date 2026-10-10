@@ -207,7 +207,7 @@ def accept_quote(quote: str):
 	q.db_set({"status": "Accepted", "accepted_on": now})
 	req.db_set({"status": "Booked", "accepted_quote": q.name, "booked_on": now})
 
-	from sokan.notifications import notify_quote_accepted, notify_quote_rejected
+	from sokan.notifications import notify_booking, notify_quote_rejected
 
 	for other in frappe.get_all(
 		"Freight Quote", {"request": req.name, "status": "Submitted", "name": ("!=", q.name)}, pluck="name"
@@ -230,7 +230,7 @@ def accept_quote(quote: str):
 		"bookings_count",
 		frappe.db.count("Freight Request", {"customer": req.customer, "status": "Booked"}),
 	)
-	notify_quote_accepted(q)
+	notify_booking(q)
 	return get_request(req.name)
 
 
@@ -243,7 +243,7 @@ def reject_quote(quote: str, reason: str | None = None):
 	q.db_set({"status": "Rejected", "rejection_reason": reason})
 	from sokan.notifications import notify_quote_rejected
 
-	notify_quote_rejected(q)
+	notify_quote_rejected(q, reason)
 	return get_request(q.request)
 
 
@@ -290,6 +290,9 @@ def leave_review(request: str, rating: int, comment: str | None = None):
 		}
 	)
 	doc.save(ignore_permissions=True)
+	from sokan.notifications import notify_admin_new_review
+
+	notify_admin_new_review(doc)
 	return {"rating": doc.rating, "comment": doc.comment, "status": doc.status}
 
 

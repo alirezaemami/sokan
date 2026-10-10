@@ -10,8 +10,11 @@ class SokanTopUp(Document):
 	def validate(self):
 		if flt(self.amount) <= 0:
 			frappe.throw(_("Top-up amount must be greater than zero."))
-		if not self.currency:
-			self.currency = frappe.db.get_value("Sokan Forwarder", self.forwarder, "wallet_currency")
+		# Always the wallet's currency. Never trust a pre-filled value: Frappe fills empty
+		# "currency" fields from the site default, which needn't match the wallet.
+		self.currency = (
+			frappe.db.get_value("Sokan Forwarder", self.forwarder, "wallet_currency") or self.currency
+		)
 		before = self.get_doc_before_save()
 		if before and before.status == "Approved" and self.status != "Approved":
 			frappe.throw(_("An approved top-up cannot be reopened. Post an Adjustment instead."))

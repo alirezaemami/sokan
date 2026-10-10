@@ -171,9 +171,7 @@ def overview():
 			"revenue_month": _revenue(month_start, today),
 			"revenue_last_month": _revenue(last_month_start, add_days(month_start, -1)),
 			"revenue_total": _revenue(),
-			"wallet_float": flt(
-				frappe.db.sql("select sum(wallet_balance) from `tabSokan Forwarder`")[0][0]
-			),
+			"wallet_float": flt(frappe.db.sql("select sum(wallet_balance) from `tabSokan Forwarder`")[0][0]),
 		},
 		"attention": {**_attention(), "topups_amount": flt(pending_topups[0])},
 		"series": [
@@ -188,7 +186,16 @@ def overview():
 		"recent_requests": frappe.get_all(
 			"Freight Request",
 			filters={"status": ("!=", "Draft")},
-			fields=["name", "title", "status", "customer_name", "transport_mode", "leads_sent", "quote_count", "creation"],
+			fields=[
+				"name",
+				"title",
+				"status",
+				"customer_name",
+				"transport_mode",
+				"leads_sent",
+				"quote_count",
+				"creation",
+			],
 			order_by="creation desc",
 			limit=6,
 		),
@@ -217,7 +224,9 @@ def reports(from_date: str | None = None, to_date: str | None = None):
 	published = one(
 		"select count(*) from `tabFreight Request` where published_on is not null and date(published_on) between %(start)s and %(end)s"
 	)
-	leads = one("select count(*) from `tabFreight Request Lead` where date(sent_on) between %(start)s and %(end)s")
+	leads = one(
+		"select count(*) from `tabFreight Request Lead` where date(sent_on) between %(start)s and %(end)s"
+	)
 	unlocks = one(
 		"select count(*) from `tabFreight Request Lead` where unlocked_on is not null and date(unlocked_on) between %(start)s and %(end)s"
 	)
@@ -292,7 +301,13 @@ def reports(from_date: str | None = None, to_date: str | None = None):
 		"from_date": str(start),
 		"to_date": str(end),
 		"currency": platform_currency(),
-		"funnel": {"published": published, "leads": leads, "unlocks": unlocks, "quotes": quotes, "booked": booked},
+		"funnel": {
+			"published": published,
+			"leads": leads,
+			"unlocks": unlocks,
+			"quotes": quotes,
+			"booked": booked,
+		},
 		"revenue": {
 			"unlocks": -flt(by_type.get("Request Unlock")),
 			"quotes": -flt(by_type.get("Quote Fee")),
@@ -368,7 +383,12 @@ def list_forwarders(search: str | None = None, status: str | None = None, page: 
 	filters = {"status": status} if status else {}
 	or_filters = None
 	if like := _like(search):
-		or_filters = {"company_name": ("like", like), "email": ("like", like), "city": ("like", like), "name": ("like", like)}
+		or_filters = {
+			"company_name": ("like", like),
+			"email": ("like", like),
+			"city": ("like", like),
+			"name": ("like", like),
+		}
 	items = frappe.get_all(
 		"Sokan Forwarder",
 		filters=filters,
@@ -418,7 +438,15 @@ def get_forwarder(name: str):
 			"transactions": frappe.get_all(
 				"Sokan Wallet Transaction",
 				filters={"forwarder": name},
-				fields=["name", "transaction_type", "amount", "balance_after", "currency", "posting_date", "description"],
+				fields=[
+					"name",
+					"transaction_type",
+					"amount",
+					"balance_after",
+					"currency",
+					"posting_date",
+					"description",
+				],
 				order_by="posting_date desc",
 				limit=15,
 			),
@@ -431,7 +459,8 @@ def get_forwarder(name: str):
 			),
 			"lead_counts": dict(
 				frappe.db.sql(
-					"select status, count(*) from `tabFreight Request Lead` where forwarder=%s group by status", name
+					"select status, count(*) from `tabFreight Request Lead` where forwarder=%s group by status",
+					name,
 				)
 			),
 			"quotes": frappe.get_all(
@@ -493,6 +522,9 @@ def adjust_wallet(name: str, amount: float, note: str):
 		amount,
 		description=_("{0} (by {1})").format(note, frappe.utils.get_fullname(frappe.session.user)),
 	)
+	from sokan.notifications import notify_wallet_adjusted
+
+	notify_wallet_adjusted(name, amount, note)
 	return get_forwarder(name)
 
 
@@ -508,7 +540,12 @@ def list_customers(search: str | None = None, blocked: int | None = None, page: 
 		filters["is_blocked"] = cint(blocked)
 	or_filters = None
 	if like := _like(search):
-		or_filters = {"full_name": ("like", like), "email": ("like", like), "company_name": ("like", like), "name": ("like", like)}
+		or_filters = {
+			"full_name": ("like", like),
+			"email": ("like", like),
+			"company_name": ("like", like),
+			"name": ("like", like),
+		}
 	items = frappe.get_all(
 		"Sokan Customer",
 		filters=filters,
@@ -642,7 +679,9 @@ def get_request(name: str):
 		),
 		"quotes": [
 			quote_payload(frappe.get_doc("Freight Quote", q))
-			for q in frappe.get_all("Freight Quote", {"request": name}, pluck="name", order_by="total_amount asc")
+			for q in frappe.get_all(
+				"Freight Quote", {"request": name}, pluck="name", order_by="total_amount asc"
+			)
 		],
 		"review": frappe.db.get_value(
 			"Sokan Review", {"request": name}, ["name", "rating", "comment", "status"], as_dict=True
@@ -661,6 +700,9 @@ def cancel_request(name: str, reason: str):
 	doc.status = "Cancelled"
 	doc.cancel_reason = _("Cancelled by Sokan: {0}").format(reason.strip())
 	doc.save(ignore_permissions=True)
+	from sokan.notifications import notify_request_cancelled_by_admin
+
+	notify_request_cancelled_by_admin(name, reason.strip())
 	return get_request(name)
 
 
@@ -720,7 +762,11 @@ def list_reviews(status: str | None = "Pending", page: int = 1, page_size: int =
 		as_dict=True,
 	)
 	counts = dict(frappe.db.sql("select status, count(*) from `tabSokan Review` group by status"))
-	return {"items": items, "total": frappe.db.count("Sokan Review", {"status": status} if status else {}), "counts": counts}
+	return {
+		"items": items,
+		"total": frappe.db.count("Sokan Review", {"status": status} if status else {}),
+		"counts": counts,
+	}
 
 
 @frappe.whitelist(methods=["POST"])
@@ -729,12 +775,17 @@ def moderate_review(name: str, action: str, note: str | None = None):
 	if action not in ("approve", "reject"):
 		frappe.throw(_("Unknown action."))
 	doc = frappe.get_doc("Sokan Review", name)
+	was_approved = doc.status == "Approved"
 	doc.status = "Approved" if action == "approve" else "Rejected"
 	doc.moderated_by = frappe.session.user
 	doc.moderated_on = now_datetime()
 	doc.moderation_note = (note or "").strip() or None
 	# Saving recomputes the forwarder's public rating from approved reviews.
 	doc.save(ignore_permissions=True)
+	if doc.status == "Approved" and not was_approved:
+		from sokan.notifications import notify_review_published
+
+		notify_review_published(doc)
 	return {"name": doc.name, "status": doc.status}
 
 
@@ -749,7 +800,18 @@ def list_messages(status: str | None = "New", page: int = 1, page_size: int = 20
 	items = frappe.get_all(
 		"Sokan Contact Message",
 		filters=filters,
-		fields=["name", "full_name", "email", "phone", "company", "audience", "status", "subject", "message", "creation"],
+		fields=[
+			"name",
+			"full_name",
+			"email",
+			"phone",
+			"company",
+			"audience",
+			"status",
+			"subject",
+			"message",
+			"creation",
+		],
 		order_by="creation desc",
 		start=start,
 		page_length=size,
@@ -809,7 +871,13 @@ def list_transactions(
 		from `tabSokan Wallet Transaction` t where {where}""",
 		args,
 	)[0]
-	return {"items": items, "total": total, "credits": flt(credits), "debits": flt(debits), "currency": platform_currency()}
+	return {
+		"items": items,
+		"total": total,
+		"credits": flt(credits),
+		"debits": flt(debits),
+		"currency": platform_currency(),
+	}
 
 
 # ---------------------------------------------------------------- catalogue
@@ -834,11 +902,16 @@ PLAN_EDITABLE = {
 @frappe.whitelist(methods=["GET"])
 def list_plans():
 	_require_admin()
-	plans = frappe.get_all("Sokan Plan", fields=["name", "plan_name", *PLAN_EDITABLE.keys()], order_by="sort_order asc")
+	plans = frappe.get_all(
+		"Sokan Plan", fields=["name", "plan_name", *PLAN_EDITABLE.keys()], order_by="sort_order asc"
+	)
 	subscribers = dict(frappe.db.sql("select plan, count(*) from `tabSokan Forwarder` group by plan"))
 	for p in plans:
 		p["features"] = frappe.get_all(
-			"Sokan Plan Feature", filters={"parent": p.name, "parenttype": "Sokan Plan"}, pluck="feature", order_by="idx"
+			"Sokan Plan Feature",
+			filters={"parent": p.name, "parenttype": "Sokan Plan"},
+			pluck="feature",
+			order_by="idx",
 		)
 		p["subscribers"] = subscribers.get(p.name, 0)
 	return plans
@@ -877,10 +950,22 @@ def list_modes():
 	_require_admin()
 	modes = frappe.get_all(
 		"Sokan Transport Mode",
-		fields=["name", "mode_name", "code", "category", "icon", "sort_order", "is_active", "uses_containers", "description"],
+		fields=[
+			"name",
+			"mode_name",
+			"code",
+			"category",
+			"icon",
+			"sort_order",
+			"is_active",
+			"uses_containers",
+			"description",
+		],
 		order_by="sort_order asc",
 	)
-	usage = dict(frappe.db.sql("select transport_mode, count(*) from `tabFreight Request` group by transport_mode"))
+	usage = dict(
+		frappe.db.sql("select transport_mode, count(*) from `tabFreight Request` group by transport_mode")
+	)
 	for m in modes:
 		m["requests"] = usage.get(m.name, 0)
 	return modes
@@ -962,7 +1047,8 @@ def add_manager(email: str, full_name: str | None = None):
 	_require_admin()
 	email = (email or "").strip().lower()
 	frappe.utils.validate_email_address(email, throw=True)
-	if frappe.db.exists("User", email):
+	new_account = not frappe.db.exists("User", email)
+	if not new_account:
 		add_role(email, ROLE_ADMIN)
 	else:
 		first, _sep, last = (full_name or email.split("@")[0]).strip().partition(" ")
@@ -974,12 +1060,16 @@ def add_manager(email: str, full_name: str | None = None):
 				"last_name": last or None,
 				# Website User: signs in to the Nuxt portal, never to Desk.
 				"user_type": "Website User",
-				"send_welcome_email": 1,
+				# Sokan sends its own invitation (below) linking to the website, not Desk.
+				"send_welcome_email": 0,
 				"roles": [{"role": ROLE_ADMIN}],
 			}
 		)
 		user.flags.ignore_permissions = True
 		user.insert()
+	from sokan.notifications import notify_manager_invite
+
+	notify_manager_invite(email, new_account)
 	return list_managers()
 
 

@@ -82,7 +82,9 @@ export function useSokan() {
     becomeCustomer: (p: Params = {}) => post<Me>(auth('become_customer'), p),
     login: (usr: string, pwd: string) => post<{ message: string; full_name: string }>('login', { usr, pwd }),
     logout: () => post<unknown>('logout'),
-    resetPassword: (user: string) => post<unknown>('frappe.core.doctype.user.user.reset_password', { user }),
+    // Sokan's own reset flow: branded email, link back to this site.
+    forgotPassword: (email: string) => post<{ ok: boolean }>(auth('forgot_password'), { email }),
+    resetPassword: (key: string, new_password: string) => post<Me>(auth('reset_password'), { key, new_password }),
 
     // ---- customer
     customer: {

@@ -130,16 +130,17 @@ def grant_signup_bonus(forwarder):
 	post(forwarder.name, "Signup Bonus", bonus, description=_("Welcome credit"))
 
 
-def refund(lead, reason: str):
-	"""Credit back an unlock fee, e.g. when the customer cancels right after publishing."""
+def refund(lead, reason: str) -> float:
+	"""Credit back an unlock fee, e.g. when the customer cancels right after publishing. Returns the amount refunded."""
 	if not lead.wallet_transaction or not flt(lead.unlock_fee):
-		return
+		return 0
 	if frappe.db.exists(
 		"Sokan Wallet Transaction",
 		{"reference_doctype": lead.doctype, "reference_name": lead.name, "transaction_type": "Refund"},
 	):
-		return
+		return 0
 	post(lead.forwarder, "Refund", flt(lead.unlock_fee), reference=lead, description=reason)
+	return flt(lead.unlock_fee)
 
 
 def charge_subscriptions():
@@ -155,6 +156,8 @@ def charge_subscriptions():
 			continue
 		fee = flt(frappe.db.get_value("Sokan Plan", row.plan, "monthly_fee"))
 		next_renewal = add_months(get_first_day(today), 1)
+		from sokan.notifications import notify_plan_downgraded, notify_plan_renewed
+
 		try:
 			if fee > 0:
 				post(
@@ -164,12 +167,17 @@ def charge_subscriptions():
 					description=_("{0} plan — {1}").format(row.plan, today.strftime("%B %Y")),
 				)
 			frappe.db.set_value("Sokan Forwarder", row.name, "plan_renews_on", next_renewal)
+			frappe.db.commit()
+			if fee > 0:
+				notify_plan_renewed(row.name, row.plan, fee, today.strftime("%B %Y"))
 		except InsufficientBalance:
 			frappe.db.rollback()
 			if default_plan and default_plan != row.plan:
 				frappe.db.set_value(
 					"Sokan Forwarder", row.name, {"plan": default_plan, "plan_renews_on": next_renewal}
 				)
+				frappe.db.commit()
+				notify_plan_downgraded(row.name, row.plan, default_plan, fee)
 		frappe.db.commit()
 
 

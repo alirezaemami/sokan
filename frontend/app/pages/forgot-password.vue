@@ -4,7 +4,9 @@ const { t } = useI18n()
 usePageSeo({ title: t('auth.forgotTitle'), noIndex: true })
 const api = useSokan()
 const errorMessage = useErrorMessage()
-const email = ref('')
+const route = useRoute()
+// A manager invitation links here with the address filled in.
+const email = ref(String(route.query.email || ''))
 const loading = ref(false)
 const sent = ref(false)
 const error = ref('')
@@ -13,7 +15,7 @@ async function submit() {
   loading.value = true
   error.value = ''
   try {
-    await api.resetPassword(email.value.trim().toLowerCase())
+    await api.forgotPassword(email.value.trim().toLowerCase())
     sent.value = true
   } catch (e) {
     error.value = errorMessage(e)

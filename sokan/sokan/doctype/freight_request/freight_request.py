@@ -106,15 +106,23 @@ class FreightRequest(Document):
 			and time_diff_in_hours(now_datetime(), self.published_on) <= 24
 			and not self.quote_count
 		)
+		from sokan.notifications import notify_lead_cancelled
+
+		currency = frappe.db.get_single_value("Sokan Settings", "default_currency")
 		for name in frappe.get_all(
 			"Freight Request Lead",
-			{"request": self.name, "status": ("in", ("New", "Unlocked"))},
+			{"request": self.name, "status": ("in", ("New", "Unlocked", "Quoted"))},
 			pluck="name",
 		):
 			lead = frappe.get_doc("Freight Request Lead", name)
+			refunded = 0
 			if refund_window and recent and lead.status == "Unlocked":
-				refund(lead, _("Customer cancelled request {0}").format(self.name))
-			lead.db_set("status", "Closed")
+				refunded = refund(lead, _("Customer cancelled request {0}").format(self.name))
+			# Forwarders who paid to look or took time to quote deserve to know.
+			if self.status == "Cancelled" and lead.status in ("Unlocked", "Quoted"):
+				notify_lead_cancelled(self.name, lead.forwarder, refunded, currency)
+			if lead.status != "Quoted":
+				lead.db_set("status", "Closed")
 		frappe.db.set_value(
 			"Freight Quote", {"request": self.name, "status": "Submitted"}, "status", "Expired"
 		)

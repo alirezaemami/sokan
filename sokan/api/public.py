@@ -312,4 +312,7 @@ def submit_contact(
 			"message": message,
 		}
 	).insert(ignore_permissions=True)
+	from sokan.notifications import notify_admin_new_message
+
+	notify_admin_new_message(doc)
 	return {"name": doc.name}

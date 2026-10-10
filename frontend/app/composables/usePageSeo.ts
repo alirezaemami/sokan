@@ -20,7 +20,7 @@ export function usePageSeo(input: MaybeRefOrGetter<PageSeoInput>) {
     const description = (v.description || t('seo.defaultDescription')).replace(/\s+/g, ' ').trim().slice(0, 160)
     const raw = v.image
     // OG images must be absolute and raster — social crawlers drop SVG and relative URLs.
-    const image = raw ? (raw.startsWith('http') ? raw : `${siteUrl}${raw}`) : `${siteUrl}/og-default.png`
+    const image = raw ? (raw.startsWith('http') ? raw : `${siteUrl}${raw}`) : `${siteUrl}/og-default.jpg`
     return { title: v.title, description, image, type: v.type ?? 'website', noIndex: Boolean(v.noIndex) }
   })
 
@@ -31,6 +31,11 @@ export function usePageSeo(input: MaybeRefOrGetter<PageSeoInput>) {
     ogDescription: () => seo.value.description,
     ogImage: () => seo.value.image,
     ogImageAlt: () => seo.value.title,
+    // Dimensions let platforms lay out the card without fetching the image first.
+    ogImageWidth: () => (toValue(input).image ? undefined : 1200),
+    ogImageHeight: () => (toValue(input).image ? undefined : 630),
+    ogImageType: () => (toValue(input).image ? undefined : 'image/jpeg'),
+    ogSiteName: 'Sokan',
     ogType: () => seo.value.type as 'website',
     twitterCard: 'summary_large_image',
     twitterTitle: () => seo.value.title,
