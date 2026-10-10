@@ -12,7 +12,7 @@ const toFrappe = (path: string) => ({ proxy: { to: `${frappeApiBase}${path}`, he
 
 // Public canonical origin. Every absolute URL (sitemap, canonical, hreflang,
 // OG tags) is built from this, so it must be the real domain in production.
-const siteUrl = process.env.NUXT_PUBLIC_SITE_URL || 'https://sokan.app'
+const siteUrl = process.env.NUXT_PUBLIC_SITE_URL || 'https://www.sokan.net'
 
 // Portals are personal, authenticated screens: render them in the browser
 // only (no SSR auth round-trip) and keep them out of every index.

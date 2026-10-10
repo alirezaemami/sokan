@@ -112,7 +112,7 @@ async function removeManager() {
           <FormField v-model="form.default_currency" :label="$t('admin.settings.f.default_currency')" :hint="$t('admin.settings.h.default_currency')" />
           <FormField v-model="form.support_email" type="email" :label="$t('admin.settings.f.support_email')" />
           <FormField v-model="form.support_phone" type="tel" :label="$t('admin.settings.f.support_phone')" />
-          <FormField v-model="form.frontend_url" class="sm:col-span-2" :label="$t('admin.settings.f.frontend_url')" :hint="$t('admin.settings.h.frontend_url')" placeholder="https://sokan.app" />
+          <FormField v-model="form.frontend_url" class="sm:col-span-2" :label="$t('admin.settings.f.frontend_url')" :hint="$t('admin.settings.h.frontend_url')" placeholder="https://www.sokan.net" />
         </section>
 
         <section class="card grid gap-4 p-5 sm:grid-cols-2">
