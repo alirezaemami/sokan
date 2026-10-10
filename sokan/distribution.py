@@ -11,7 +11,7 @@ forwarder pays only when they unlock one (see sokan.billing).
 """
 
 import frappe
-from frappe.utils import now_datetime
+from frappe.utils import cint, now_datetime, nowdate
 
 from sokan.utils import get_settings
 
@@ -91,3 +91,34 @@ def create_leads(request_name: str, forwarders: list[str]):
 	from sokan.notifications import notify_new_leads
 
 	notify_new_leads(request_name, created)
+
+
+# A newly approved forwarder is offered this many of the most recent open requests.
+BACKFILL_LIMIT = 50
+
+
+def backfill_leads(forwarder_name: str):
+	"""Offer a forwarder the requests that were already open when it was approved.
+
+	Leads are normally created when a request is published, so without this a
+	company approved after the fact would see nothing until the next request.
+	"""
+	forwarder = frappe.get_doc("Sokan Forwarder", forwarder_name)
+	if forwarder.status != "Active":
+		return
+	settings = get_settings()
+	modes = {s.transport_mode for s in forwarder.services}
+	countries = {c.country for c in forwarder.coverage}
+
+	for request in frappe.get_all(
+		"Freight Request",
+		filters={"status": "Open", "valid_until": (">=", nowdate())},
+		fields=["name", "transport_mode", "origin_country", "destination_country"],
+		order_by="creation desc",
+		limit=BACKFILL_LIMIT,
+	):
+		if cint(settings.match_transport_mode) and request.transport_mode not in modes:
+			continue
+		if cint(settings.match_coverage) and countries and not countries & {request.origin_country, request.destination_country}:
+			continue
+		create_leads(request.name, [forwarder_name])

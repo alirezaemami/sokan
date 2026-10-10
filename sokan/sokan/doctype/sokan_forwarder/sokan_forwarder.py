@@ -44,6 +44,13 @@ class SokanForwarder(Document):
 				from sokan.billing import grant_signup_bonus
 
 				grant_signup_bonus(self)
+				# After the status change is saved, hand over requests that are already open.
+				frappe.enqueue(
+					"sokan.distribution.backfill_leads",
+					queue="short",
+					forwarder_name=self.name,
+					enqueue_after_commit=True,
+				)
 			if self.status in ("Active", "Rejected", "Suspended") and not self.flags.in_insert:
 				from sokan.notifications import notify_forwarder_status
 

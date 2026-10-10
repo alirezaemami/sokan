@@ -20,6 +20,11 @@ watch(() => route.fullPath, () => (menu.value = false))
 watch(menu, (v) => {
   if (import.meta.client) document.documentElement.style.overflow = v ? 'hidden' : ''
 })
+// Navigating into a portal swaps the layout and unmounts the header before
+// the watcher above can release the lock.
+onBeforeUnmount(() => {
+  if (import.meta.client) document.documentElement.style.overflow = ''
+})
 </script>
 
 <template>
