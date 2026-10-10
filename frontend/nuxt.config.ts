@@ -79,8 +79,12 @@ export default defineNuxtConfig({
 
     '/account/**': portal,
     '/partner/**': portal,
+    '/admin': portal,
+    '/admin/**': portal,
     '/fa/account/**': portal,
     '/fa/partner/**': portal,
+    '/fa/admin': portal,
+    '/fa/admin/**': portal,
     '/login': { robots: false },
     '/fa/login': { robots: false },
     '/forgot-password': { robots: false },
@@ -121,11 +125,11 @@ export default defineNuxtConfig({
     // Forwarder slugs live in Frappe. Deliberately not under /api — the proxy
     // rule above would swallow it.
     sources: ['/__sitemap__/urls'],
-    exclude: ['/account/**', '/partner/**', '/login', '/register/**', '/forgot-password'],
+    exclude: ['/account/**', '/partner/**', '/admin', '/admin/**', '/login', '/register/**', '/forgot-password'],
   },
 
   robots: {
-    disallow: ['/api/', '/account/', '/partner/'],
+    disallow: ['/api/', '/account/', '/partner/', '/admin'],
   },
 
   // Share cards come from public/og-default.png; runtime OG rendering is

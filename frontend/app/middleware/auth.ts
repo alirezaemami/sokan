@@ -1,13 +1,13 @@
 /**
  * Portal guard. Pages opt in with
- *   definePageMeta({ middleware: 'auth', role: 'customer' | 'forwarder' })
+ *   definePageMeta({ middleware: 'auth', role: 'customer' | 'forwarder' | 'admin' })
  *
  * Portals render client-only (see nuxt.config routeRules), so this always
  * runs in the browser where the Frappe session cookie is available.
  */
 export default defineNuxtRouteMiddleware(async (to) => {
   if (import.meta.server) return
-  const { ensure, isCustomer, isForwarder } = useAuth()
+  const { ensure, isCustomer, isForwarder, isAdmin, homePath } = useAuth()
   const localePath = useLocalePath()
   const me = await ensure()
 
@@ -15,7 +15,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return navigateTo({ path: localePath('/login'), query: { redirect: to.fullPath } })
   }
 
-  const role = to.meta.role as 'customer' | 'forwarder' | undefined
+  const role = to.meta.role as 'customer' | 'forwarder' | 'admin' | undefined
+  // The server refuses every admin call anyway; this only avoids an empty screen.
+  if (role === 'admin' && !isAdmin.value) {
+    return navigateTo(homePath.value)
+  }
   if (role === 'forwarder' && !isForwarder.value) {
     return navigateTo(localePath(isCustomer.value ? '/account' : '/register/forwarder'))
   }

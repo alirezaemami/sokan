@@ -111,7 +111,12 @@ async function sendReview() {
 
         <!-- Review -->
         <section v-if="r.status === 'Booked'" class="card p-6">
-          <h2 class="font-bold">{{ $t('requestDetail.reviewTitle') }}</h2>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h2 class="font-bold">{{ $t('requestDetail.reviewTitle') }}</h2>
+            <span v-if="data.review?.status" class="rounded-full px-2.5 py-1 text-xs font-semibold" :class="data.review.status === 'Approved' ? 'bg-success/12 text-success' : data.review.status === 'Rejected' ? 'bg-danger/12 text-danger' : 'bg-warning/15 text-warning'">
+              {{ $t(`requestDetail.reviewStatus.${data.review.status}`) }}
+            </span>
+          </div>
           <p class="mt-1 text-sm text-muted">{{ $t('requestDetail.reviewText') }}</p>
           <RatingStars v-model="rating" :readonly="false" :size="30" class="mt-4" />
           <FormField v-model="comment" as="textarea" :rows="3" class="mt-4" :placeholder="$t('requestDetail.reviewPh')" />

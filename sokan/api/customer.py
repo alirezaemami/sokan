@@ -177,7 +177,9 @@ def get_request(name: str):
 				["email", "phone", "website", "address"],
 				as_dict=True,
 			)
-	review = frappe.db.get_value("Sokan Review", {"request": name}, ["rating", "comment"], as_dict=True)
+	review = frappe.db.get_value(
+		"Sokan Review", {"request": name}, ["rating", "comment", "status"], as_dict=True
+	)
 	return {
 		"request": request_full(doc),
 		"leads_sent": doc.leads_sent,
@@ -281,10 +283,14 @@ def leave_review(request: str, rating: int, comment: str | None = None):
 			"customer": req.customer,
 			"rating": cint(rating),
 			"comment": comment,
+			# New or edited, a review waits for a manager before it is public.
+			"status": "Pending",
+			"moderated_by": None,
+			"moderated_on": None,
 		}
 	)
 	doc.save(ignore_permissions=True)
-	return {"rating": doc.rating, "comment": doc.comment}
+	return {"rating": doc.rating, "comment": doc.comment, "status": doc.status}
 
 
 @frappe.whitelist(methods=["GET"])

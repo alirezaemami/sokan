@@ -11,6 +11,10 @@
   "customer_name",
   "cb1",
   "rating",
+  "status",
+  "moderated_by",
+  "moderated_on",
+  "moderation_note",
   "is_published",
   "sb_body",
   "comment"
@@ -58,11 +62,41 @@
    "in_list_view": 1
   },
   {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nApproved\nRejected",
+   "default": "Pending",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "moderated_by",
+   "fieldtype": "Link",
+   "label": "Moderated By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "moderated_on",
+   "fieldtype": "Datetime",
+   "label": "Moderated On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "moderation_note",
+   "fieldtype": "Small Text",
+   "label": "Moderation Note"
+  },
+  {
    "fieldname": "is_published",
    "fieldtype": "Check",
    "label": "Published",
-   "default": "1",
-   "in_list_view": 1
+   "default": "0",
+   "in_list_view": 1,
+   "read_only": 1,
+   "description": "Set from Status: only approved reviews are public."
   },
   {
    "fieldname": "sb_body",
@@ -76,7 +110,7 @@
  ],
  "index_web_pages_for_search": 0,
  "links": [],
- "modified": "2026-10-10 00:00:00.000000",
+ "modified": "2026-10-10 20:00:00.000000",
  "modified_by": "Administrator",
  "module": "Sokan",
  "name": "Sokan Review",

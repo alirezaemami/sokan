@@ -1,4 +1,7 @@
 import type {
+  AdminOverview,
+  AdminPaged,
+  AdminReports,
   Country,
   CustomerRequestDetail,
   CustomerRequestRow,
@@ -16,6 +19,7 @@ import type {
   TransportMode,
   WalletSummary,
   WalletTransaction,
+  Row,
 } from '~/types/sokan'
 
 type Params = Record<string, unknown>
@@ -55,6 +59,7 @@ export function useSokan() {
   const cust = (m: string) => `sokan.api.customer.${m}`
   const part = (m: string) => `sokan.api.partner.${m}`
   const auth = (m: string) => `sokan.api.auth.${m}`
+  const adm = (m: string) => `sokan.api.admin.${m}`
 
   return {
     get,
@@ -120,6 +125,40 @@ export function useSokan() {
       changePlan: (plan: string) => post<WalletSummary>(part('change_plan'), { plan }),
       profile: () => get<Record<string, any>>(part('get_profile')),
       updateProfile: (data: Params) => post<Record<string, any>>(part('update_profile'), { data }),
+    },
+
+    // ---- admin (managers). Every endpoint re-checks the role server-side.
+    admin: {
+      overview: () => get<AdminOverview>(adm('overview')),
+      attention: () => get<AdminOverview['attention']>(adm('attention')),
+      reports: (p: { from_date?: string; to_date?: string }) => get<AdminReports>(adm('reports'), p),
+      forwarders: (p: Params) => get<AdminPaged>(adm('list_forwarders'), p),
+      forwarder: (name: string) => get<Row>(adm('get_forwarder'), { name }),
+      setForwarderStatus: (name: string, status: string, reason?: string) => post<Row>(adm('set_forwarder_status'), { name, status, reason }),
+      updateForwarder: (name: string, data: Params) => post<Row>(adm('update_forwarder'), { name, data }),
+      adjustWallet: (name: string, amount: number, note: string) => post<Row>(adm('adjust_wallet'), { name, amount, note }),
+      customers: (p: Params) => get<AdminPaged>(adm('list_customers'), p),
+      customer: (name: string) => get<Row>(adm('get_customer'), { name }),
+      setCustomerBlocked: (name: string, blocked: boolean) => post<Row>(adm('set_customer_blocked'), { name, blocked: blocked ? 1 : 0 }),
+      requests: (p: Params) => get<AdminPaged>(adm('list_requests'), p),
+      request: (name: string) => get<Row>(adm('get_request'), { name }),
+      cancelRequest: (name: string, reason: string) => post<Row>(adm('cancel_request'), { name, reason }),
+      topups: (p: Params) => get<AdminPaged>(adm('list_topups'), p),
+      reviewTopup: (name: string, action: 'approve' | 'reject', note?: string) => post<Row>(adm('review_topup'), { name, action, note }),
+      reviews: (p: Params) => get<AdminPaged>(adm('list_reviews'), p),
+      moderateReview: (name: string, action: 'approve' | 'reject', note?: string) => post<Row>(adm('moderate_review'), { name, action, note }),
+      messages: (p: Params) => get<AdminPaged>(adm('list_messages'), p),
+      setMessageStatus: (name: string, status: string) => post<Row>(adm('set_message_status'), { name, status }),
+      transactions: (p: Params) => get<AdminPaged & { credits: number; debits: number; currency: string }>(adm('list_transactions'), p),
+      plans: () => get<Row[]>(adm('list_plans')),
+      savePlan: (data: Params) => post<Row[]>(adm('save_plan'), { data }),
+      modes: () => get<Row[]>(adm('list_modes')),
+      saveMode: (name: string, data: Params) => post<Row[]>(adm('save_mode'), { name, data }),
+      settings: () => get<Row>(adm('get_settings')),
+      updateSettings: (data: Params) => post<Row>(adm('update_settings'), { data }),
+      managers: () => get<Row[]>(adm('list_managers')),
+      addManager: (email: string, full_name?: string) => post<Row[]>(adm('add_manager'), { email, full_name }),
+      removeManager: (user: string) => post<Row[]>(adm('remove_manager'), { user }),
     },
   }
 }

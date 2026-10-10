@@ -2,11 +2,14 @@
 /**
  * Marketing header. Transparent over the chart paper at the top of the
  * page, frosted once scrolled. The phone menu opens as a night chart.
+ * A page whose hero is a night chart sets `definePageMeta({ headerTone:
+ * 'night' })`; until scrolled, the header then draws light on night.
  */
 const { y } = useWindowScroll()
 const scrolled = computed(() => y.value > 16)
 const menu = ref(false)
 const route = useRoute()
+const night = computed(() => route.meta.headerTone === 'night' && !scrolled.value)
 const { isLoggedIn, homePath, me } = useAuth()
 
 const links = [
@@ -30,15 +33,16 @@ onBeforeUnmount(() => {
 <template>
   <header class="fixed inset-x-0 top-0 z-50 transition-[background,border-color,box-shadow] duration-300" :class="scrolled ? 'glass border-x-0 border-t-0' : 'border-b border-transparent'">
     <div class="mx-auto flex h-[72px] max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
-      <NuxtLinkLocale to="/" class="shrink-0" :aria-label="$t('nav.home')"><AppLogo /></NuxtLinkLocale>
+      <NuxtLinkLocale to="/" class="shrink-0" :aria-label="$t('nav.home')"><AppLogo :light="night" /></NuxtLinkLocale>
 
       <nav class="ms-6 hidden items-center gap-1 lg:flex" :aria-label="$t('nav.main')">
         <NuxtLinkLocale
           v-for="l in links"
           :key="l.to"
           :to="l.to"
-          class="rounded-full px-3.5 py-2 text-[0.94rem] font-medium text-ink-soft transition-colors hover:text-ink"
-          active-class="!text-sea"
+          class="rounded-full px-3.5 py-2 text-[0.94rem] font-medium transition-colors"
+          :class="night ? 'text-white/80 hover:text-white' : 'text-ink-soft hover:text-ink'"
+          :active-class="night ? '!text-tide' : '!text-sea'"
         >
           {{ $t(l.key) }}
         </NuxtLinkLocale>
@@ -46,16 +50,16 @@ onBeforeUnmount(() => {
 
       <div class="ms-auto flex items-center gap-1">
         <div class="hidden items-center gap-1 sm:flex">
-          <LangSwitch />
-          <ThemeToggle />
+          <LangSwitch :light="night" />
+          <ThemeToggle :light="night" />
         </div>
         <!-- Visibility lives on wrappers: AppButton's own inline-flex would beat a passed-in `hidden`. -->
         <div class="hidden sm:block">
           <ClientOnly>
-            <AppButton v-if="isLoggedIn" :to="homePath" variant="secondary" size="sm" icon="dashboard">
-              {{ me?.forwarder ? $t('nav.partner') : $t('nav.account') }}
+            <AppButton v-if="isLoggedIn" :to="homePath" :variant="night ? 'night' : 'secondary'" size="sm" icon="dashboard">
+              {{ me?.is_admin ? $t('nav.admin') : me?.forwarder ? $t('nav.partner') : $t('nav.account') }}
             </AppButton>
-            <AppButton v-else to="/login" variant="ghost" size="sm">{{ $t('nav.login') }}</AppButton>
+            <AppButton v-else to="/login" :variant="night ? 'night' : 'ghost'" size="sm">{{ $t('nav.login') }}</AppButton>
           </ClientOnly>
         </div>
         <div class="ms-1">
@@ -63,7 +67,8 @@ onBeforeUnmount(() => {
         </div>
         <button
           type="button"
-          class="grid size-11 place-items-center rounded-full text-ink hover:bg-sunken lg:hidden"
+          class="grid size-11 place-items-center rounded-full lg:hidden"
+          :class="night ? 'text-white hover:bg-white/10' : 'text-ink hover:bg-sunken'"
           :aria-label="$t('nav.menu')"
           :aria-expanded="menu"
           @click="menu = true"

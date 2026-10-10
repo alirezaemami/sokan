@@ -5,11 +5,17 @@ from frappe.utils import flt
 
 
 class SokanReview(Document):
-	"""A customer's rating of the forwarder they booked."""
+	"""A customer's rating of the forwarder they booked.
+
+	Starts Pending; a manager approves it before it is public or counts
+	toward the forwarder's rating.
+	"""
 
 	def validate(self):
 		if not 1 <= int(self.rating or 0) <= 5:
 			frappe.throw(_("Rating must be between 1 and 5."))
+		self.status = self.status or "Pending"
+		self.is_published = 1 if self.status == "Approved" else 0
 
 	def on_update(self):
 		refresh_rating(self.forwarder)

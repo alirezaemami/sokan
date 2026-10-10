@@ -39,8 +39,30 @@ bench start                                     # web server on :8000
 The frontend selects the site with an `X-Frappe-Site-Name` header, so it
 works on a multi-site bench whatever `default_site` is.
 
-Then in Desk: **Sokan Settings** (website URL, fees, auto-approve), and approve
-forwarders by setting **Sokan Forwarder → Status = Active**.
+#### Management
+
+Managers run Sokan from the website at `/admin`, never from Desk. Create the
+first one from the command line; add the rest in **Settings → Managers**:
+
+```bash
+bench --site sokan.local sokan-add-manager you@example.com --name "Your Name"
+```
+
+The admin portal covers: overview, forwarder approval (approve / reject /
+suspend, verified and featured flags, plan, wallet adjustments), requests,
+top-up approval, customers (block / unblock), review moderation, contact
+messages, the wallet ledger with CSV export, reports (funnel, revenue, lanes,
+modes, top forwarders) and settings (platform rules, plans, transport modes,
+managers).
+
+All of it goes through `sokan/api/admin.py`. Every endpoint checks the
+**Sokan Admin** role (or System Manager) first, writes are POST-only with the
+CSRF token, editable fields are allowlisted, and money only moves through the
+wallet ledger. The Sokan Admin role has no Desk access, so managers are
+Website Users.
+
+Reviews start as *Pending* and are public, and counted in ratings, only once a
+manager approves them. Editing a review sends it back to Pending.
 
 #### Frontend
 

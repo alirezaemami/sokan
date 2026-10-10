@@ -164,6 +164,7 @@ scheduler_events = {
 role_home_page = {
 	"Sokan Customer": "/account",
 	"Sokan Forwarder": "/partner",
+	"Sokan Admin": "/admin",
 }
 
 # ---------------

@@ -297,10 +297,52 @@ export interface CustomerRequestDetail {
   accepted_quote: string | null
   cancel_reason: string | null
   quotes: Quote[]
-  review: { rating: number; comment: string | null } | null
+  review: { rating: number; comment: string | null; status?: 'Pending' | 'Approved' | 'Rejected' } | null
 }
 
 export interface Country {
   name: string
   code: string
+}
+
+// ---------------------------------------------------------------- admin
+
+export type Row = Record<string, any>
+
+export interface AdminPaged<T = Row> extends Paged<T> {
+  counts?: Record<string, number>
+}
+
+export interface AdminOverview {
+  currency: string
+  kpis: {
+    forwarders_active: number
+    forwarders_total: number
+    customers: number
+    requests_open: number
+    requests_booked: number
+    requests_total: number
+    quotes: number
+    revenue_month: number
+    revenue_last_month: number
+    revenue_total: number
+    wallet_float: number
+  }
+  attention: { forwarders: number; topups: number; topups_amount: number; reviews: number; messages: number }
+  series: { date: string; requests: number; quotes: number; revenue: number }[]
+  recent_requests: Row[]
+  pending_forwarders: Row[]
+}
+
+export interface AdminReports {
+  from_date: string
+  to_date: string
+  currency: string
+  funnel: { published: number; leads: number; unlocks: number; quotes: number; booked: number }
+  revenue: Record<'unlocks' | 'quotes' | 'subscriptions' | 'topups' | 'bonuses' | 'refunds' | 'adjustments', number>
+  averages: { leads_per_request: number; quotes_per_request: number; booking_rate: number }
+  monthly: { month: string; revenue: number; topups: number; requests: number; booked: number }[]
+  lanes: { origin_country: string; destination_country: string; requests: number; booked: number }[]
+  modes: { mode: string; requests: number; booked: number }[]
+  top_forwarders: { name: string; company_name: string; country: string; quotes: number; won: number; unlocks: number; fees: number }[]
 }

@@ -13,10 +13,17 @@ export function useAuth() {
   const isLoggedIn = computed(() => Boolean(me.value?.user))
   const isCustomer = computed(() => Boolean(me.value?.customer))
   const isForwarder = computed(() => Boolean(me.value?.forwarder))
+  const isAdmin = computed(() => Boolean(me.value?.is_admin))
 
-  /** Where a user belongs after signing in. Forwarders first: it's their workplace. */
+  /** Where a user belongs after signing in: managers, then forwarders (their workplace), then shippers. */
   const homePath = computed(() =>
-    isForwarder.value ? localePath('/partner') : isCustomer.value ? localePath('/account') : localePath('/'),
+    isAdmin.value
+      ? localePath('/admin')
+      : isForwarder.value
+        ? localePath('/partner')
+        : isCustomer.value
+          ? localePath('/account')
+          : localePath('/'),
   )
 
   async function refresh() {
@@ -53,5 +60,5 @@ export function useAuth() {
     me.value = data
   }
 
-  return { me, isLoggedIn, isCustomer, isForwarder, homePath, refresh, ensure, login, logout, setMe }
+  return { me, isLoggedIn, isCustomer, isForwarder, isAdmin, homePath, refresh, ensure, login, logout, setMe }
 }

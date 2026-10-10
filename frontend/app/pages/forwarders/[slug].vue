@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// The profile opens on a night chart; the header switches to its light-on-night style.
+definePageMeta({ headerTone: 'night' })
+
 const route = useRoute()
 const api = useSokan()
 const fmt = useFormat()

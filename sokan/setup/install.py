@@ -10,7 +10,8 @@ import frappe
 from sokan.utils import ROLE_ADMIN, ROLE_CUSTOMER, ROLE_FORWARDER
 
 ROLES = [
-	(ROLE_ADMIN, 1),
+	# Managers work in the Nuxt admin portal; nobody needs Desk.
+	(ROLE_ADMIN, 0),
 	(ROLE_FORWARDER, 0),
 	(ROLE_CUSTOMER, 0),
 ]
