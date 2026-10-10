@@ -2,6 +2,7 @@
 
 import frappe
 from frappe import _
+from frappe.query_builder.functions import Count
 from frappe.rate_limiter import rate_limit
 from frappe.utils import cint, strip_html
 
@@ -174,7 +175,7 @@ def list_forwarders(
 			)
 		)
 
-	total = q.select(frappe.qb.functions.Count(Fwd.name)).run()[0][0]
+	total = q.select(Count(Fwd.name)).run()[0][0]
 	rows = (
 		q.select(*[Fwd[f] for f in FORWARDER_CARD_FIELDS])
 		.orderby(Plan.priority_listing, order=frappe.qb.desc)

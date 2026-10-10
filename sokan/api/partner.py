@@ -5,6 +5,7 @@ Flow for one request:  New lead → unlock (billed) → quote (billed) → accep
 
 import frappe
 from frappe import _
+from frappe.query_builder.functions import Count
 from frappe.utils import add_days, cint, flt, now_datetime, nowdate
 
 from sokan import billing
@@ -127,7 +128,7 @@ def list_leads(
 	if cint(only_open):
 		q = q.where(R.status == "Open")
 
-	total = q.select(frappe.qb.functions.Count(L.name)).run()[0][0]
+	total = q.select(Count(L.name)).run()[0][0]
 	rows = (
 		q.select(L.name, L.request, L.status, L.sent_on, L.seen_on, L.quote)
 		.orderby(L.sent_on, order=frappe.qb.desc)
