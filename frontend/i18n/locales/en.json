@@ -367,7 +367,40 @@
       "title1": "Your next shipment,",
       "title2": "better priced.",
       "subtitle": "It takes two minutes to post a request. Quotes start arriving soon after.",
-      "forwarder": "I'm a forwarder"
+      "forwarder": "I'm a forwarder",
+      "photoLabel": "Port of loading"
+    },
+    "reel": {
+      "eyebrow": "Sea · Air · Road · Rail",
+      "title": "Every mode. Every lane.",
+      "subtitle": "Containers, pallets, parcels or heavy lift: one request reaches the forwarders who move it."
+    },
+    "story": {
+      "eyebrow": "Why shippers use Sokan",
+      "title": "Freight pricing without the chasing",
+      "subtitle": "No more emailing ten forwarders and waiting. Here is what changes.",
+      "s1": {
+        "title": "All-in prices, line by line",
+        "text": "Every quote breaks down freight, origin, destination and surcharges, so you compare like with like and nothing appears on the invoice later."
+      },
+      "s2": {
+        "title": "Only checked forwarders",
+        "text": "We review each company before it can quote. Ratings come only from shippers who actually booked them."
+      },
+      "s3": {
+        "title": "Book in one tap",
+        "text": "Accept the offer that fits. You both get each other's details at once, and the other offers close automatically."
+      },
+      "card": {
+        "quote": "Quote breakdown",
+        "freight": "Ocean freight",
+        "origin": "Origin charges",
+        "docs": "Documents",
+        "total": "Total",
+        "verified": "Verified forwarder",
+        "booked": "Booked with BlueWake Freight",
+        "bookedText": "Contact details shared with both sides"
+      }
     }
   },
   "faq": {
@@ -1387,5 +1420,18 @@
       "removeText": "{name} loses access to the management area. Their account stays."
     },
     "chartEmpty": "No activity in this period yet"
+  },
+  "photos": {
+    "port": "Container terminal seen from above, stacks of containers and gantry cranes",
+    "ship": "Fully loaded container ship under way at sea",
+    "cranes": "Container ship being loaded under port cranes",
+    "plane": "Aircraft wing above the clouds at sunrise",
+    "train": "Freight locomotive pulling tank wagons",
+    "truck": "Semi-truck on an open highway",
+    "highway": "Truck driving through a mountain pass",
+    "parcel": "Courier handing over a parcel",
+    "warehouse": "Warehouse racks full of boxed goods",
+    "night": "Container yard from above at night",
+    "contract": "Hand signing a freight contract"
   }
 }

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { TransportMode } from '~/types/sokan'
+import { MODE_PHOTOS } from '~/utils/photos'
 
+/** One photo card per transport mode; each opens the request form pre-set to that mode. */
 defineProps<{ modes: TransportMode[] }>()
 const localePath = useLocalePath()
 </script>
@@ -14,21 +16,30 @@ const localePath = useLocalePath()
         <NuxtLink
           v-for="(m, i) in modes"
           :key="m.name"
-          v-reveal="(i % 4) * 70"
           :to="{ path: localePath('/get-quote'), query: { mode: m.name } }"
-          class="card group flex flex-col p-5 transition-all duration-300 hover:-translate-y-1 hover:border-sea/50 sm:p-6"
+          class="card group flex flex-col overflow-hidden p-0 transition-[translate,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-sea/50 hover:shadow-xl"
         >
-          <div class="flex items-start justify-between gap-2">
-            <span class="grid size-11 place-items-center rounded-full border border-line-strong text-ink transition-all duration-500 group-hover:border-helm group-hover:bg-helm group-hover:text-helm-ink">
-              <AppIcon :name="m.icon" :size="20" />
+          <div v-reveal="(i % 4) * 90" class="photo-wipe relative">
+            <ChartPhoto
+              :name="MODE_PHOTOS[m.code] || 'port'"
+              :alt="$t(`photos.${MODE_PHOTOS[m.code] || 'port'}`)"
+              sizes="(min-width: 1024px) 300px, 50vw"
+              class="aspect-[4/3]"
+              img-class="transition-transform duration-[1.2s] ease-[var(--ease-spring)] group-hover:scale-110"
+            />
+            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-night-950/55 to-transparent" />
+            <span class="absolute start-3 bottom-3 grid size-10 place-items-center rounded-full bg-surface/90 text-ink shadow-md backdrop-blur transition-colors duration-500 group-hover:bg-buoy group-hover:text-white">
+              <AppIcon :name="m.icon" :size="18" />
             </span>
-            <span class="chart-label text-faint">{{ $t(`modes.${m.code}.category`) }}</span>
+            <span class="chart-label absolute end-3 top-3 rounded-full bg-night-950/55 px-2 py-0.5 text-white backdrop-blur">{{ $t(`modes.${m.code}.category`) }}</span>
           </div>
-          <h3 class="mt-5 font-semibold sm:text-lg">{{ $t(`modes.${m.code}.name`) }}</h3>
-          <p class="mt-1.5 line-clamp-3 text-xs leading-relaxed text-muted sm:text-sm">{{ $t(`modes.${m.code}.desc`) }}</p>
-          <span class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-semibold text-sea">
-            {{ $t('home.modes.quote') }} <AppIcon name="arrow-right" :size="14" flip class="transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
-          </span>
+          <div class="flex flex-1 flex-col p-4 sm:p-5">
+            <h3 class="font-semibold sm:text-lg">{{ $t(`modes.${m.code}.name`) }}</h3>
+            <p class="mt-1.5 line-clamp-3 text-xs leading-relaxed text-muted sm:text-sm">{{ $t(`modes.${m.code}.desc`) }}</p>
+            <span class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-semibold text-sea">
+              {{ $t('home.modes.quote') }} <AppIcon name="arrow-right" :size="14" flip class="transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
+            </span>
+          </div>
         </NuxtLink>
       </div>
     </div>

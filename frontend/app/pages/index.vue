@@ -22,8 +22,10 @@ useSchemaOrg([
     <HeroSection :modes="modes" />
     <LiveTicker :live="data?.live ?? []" />
     <StatsBand v-if="data" :stats="data.stats" :mode-count="modes.length" />
+    <PhotoReel />
     <HowItWorks />
     <ModesGrid v-if="modes.length" :modes="modes" />
+    <StorySection />
     <FeatureBento />
 
     <section v-if="data?.featured?.length" class="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">

@@ -307,6 +307,40 @@
   animation-delay: var(--d, 0ms);
 }
 
+/* Photo unveiled like a chart being unrolled: a wipe from the bottom,
+   driven by v-reveal. The mask goes on the children, never on the element
+   v-reveal watches: a fully clipped element counts as invisible to
+   IntersectionObserver, so it would never be revealed. Server markup (no
+   data-reveal) shows everything whole. */
+.photo-wipe[data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+.photo-wipe[data-reveal] > * {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.1s var(--ease-spring);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.photo-wipe[data-reveal='in'] > * {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Very slow drift across a photo, like a camera on a long lens. */
+@keyframes drift {
+  from { transform: scale(1.04) translate3d(0, 0, 0); }
+  to { transform: scale(1.12) translate3d(-1.5%, -1%, 0); }
+}
+.drift {
+  animation: drift 24s ease-in-out infinite alternate;
+}
+
+/* Moves with useParallax(); oversized so the edges never show. */
+.parallax-layer {
+  translate: 0 var(--parallax, 0px);
+  scale: 1.18;
+  will-change: translate;
+}
+
 .page-enter-active,
 .page-leave-active {
   transition: opacity 0.25s ease, transform 0.25s var(--ease-spring);
@@ -354,7 +388,11 @@
   /* Entrances carry stagger delays; drop them entirely so the page is
      static and complete at once, not merely fast. */
   .rise,
-  .plot {
+  .plot,
+  .drift {
     animation: none !important;
+  }
+  .photo-wipe[data-reveal] > * {
+    clip-path: none;
   }
 }

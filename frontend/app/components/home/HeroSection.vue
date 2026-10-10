@@ -73,8 +73,21 @@ function start() {
         </ul>
       </div>
 
-      <div class="rise min-w-0" style="--d: 180ms">
-        <HeroVisual />
+      <div class="rise relative min-w-0" style="--d: 180ms">
+        <!-- Real freight behind the chart: a terminal from above and a ship under way, pinned like prints on a chart table. -->
+        <div class="pointer-events-none absolute -top-10 -end-4 hidden w-[58%] sm:block lg:-top-14 lg:-end-10" aria-hidden="true">
+          <div class="animate-float rotate-[4deg] overflow-hidden rounded-3xl border-4 border-surface shadow-2xl" style="animation-duration: 9s">
+            <ChartPhoto name="port" alt="" sizes="(min-width: 1024px) 340px, 50vw" class="aspect-[4/3]" img-class="drift" />
+          </div>
+        </div>
+        <div class="pointer-events-none absolute -bottom-10 -start-6 hidden w-[42%] lg:block" aria-hidden="true">
+          <div class="animate-float -rotate-[5deg] overflow-hidden rounded-2xl border-4 border-surface shadow-xl" style="animation-duration: 11s; animation-delay: -4s">
+            <ChartPhoto name="ship" alt="" sizes="240px" class="aspect-[4/3]" />
+          </div>
+        </div>
+        <div class="relative">
+          <HeroVisual />
+        </div>
       </div>
     </div>
   </section>
