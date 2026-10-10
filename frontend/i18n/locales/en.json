@@ -1,0 +1,1028 @@
+{
+  "seo": {
+    "brand": "Sokan",
+    "homeTitle": "Sokan — Compare freight quotes from verified forwarders",
+    "homeDescription": "Post one shipment request and receive competing quotes from verified freight forwarders for sea, air, road and rail. Free for shippers.",
+    "defaultDescription": "Sokan is the freight marketplace where shippers post one request and verified forwarders compete with real quotes."
+  },
+  "nav": {
+    "home": "Home",
+    "main": "Main navigation",
+    "howItWorks": "How it works",
+    "forwarders": "Forwarders",
+    "forForwarders": "For forwarders",
+    "pricing": "Pricing",
+    "about": "About",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "getQuote": "Get quotes",
+    "getQuoteFree": "Get free quotes",
+    "login": "Sign in",
+    "logout": "Sign out",
+    "dashboard": "Dashboard",
+    "account": "My shipments",
+    "partner": "Partner portal",
+    "menu": "Open menu",
+    "theme": "Toggle dark mode"
+  },
+  "common": {
+    "add": "Add",
+    "all": "All",
+    "back": "Back",
+    "cancel": "Cancel",
+    "close": "Close",
+    "continue": "Continue",
+    "edit": "Edit",
+    "from": "From",
+    "to": "To",
+    "learnMore": "Learn more",
+    "new": "New",
+    "next": "Next",
+    "previous": "Previous",
+    "no": "No",
+    "yes": "Yes",
+    "noResults": "No results",
+    "optional": "Optional",
+    "pageOf": "Page {page} of {pages}",
+    "pagination": "Pagination",
+    "remove": "Remove",
+    "save": "Save",
+    "saveChanges": "Save changes",
+    "saved": "Saved",
+    "search": "Search…",
+    "selectCountry": "Select a country",
+    "submit": "Submit",
+    "update": "Update",
+    "verified": "Verified",
+    "view": "View",
+    "viewAll": "View all"
+  },
+  "units": {
+    "kg": "kg",
+    "t": "t",
+    "cbm": "m³",
+    "days": "days"
+  },
+  "fields": {
+    "fullName": "Full name",
+    "yourName": "Your name",
+    "email": "Email",
+    "workEmail": "Work email",
+    "phone": "Phone",
+    "company": "Company",
+    "companyName": "Company name",
+    "country": "Country",
+    "city": "City",
+    "address": "Address",
+    "website": "Website",
+    "license": "Licence / registration no.",
+    "password": "Password",
+    "subject": "Subject",
+    "message": "Message",
+    "currency": "Currency"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "rateLimited": "Too many attempts. Please wait a little and try again.",
+    "notFoundTitle": "This page sailed away",
+    "notFoundText": "The page you're looking for doesn't exist or has moved.",
+    "serverTitle": "Rough seas on our side",
+    "serverText": "We hit an unexpected problem. Please try again in a moment.",
+    "backHome": "Back to home"
+  },
+  "status": {
+    "Draft": "Draft",
+    "Open": "Open",
+    "Booked": "Booked",
+    "Expired": "Expired",
+    "Cancelled": "Cancelled",
+    "Submitted": "Submitted",
+    "Accepted": "Accepted",
+    "Rejected": "Rejected",
+    "Withdrawn": "Withdrawn",
+    "Pending": "Pending",
+    "Approved": "Approved",
+    "Active": "Active",
+    "Suspended": "Suspended"
+  },
+  "leadStatus": {
+    "New": "New",
+    "Unlocked": "Unlocked",
+    "Quoted": "Quoted",
+    "Declined": "Declined",
+    "Closed": "Closed"
+  },
+  "modes": {
+    "sea_fcl": {
+      "name": "Sea FCL",
+      "desc": "Full container loads — book whole 20' or 40' containers."
+    },
+    "sea_lcl": {
+      "name": "Sea LCL",
+      "desc": "Share container space and pay only for the cubic metres you use."
+    },
+    "air": {
+      "name": "Air freight",
+      "desc": "The fastest way to move urgent, high-value or perishable cargo."
+    },
+    "road_ftl": {
+      "name": "Road FTL",
+      "desc": "A full truck, door to door, across borders."
+    },
+    "road_ltl": {
+      "name": "Road LTL",
+      "desc": "Groupage trucking for pallets and smaller loads."
+    },
+    "rail": {
+      "name": "Rail freight",
+      "desc": "Cost-efficient overland transport, e.g. China to Europe."
+    },
+    "courier": {
+      "name": "Express courier",
+      "desc": "Parcels and documents delivered door to door."
+    },
+    "project": {
+      "name": "Project cargo",
+      "desc": "Oversized, heavy-lift and breakbulk shipments."
+    }
+  },
+  "categories": {
+    "General Cargo": "General cargo",
+    "Dangerous Goods": "Dangerous goods",
+    "Temperature Controlled": "Temperature controlled",
+    "Oversized / Heavy Lift": "Oversized / heavy lift",
+    "Fragile": "Fragile",
+    "Perishable": "Perishable",
+    "Vehicles": "Vehicles",
+    "Livestock": "Livestock",
+    "High Value": "High value"
+  },
+  "packages": {
+    "Pallet": "Pallet",
+    "Carton": "Carton",
+    "Crate": "Crate",
+    "Drum": "Drum",
+    "Bag": "Bag",
+    "Bundle": "Bundle",
+    "Roll": "Roll",
+    "Loose": "Loose",
+    "Other": "Other"
+  },
+  "chargeGroups": {
+    "Freight": "Freight",
+    "Origin": "Origin charges",
+    "Destination": "Destination charges",
+    "Customs": "Customs",
+    "Insurance": "Insurance",
+    "Surcharge": "Surcharge",
+    "Other": "Other"
+  },
+  "bases": {
+    "Per Shipment": "Per shipment",
+    "Per Container": "Per container",
+    "Per KG": "Per kg",
+    "Per CBM": "Per m³",
+    "Per W/M": "Per W/M",
+    "Per Package": "Per package",
+    "Per Document": "Per document"
+  },
+  "txn": {
+    "Top-up": "Top-up",
+    "Request Unlock": "Request unlocked",
+    "Quote Fee": "Quote fee",
+    "Subscription": "Plan subscription",
+    "Signup Bonus": "Welcome credit",
+    "Refund": "Refund",
+    "Adjustment": "Adjustment"
+  },
+  "payment": {
+    "Bank Transfer": "Bank transfer",
+    "Card": "Card",
+    "Online Gateway": "Online payment",
+    "Cash": "Cash"
+  },
+  "services": {
+    "customs": "Customs clearance",
+    "insurance": "Insurance",
+    "warehousing": "Warehousing",
+    "packing": "Packing"
+  },
+  "home": {
+    "hero": {
+      "badge": "New",
+      "eyebrow": "The freight marketplace for global trade",
+      "title1": "One request.",
+      "titleHighlight": "Every forwarder competes.",
+      "subtitle": "Describe your shipment once. Verified freight forwarders send you real, all-in quotes — you compare side by side and book the best one. Free for shippers.",
+      "from": "From country",
+      "to": "To country",
+      "cta": "Get quotes",
+      "trust1": "Free for shippers",
+      "trust2": "Verified forwarders only",
+      "trust3": "Quotes within hours"
+    },
+    "visual": {
+      "live": "Request live",
+      "example": "Example",
+      "origin": "Shanghai",
+      "destination": "Hamburg",
+      "commodity": "Furniture",
+      "best": "Best price"
+    },
+    "live": {
+      "title": "Live requests on Sokan",
+      "popular": "Popular trade lanes",
+      "quotes": "{n} quotes"
+    },
+    "stats": {
+      "forwarders": "Verified forwarders",
+      "requests": "Shipments requested",
+      "quotes": "Quotes delivered",
+      "countries": "Countries served",
+      "costForShippers": "Cost for shippers, always",
+      "modes": "Transport modes covered",
+      "alwaysOn": "Requests go out instantly",
+      "private": "Your contact details stay private"
+    },
+    "how": {
+      "eyebrow": "How it works",
+      "title": "From request to booking in four steps",
+      "subtitle": "No more emailing ten forwarders and chasing replies. Sokan does the legwork.",
+      "tab": {
+        "shippers": "For shippers",
+        "forwarders": "For forwarders"
+      },
+      "s1": {
+        "title": "Describe your shipment",
+        "text": "Route, cargo and dates in a two-minute guided form."
+      },
+      "s2": {
+        "title": "Forwarders are notified",
+        "text": "Every matching, verified forwarder receives your request instantly."
+      },
+      "s3": {
+        "title": "Compare quotes",
+        "text": "All-in prices, transit times and ratings, side by side."
+      },
+      "s4": {
+        "title": "Book with confidence",
+        "text": "Accept the best offer and get the forwarder's direct contact."
+      },
+      "f1": {
+        "title": "Receive matching requests",
+        "text": "Only shipments on your modes and lanes reach your inbox."
+      },
+      "f2": {
+        "title": "Unlock what you want",
+        "text": "Preview for free, pay a small fee only to open full details."
+      },
+      "f3": {
+        "title": "Send a priced quote",
+        "text": "Build a clean, itemised quote in under a minute."
+      },
+      "f4": {
+        "title": "Win new customers",
+        "text": "Accepted quotes become bookings and lasting relationships."
+      },
+      "ctaShipper": "Start a request",
+      "ctaForwarder": "Join as a forwarder"
+    },
+    "modes": {
+      "eyebrow": "Every mode",
+      "title": "Whatever you ship, however it moves",
+      "subtitle": "Sea, air, road, rail, courier and project cargo — one request flow for all of them.",
+      "quote": "Get a quote"
+    },
+    "features": {
+      "eyebrow": "Why Sokan",
+      "title": "Built to make freight buying fair and fast",
+      "subtitle": "Transparency for shippers, qualified demand for forwarders.",
+      "compare": {
+        "title": "Real quotes, compared side by side",
+        "text": "Every offer shows the all-in price, a full charge breakdown, transit time and validity — so you compare like for like.",
+        "quote": "Quote {n}",
+        "best": "Best"
+      },
+      "verified": {
+        "title": "Verified network",
+        "text": "Forwarders are reviewed before they can quote, and rated by real customers."
+      },
+      "private": {
+        "title": "Private by default",
+        "text": "Your identity is shared only with forwarders who commit to your request."
+      },
+      "fast": {
+        "title": "Quotes in hours",
+        "text": "Requests reach every matching forwarder the moment you publish."
+      },
+      "reviews": {
+        "title": "Honest reviews",
+        "text": "Only customers who booked can rate a forwarder."
+      },
+      "free": {
+        "title": "Free for shippers",
+        "text": "No fees, no commission, no catch. Forwarders fund the platform."
+      }
+    },
+    "featured": {
+      "eyebrow": "Top rated",
+      "title": "Forwarders shippers trust"
+    },
+    "forwarders": {
+      "eyebrow": "For freight forwarders",
+      "title": "A steady flow of real shipments",
+      "subtitle": "Stop cold-calling. Get qualified requests on your lanes, quote in a minute and win customers who are ready to book.",
+      "cta": "Join the network",
+      "p1": {
+        "title": "Qualified demand",
+        "text": "Real shipments with real dates."
+      },
+      "p2": {
+        "title": "Your lanes only",
+        "text": "Filter by mode and country coverage."
+      },
+      "p3": {
+        "title": "Pay per lead",
+        "text": "Free previews, small fee to unlock."
+      },
+      "p4": {
+        "title": "Build reputation",
+        "text": "Reviews and a public profile."
+      }
+    },
+    "final": {
+      "title1": "Your next shipment,",
+      "title2": "better priced.",
+      "subtitle": "It takes two minutes to post a request. Quotes start arriving soon after.",
+      "forwarder": "I'm a forwarder"
+    }
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Questions, answered",
+    "seoTitle": "Frequently asked questions",
+    "seoDescription": "How Sokan works for shippers and freight forwarders: pricing, privacy, quotes and bookings.",
+    "shippers": "For shippers",
+    "general": {
+      "items": [
+        {
+          "q": "Is Sokan really free for shippers?",
+          "a": "Yes. Posting requests, receiving quotes and booking are free for shippers. Forwarders pay a small fee to access requests, which is how Sokan is funded."
+        },
+        {
+          "q": "Who sees my request?",
+          "a": "Verified forwarders who handle your transport mode and lane see the route and cargo summary. Your name, company and contact details are only revealed to forwarders who unlock the request."
+        },
+        {
+          "q": "How quickly will I get quotes?",
+          "a": "Requests are sent to matching forwarders the moment you publish. Most shippers receive their first quotes within a few hours."
+        },
+        {
+          "q": "Am I obliged to accept a quote?",
+          "a": "No. You can compare quotes, ask questions and decide not to book. Unused requests simply expire."
+        },
+        {
+          "q": "Are the prices final?",
+          "a": "Quotes are itemised and include a validity date. Final pricing can depend on exact cargo details and carrier rates — always confirm inclusions with the forwarder before shipping."
+        },
+        {
+          "q": "What can I ship?",
+          "a": "Anything legal: general cargo, dangerous goods, temperature-controlled, oversized and project cargo, vehicles and more, by sea, air, road, rail or courier."
+        }
+      ]
+    },
+    "forwarders": {
+      "title": "For forwarders",
+      "items": [
+        {
+          "q": "How does billing work?",
+          "a": "Sokan is prepaid. You top up a wallet and pay a small fee when you unlock a request's full details, and another when you submit a quote. Every plan includes free unlocks and quotes each month."
+        },
+        {
+          "q": "What does unlocking give me?",
+          "a": "Full shipment details — exact addresses, packing list, notes and attachments — plus the customer's name and contact details."
+        },
+        {
+          "q": "Can I choose which requests I receive?",
+          "a": "Yes. You receive requests only for the transport modes you offer and, optionally, only for the countries you cover."
+        },
+        {
+          "q": "How do I get verified?",
+          "a": "Complete your company profile and licence details. Our team reviews every forwarder before activation and awards the verified badge after checking your documents."
+        },
+        {
+          "q": "Can I change plans?",
+          "a": "Any time from your wallet. Upgrades take effect immediately; the monthly fee is charged from your wallet."
+        }
+      ]
+    }
+  },
+  "how": {
+    "seoTitle": "How Sokan works",
+    "seoDescription": "Post a freight request, get competing quotes from verified forwarders, compare and book — step by step.",
+    "title": "Freight buying, without the back-and-forth",
+    "subtitle": "One request replaces dozens of emails and phone calls. Here's exactly what happens.",
+    "detailTitle": "What happens behind the scenes",
+    "d1": {
+      "title": "You describe the shipment",
+      "text": "Choose the transport mode, route and dates, then add cargo details — containers, pallets or just total weight. Sokan calculates chargeable weight for you."
+    },
+    "d2": {
+      "title": "We route it to the right forwarders",
+      "text": "Your request goes to every active, verified forwarder that handles your mode and covers your lane. They see the route and cargo — not who you are."
+    },
+    "d3": {
+      "title": "Forwarders unlock and quote",
+      "text": "Interested forwarders unlock your full details and send an itemised quote with transit time, validity and inclusions. You're notified as each one arrives."
+    },
+    "d4": {
+      "title": "You compare and book",
+      "text": "Quotes are ranked by price with the fastest option highlighted. Accept one and you both get each other's direct contact to finalise the booking."
+    },
+    "d5": {
+      "title": "Rate the experience",
+      "text": "After booking, leave a review. Ratings help other shippers choose — and reward the forwarders who deliver."
+    }
+  },
+  "directory": {
+    "seoTitle": "Freight forwarder directory",
+    "seoDescription": "Browse verified freight forwarders by transport mode and country. See ratings, services and coverage, then request a quote.",
+    "eyebrow": "Directory",
+    "title": "Find a freight forwarder",
+    "subtitle": "Verified companies, rated by the shippers who booked them.",
+    "searchPlaceholder": "Company, city or speciality",
+    "allModes": "All modes",
+    "anyCountry": "Any country",
+    "count": "{n} forwarders",
+    "emptyTitle": "No forwarders match",
+    "emptyText": "Try a different filter — or post a request and let forwarders come to you.",
+    "emptyCta": "Post a request",
+    "joinTitle": "Are you a freight forwarder?",
+    "joinText": "Get listed and start receiving shipment requests on your lanes."
+  },
+  "profile": {
+    "seoTitle": "{name} — freight forwarder in {place}",
+    "seoFallback": "{name} on Sokan: services, coverage and verified customer reviews.",
+    "back": "All forwarders",
+    "since": "Since {year}",
+    "requestQuote": "Request a quote",
+    "about": "About",
+    "services": "Services",
+    "reviews": "Customer reviews",
+    "noReviews": "No reviews yet.",
+    "quotesSent": "Quotes sent",
+    "winRate": "Win rate",
+    "coverage": "Countries covered",
+    "worldwide": "Worldwide",
+    "certifications": "Certifications",
+    "ctaTitle": "Ship with the best price",
+    "ctaText": "Post one request and get quotes from this forwarder and others."
+  },
+  "forForwarders": {
+    "seoTitle": "Get freight leads — join Sokan as a forwarder",
+    "seoDescription": "Receive real shipment requests on your lanes, quote in a minute and win new customers. Pay only for the leads you open.",
+    "eyebrow": "For freight forwarders",
+    "title": "Grow your book of business",
+    "subtitle": "Sokan sends you real shipments from shippers who are ready to book — on the modes and lanes you choose.",
+    "b1": {
+      "title": "Requests come to you",
+      "text": "Every new shipment on your modes and lanes lands in your partner inbox and email."
+    },
+    "b2": {
+      "title": "Only relevant leads",
+      "text": "Choose your transport modes and countries. No noise, no irrelevant enquiries."
+    },
+    "b3": {
+      "title": "Preview before paying",
+      "text": "See route, cargo, dates and competition for free. Unlock only what's worth quoting."
+    },
+    "b4": {
+      "title": "Simple prepaid wallet",
+      "text": "Top up once, pay per unlock and quote. Free allowance every month on every plan."
+    },
+    "b5": {
+      "title": "Earn a reputation",
+      "text": "Customers who book you leave reviews that appear on your public profile."
+    },
+    "b6": {
+      "title": "Track your win rate",
+      "text": "See quotes sent, won and your conversion at a glance."
+    },
+    "billing": {
+      "free": {
+        "title": "Preview for free",
+        "text": "Every matching request appears in your inbox with route, cargo and dates."
+      },
+      "unlock": {
+        "title": "Unlock to see everything",
+        "text": "A small fee reveals exact details and the customer's contact. Monthly free unlocks included."
+      },
+      "quote": {
+        "title": "Quote and win",
+        "text": "Send an itemised quote. Revising it later is always free."
+      }
+    }
+  },
+  "pricing": {
+    "seoTitle": "Pricing for freight forwarders",
+    "seoDescription": "Simple, prepaid pricing for forwarders: pay per unlocked request and quote, with free monthly allowances. Always free for shippers.",
+    "heroTitle": "Simple, pay-as-you-grow pricing",
+    "heroSubtitle": "Shippers never pay. Forwarders pay only for the requests they choose to open.",
+    "title": "Plans for every size of forwarder",
+    "subtitle": "Start free. Upgrade when you're quoting every day.",
+    "shippersFree": "Shippers: Sokan is 100% free",
+    "shippersFreeText": "No fees to post requests, receive quotes or book.",
+    "free": "Free",
+    "month": "month",
+    "unlockFee": "Per unlock",
+    "quoteFee": "Per quote",
+    "included": "{views} free unlocks and {quotes} free quotes every month",
+    "start": "Get started",
+    "current": "Current plan",
+    "calcTitle": "Estimate your monthly cost",
+    "calcText": "Move the sliders to match your expected activity.",
+    "calcUnlocks": "Requests unlocked per month",
+    "calcQuotes": "Quotes sent per month",
+    "bestForYou": "Best value for you"
+  },
+  "about": {
+    "seoTitle": "About Sokan",
+    "title": "We put shippers at the helm",
+    "subtitle": "Sokan — Persian for “helm” — gives businesses control over how their freight is bought.",
+    "storyTitle": "Why we built Sokan",
+    "story1": "Getting a freight price still means emailing a list of forwarders, waiting days for replies and comparing quotes that never line up. Small shippers get ignored; good forwarders struggle to reach new customers.",
+    "story2": "Sokan fixes both sides: shippers post once and receive comparable, itemised quotes; forwarders receive qualified demand on their lanes and pay only for leads they choose.",
+    "v1": {
+      "title": "Transparency",
+      "text": "Itemised quotes and honest reviews make prices comparable."
+    },
+    "v2": {
+      "title": "Trust",
+      "text": "Every forwarder is reviewed; every review comes from a real booking."
+    },
+    "v3": {
+      "title": "Fairness",
+      "text": "Free for shippers, pay-per-lead for forwarders. No commission on your freight."
+    }
+  },
+  "contact": {
+    "seoTitle": "Contact Sokan",
+    "title": "Talk to us",
+    "subtitle": "Questions about a shipment, joining as a forwarder or partnering with Sokan? We reply within one business day.",
+    "email": {
+      "title": "Email",
+      "text": "Write to the support team — use the form and we'll reply by email."
+    },
+    "chat": {
+      "title": "Partnerships",
+      "text": "Associations, networks and integrators — let's talk."
+    },
+    "hours": {
+      "title": "Hours",
+      "text": "Sunday to Thursday, 9:00–18:00."
+    },
+    "iAm": "I am a",
+    "audience": {
+      "Shipper": "Shipper / importer / exporter",
+      "Forwarder": "Freight forwarder",
+      "Partner": "Partner",
+      "Other": "Other"
+    },
+    "send": "Send message",
+    "sentTitle": "Message sent",
+    "sentText": "Thanks — we'll get back to you shortly."
+  },
+  "legal": {
+    "updated": "Last updated: October 2026",
+    "terms": {
+      "title": "Terms of service",
+      "intro": "These terms govern your use of Sokan, a marketplace connecting shippers with independent freight forwarders.",
+      "s1": {
+        "title": "The service",
+        "text": "Sokan provides a platform for shippers to publish freight requests and for forwarders to submit quotes. Sokan is not a carrier or freight forwarder and is not a party to any transport contract concluded between users."
+      },
+      "s2": {
+        "title": "Accounts",
+        "text": "You are responsible for the accuracy of information you provide and for keeping your credentials secure. Forwarders must hold all licences required to offer their services."
+      },
+      "s3": {
+        "title": "Fees",
+        "text": "Sokan is free for shippers. Forwarders pay the fees of their selected plan from a prepaid wallet. Fees for unlocked requests and submitted quotes are non-refundable except where stated."
+      },
+      "s4": {
+        "title": "Conduct",
+        "text": "Users must not post false requests, misleading quotes or use contact details obtained on Sokan for unsolicited marketing."
+      },
+      "s5": {
+        "title": "Liability",
+        "text": "Transport services are provided by forwarders under their own terms. Sokan is not liable for the performance of any shipment or for losses arising from it."
+      }
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "intro": "This policy explains what data Sokan collects, why, and how we protect it.",
+      "s1": {
+        "title": "What we collect",
+        "text": "Account details (name, email, phone, company), shipment requests and quotes, and technical data needed to run the service."
+      },
+      "s2": {
+        "title": "How requests are shared",
+        "text": "Matching forwarders see your route and cargo summary. Your identity and contact details are shared only with forwarders who unlock your request, and with the forwarder you book."
+      },
+      "s3": {
+        "title": "Why we use data",
+        "text": "To deliver requests and quotes, notify you of activity, prevent abuse and improve Sokan. We never sell personal data."
+      },
+      "s4": {
+        "title": "Retention",
+        "text": "We keep data while your account is active and as required by law. You can ask us to delete your account at any time."
+      },
+      "s5": {
+        "title": "Your rights",
+        "text": "You may access, correct or delete your personal data. Contact us through the contact page for any privacy request."
+      }
+    }
+  },
+  "wizard": {
+    "seoTitle": "Get freight quotes",
+    "seoDescription": "Request freight quotes for sea, air, road and rail shipments. Compare offers from verified forwarders — free.",
+    "eyebrow": "Free quote request",
+    "title": "Tell us about your shipment",
+    "subtitle": "Two minutes now saves days of back-and-forth. Verified forwarders reply with real quotes.",
+    "steps": {
+      "route": "Route",
+      "cargo": "Cargo",
+      "services": "Services",
+      "review": "Review"
+    },
+    "stepOf": "Step {n} of {total}",
+    "required": "Required",
+    "sameplace": "Origin and destination can't be the same place.",
+    "addContainer": "Add at least one container.",
+    "addWeight": "Add your packages or at least the total weight.",
+    "fixErrors": "Please complete the highlighted fields.",
+    "fileTooBig": "Files must be under 10 MB.",
+    "route": {
+      "title": "Where is it going?",
+      "subtitle": "Pick a transport mode and the two ends of the journey.",
+      "origin": "Origin",
+      "destination": "Destination",
+      "port": "Port / airport",
+      "pickup": "Door pickup needed",
+      "pickupAddress": "Pickup address",
+      "delivery": "Door delivery needed",
+      "deliveryAddress": "Delivery address",
+      "readyDate": "Cargo ready date",
+      "incoterm": "Incoterm",
+      "incotermHint": "Defines who pays what. Not sure? Leave it.",
+      "notSure": "Not sure"
+    },
+    "cargo": {
+      "title": "What are you shipping?",
+      "subtitle": "The more precise, the more accurate the quotes.",
+      "commodity": "Commodity",
+      "commodityPh": "e.g. Office furniture, auto parts, textiles",
+      "category": "Cargo type",
+      "hs": "HS code",
+      "un": "UN number",
+      "temp": "Temperature range",
+      "containers": "Containers",
+      "packages": "Packages",
+      "type": "Type",
+      "qty": "Qty",
+      "weightPer": "Weight each (kg)",
+      "l": "L (cm)",
+      "w": "W (cm)",
+      "h": "H (cm)",
+      "addLine": "Add another line",
+      "totalsOnly": "I only know the totals",
+      "totalWeight": "Total weight",
+      "totalVolume": "Total volume",
+      "stackable": "Cargo is stackable",
+      "value": "Cargo value",
+      "valueHint": "Helps forwarders quote insurance."
+    },
+    "services": {
+      "title": "Anything else you need?",
+      "subtitle": "Add services and context so forwarders can quote all-in.",
+      "need_customs_clearance": {
+        "title": "Customs clearance",
+        "text": "Export and/or import formalities handled for you."
+      },
+      "need_insurance": {
+        "title": "Cargo insurance",
+        "text": "Cover your goods against loss and damage."
+      },
+      "need_warehousing": {
+        "title": "Warehousing",
+        "text": "Storage before or after transport."
+      },
+      "need_packing": {
+        "title": "Packing & crating",
+        "text": "Professional packing for safe transit."
+      },
+      "quoteCurrency": "Preferred quote currency",
+      "deadline": "Accept quotes until",
+      "deadlineHint": "Default: 14 days",
+      "notes": "Notes for forwarders",
+      "notesPh": "Anything special? Loading equipment, delivery windows, documents…",
+      "attach": "Attach a file",
+      "attachHint": "Packing list, MSDS, drawings — PDF, image or Office, up to 10 MB."
+    },
+    "review": {
+      "title": "Review and send",
+      "subtitle": "Check the summary, then publish your request to matching forwarders.",
+      "ready": "ready",
+      "newAccount": "New to Sokan",
+      "haveAccount": "I have an account",
+      "accountWhy": "Create a free account to receive and compare your quotes.",
+      "loginWhy": "Sign in to send this request from your account.",
+      "signedInAs": "Sending as {name}",
+      "privacy": "Your name and contact details are only shown to forwarders who unlock your request."
+    },
+    "summary": "Shipment summary",
+    "grossWeight": "Gross weight",
+    "volume": "Volume",
+    "chargeable": "Chargeable weight",
+    "units": "Units",
+    "why1": "Free — no fees, no commitment",
+    "why2": "Only verified forwarders can quote",
+    "why3": "Compare all-in prices side by side",
+    "submit": "Send request",
+    "successTitle": "Your request is live!",
+    "successText": "We've sent it to {n} matching forwarders. You'll get an email as each quote arrives.",
+    "reviewTitle": "Request received",
+    "reviewText": "Our team will review it shortly and send it to matching forwarders.",
+    "reference": "Reference: {ref}",
+    "track": "Track quotes",
+    "another": "New request"
+  },
+  "auth": {
+    "sideTitle": "Freight, priced fairly.",
+    "sideText": "Shippers compare real quotes. Forwarders win real shipments. Everyone saves time.",
+    "side1": "Free for shippers",
+    "side2": "Verified forwarders only",
+    "side3": "Your data stays private",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to manage your shipments and quotes.",
+    "login": "Sign in",
+    "forgot": "Forgot password?",
+    "badCredentials": "Incorrect email or password.",
+    "newShipper": "New shipper?",
+    "createFree": "Create a free account",
+    "newForwarder": "Freight forwarder?",
+    "joinNetwork": "Join the network",
+    "registerTitle": "Create your free account",
+    "registerSubtitle": "Request freight quotes and compare offers from verified forwarders.",
+    "type": {
+      "Business": "Business",
+      "Individual": "Individual"
+    },
+    "passwordHint": "At least 8 characters.",
+    "passwordShort": "Password must be at least 8 characters.",
+    "invalidEmail": "Enter a valid email address.",
+    "createAccount": "Create account",
+    "agree": "By continuing you agree to our",
+    "haveAccount": "Already have an account?",
+    "imForwarder": "I'm a forwarder",
+    "fwdTitle": "Join Sokan as a forwarder",
+    "fwdSubtitle": "Start receiving shipment requests on your lanes.",
+    "fwdModes": "Transport modes you handle",
+    "fwdStep1Error": "Add your company name, country and at least one transport mode.",
+    "fwdSubmit": "Create partner account",
+    "fwdReview": "We review new companies before they can quote — usually within one business day.",
+    "fwdLoggedIn": "You're signed in. Signing up here creates a separate partner account with a different email.",
+    "forgotTitle": "Reset your password",
+    "forgotSubtitle": "Enter your email and we'll send you a reset link.",
+    "forgotSent": "If an account exists for that email, a reset link is on its way.",
+    "sendLink": "Send reset link",
+    "backToLogin": "Back to sign in"
+  },
+  "footer": {
+    "tagline": "The freight marketplace where shippers post once and verified forwarders compete with real quotes.",
+    "shippers": "Shippers",
+    "forwarders": "Forwarders",
+    "company": "Company",
+    "joinNetwork": "Join as forwarder",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "rights": "All rights reserved."
+  },
+  "portal": {
+    "hello": "Hello, {name}",
+    "walletBalance": "Wallet balance",
+    "topUp": "Top up",
+    "asForwarder": "Forwarder",
+    "asShipper": "Shipper",
+    "nav": {
+      "overview": "Overview",
+      "requests": "Requests",
+      "newRequest": "New request",
+      "profile": "Profile",
+      "leads": "Leads",
+      "quotes": "Quotes",
+      "wallet": "Wallet",
+      "company": "Company"
+    }
+  },
+  "account": {
+    "subtitle": "Track your requests and compare incoming quotes.",
+    "blocked": "Your account can't publish new requests. Please contact support.",
+    "open": "Open requests",
+    "quotesWaiting": "Quotes to review",
+    "booked": "Booked",
+    "expired": "Closed",
+    "recent": "Recent requests",
+    "emptyTitle": "No requests yet",
+    "emptyText": "Post your first shipment and watch the quotes arrive.",
+    "noneTitle": "Nothing here",
+    "noneText": "No requests match this filter."
+  },
+  "requests": {
+    "quotes": "quote | quotes",
+    "sentTo": "sent to {n} forwarders",
+    "from": "from"
+  },
+  "requestDetail": {
+    "notified": "Forwarders notified",
+    "reviewing": "Reviewing",
+    "quotes": "Quotes",
+    "quotesTitle": "Quotes",
+    "waitingTitle": "Waiting for quotes",
+    "waitingText": "Forwarders are reviewing your request. We'll email you as soon as a quote arrives.",
+    "noQuotes": "This request didn't receive any quotes.",
+    "shipment": "Shipment",
+    "deadline": "Quotes until",
+    "draftText": "This request is a draft and hasn't been sent to forwarders.",
+    "publish": "Publish request",
+    "published": "Request published",
+    "cancel": "Cancel request",
+    "cancelWhy": "Why are you cancelling? (optional)",
+    "cancelled": "Request cancelled",
+    "cancelReason": "Reason",
+    "rejected": "Quote declined",
+    "confirmTitle": "Book this quote?",
+    "confirmText": "The forwarder will be notified and you'll both see each other's contact details. Other quotes will be declined automatically.",
+    "bookedToast": "Booked! Contact details are now visible.",
+    "reviewTitle": "How was your forwarder?",
+    "reviewText": "Your rating helps other shippers choose well.",
+    "reviewPh": "Share a few words about the experience (optional)",
+    "reviewThanks": "Thanks for your review!"
+  },
+  "quotes": {
+    "booked": "Booked",
+    "bestPrice": "Best price",
+    "fastest": "Fastest",
+    "allIn": "all-in total",
+    "transit": "Transit",
+    "validUntil": "Valid until",
+    "freeDays": "Free days",
+    "breakdown": "Charge breakdown",
+    "carrier": "Carrier",
+    "routing": "Routing",
+    "included": "Included",
+    "excluded": "Excluded",
+    "contactNow": "Contact your forwarder to confirm the booking",
+    "accept": "Accept & book",
+    "decline": "Decline"
+  },
+  "partner": {
+    "pendingTitle": "Your company is under review",
+    "pendingText": "We're verifying your details. Complete your profile to speed things up — you'll start receiving requests once approved.",
+    "completeProfile": "Complete profile",
+    "status": {
+      "Rejected": "Your application was not approved",
+      "Suspended": "Your account is suspended"
+    },
+    "actionable": "Requests waiting for you",
+    "actionableHint": "Open requests you haven't quoted yet",
+    "openLeads": "Open inbox",
+    "freeUnlocks": "Free unlocks left",
+    "thenFee": "then {fee} each",
+    "quotesSent": "Quotes sent",
+    "winRate": "Win rate",
+    "won": "{n} won",
+    "lowBalance": "Your wallet balance is low. Top up to keep unlocking requests.",
+    "profileStrength": "Profile strength",
+    "profileHint": "Complete profiles win more quotes.",
+    "latest": "Latest requests",
+    "noQuotesTitle": "No quotes yet",
+    "noQuotesText": "Unlock a request in your inbox and send your first quote.",
+    "viewPublic": "View public profile",
+    "cover": "Cover",
+    "sections": {
+      "identity": "Company",
+      "services": "Services & coverage",
+      "contact": "Contact",
+      "notifications": "Notifications",
+      "team": "Team"
+    },
+    "tagline": "Tagline",
+    "taglineHint": "One line shown in the directory.",
+    "about": "About your company",
+    "established": "Established",
+    "teamSize": "Team size",
+    "certifications": "Certifications & memberships",
+    "certificationsHint": "One per line, e.g. FIATA, IATA, ISO 9001.",
+    "servicesHint": "You'll receive requests in these modes.",
+    "coverageHint": "Leave empty to receive requests worldwide, or add the countries you serve.",
+    "addCountry": "Add a country",
+    "notifyRequests": "Email me new matching requests",
+    "notifyQuotes": "Email me when a quote is accepted",
+    "teamHint": "To add colleagues, contact support.",
+    "role": {
+      "Owner": "Owner",
+      "Manager": "Manager",
+      "Agent": "Agent"
+    }
+  },
+  "leads": {
+    "subtitle": "Shipments matching your modes and lanes.",
+    "onlyOpen": "Open requests only",
+    "emptyTitle": "No requests yet",
+    "emptyText": "New shipments on your lanes will appear here — we'll email you too.",
+    "ready": "Ready",
+    "competition": "{n} quotes",
+    "quotesSoFar": "Quotes so far",
+    "lockedTitle": "Full details are locked",
+    "lockedText": "Unlock to see exact addresses, packing list, notes, attachments and the customer's contact details.",
+    "unlockCost": "Unlock this request",
+    "freeLeft": "{n} free unlocks left this month",
+    "balance": "Wallet balance: {b}",
+    "u1": "Full shipment details",
+    "u2": "Customer name & contact",
+    "u3": "Send your quote",
+    "unlock": "Unlock request",
+    "unlocked": "Request unlocked",
+    "needTopUp": "Not enough balance.",
+    "unlockedOn": "Unlocked {date}",
+    "wasFree": "Used a free unlock",
+    "charged": "Charged {fee}",
+    "closed": "This request is {status}.",
+    "details": "Shipment details",
+    "customer": "Customer",
+    "pol": "Port of loading",
+    "pod": "Port of discharge",
+    "attachment": "Download attachment",
+    "wonTitle": "You won this shipment!",
+    "wonText": "The customer accepted your quote. Reach out now to confirm the booking.",
+    "decline": "Not interested",
+    "declineText": "Declining hides this request. Tell us why so we can send you better matches.",
+    "declined": "Request declined",
+    "reason": {
+      "none": "No reason",
+      "lane": "I don't serve this lane",
+      "capacity": "No capacity right now",
+      "cargo": "Cargo type not handled",
+      "timing": "Dates don't work"
+    }
+  },
+  "quoteBuilder": {
+    "title": "Build your quote",
+    "reviseTitle": "Revise your quote",
+    "mainFreight": "{mode} freight",
+    "group": "Group",
+    "description": "Description",
+    "descriptionPh": "e.g. Ocean freight, THC, B/L fee",
+    "basis": "Basis",
+    "price": "Unit price",
+    "addLine": "Add line",
+    "transitMin": "Transit min",
+    "transitMax": "Transit max",
+    "routingPh": "Direct, or via Jebel Ali",
+    "notes": "Notes to customer",
+    "total": "Quote total",
+    "feeNote": "A {fee} quote fee applies when you send.",
+    "freeNote": "Free — {n} free quotes left this month.",
+    "reviseFree": "Revisions are free.",
+    "send": "Send quote",
+    "update": "Update quote",
+    "sent": "Quote sent! The customer has been notified.",
+    "revised": "Quote updated",
+    "needCharge": "Add at least one charge with a price.",
+    "yourQuote": "Your quote",
+    "withdraw": "Withdraw quote",
+    "withdrawn": "Quote withdrawn"
+  },
+  "wallet": {
+    "low": "Low balance",
+    "freeQuotes": "Free quotes left",
+    "pending": "Top-up of {amount} pending review",
+    "plans": "Your plan",
+    "plansText": "Plan fees are charged from your wallet. Upgrades start immediately.",
+    "switch": "Switch to this plan",
+    "switchPaid": "Switch — {fee}/mo",
+    "planChanged": "You're now on {plan}",
+    "history": "Transactions",
+    "emptyTitle": "No transactions yet",
+    "emptyText": "Top-ups and fees will appear here.",
+    "topupTitle": "Top up your wallet",
+    "amount": "Amount",
+    "method": "Payment method",
+    "reference": "Payment reference",
+    "referenceHint": "Bank transaction or receipt number.",
+    "receipt": "Attach receipt (optional)",
+    "submitTopup": "Submit top-up",
+    "topupSent": "Top-up submitted. We'll credit your wallet once payment is confirmed."
+  }
+}

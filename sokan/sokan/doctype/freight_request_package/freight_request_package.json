@@ -1,0 +1,86 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-10 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "package_type",
+  "quantity",
+  "length_cm",
+  "width_cm",
+  "height_cm",
+  "weight_kg",
+  "volume_cbm"
+ ],
+ "fields": [
+  {
+   "fieldname": "package_type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "Pallet\nCarton\nCrate\nDrum\nBag\nBundle\nRoll\nLoose\nOther",
+   "default": "Pallet",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Int",
+   "label": "Qty",
+   "default": "1",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "length_cm",
+   "fieldtype": "Float",
+   "label": "L (cm)",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "width_cm",
+   "fieldtype": "Float",
+   "label": "W (cm)",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "height_cm",
+   "fieldtype": "Float",
+   "label": "H (cm)",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "weight_kg",
+   "fieldtype": "Float",
+   "label": "Weight / Package (kg)",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "volume_cbm",
+   "fieldtype": "Float",
+   "label": "Volume (CBM)",
+   "precision": "3",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 2
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-10 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Sokan",
+ "name": "Freight Request Package",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

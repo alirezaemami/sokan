@@ -1,0 +1,175 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-10 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "request",
+  "forwarder",
+  "status",
+  "cb1",
+  "transport_mode",
+  "sent_on",
+  "seen_on",
+  "sb_unlock",
+  "unlocked_on",
+  "unlocked_by",
+  "cb2",
+  "unlock_fee",
+  "was_free",
+  "wallet_transaction",
+  "sb_outcome",
+  "quote",
+  "decline_reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "request",
+   "fieldtype": "Link",
+   "label": "Request",
+   "options": "Freight Request",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "forwarder",
+   "fieldtype": "Link",
+   "label": "Forwarder",
+   "options": "Sokan Forwarder",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "New\nUnlocked\nQuoted\nDeclined\nClosed",
+   "default": "New",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transport_mode",
+   "fieldtype": "Link",
+   "label": "Transport Mode",
+   "options": "Sokan Transport Mode",
+   "fetch_from": "request.transport_mode",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sent_on",
+   "fieldtype": "Datetime",
+   "label": "Sent On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "seen_on",
+   "fieldtype": "Datetime",
+   "label": "First Seen",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_unlock",
+   "fieldtype": "Section Break",
+   "label": "Unlock & Billing"
+  },
+  {
+   "fieldname": "unlocked_on",
+   "fieldtype": "Datetime",
+   "label": "Unlocked On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "unlocked_by",
+   "fieldtype": "Link",
+   "label": "Unlocked By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "unlock_fee",
+   "fieldtype": "Currency",
+   "label": "Unlock Fee Charged",
+   "read_only": 1
+  },
+  {
+   "fieldname": "was_free",
+   "fieldtype": "Check",
+   "label": "Used Free Allowance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "wallet_transaction",
+   "fieldtype": "Link",
+   "label": "Wallet Transaction",
+   "options": "Sokan Wallet Transaction",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_outcome",
+   "fieldtype": "Section Break",
+   "label": "Outcome"
+  },
+  {
+   "fieldname": "quote",
+   "fieldtype": "Link",
+   "label": "Quote",
+   "options": "Freight Quote",
+   "read_only": 1
+  },
+  {
+   "fieldname": "decline_reason",
+   "fieldtype": "Small Text",
+   "label": "Decline Reason"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-10 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Sokan",
+ "name": "Freight Request Lead",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Sokan Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "LEAD-.########",
+ "naming_rule": "Expression (old style)"
+}

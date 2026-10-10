@@ -1,0 +1,521 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-10 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_shipment",
+  "title",
+  "customer",
+  "customer_name",
+  "cb0",
+  "status",
+  "transport_mode",
+  "incoterm",
+  "sb_origin",
+  "origin_country",
+  "origin_city",
+  "origin_port",
+  "pickup_required",
+  "pickup_address",
+  "cb_dest",
+  "destination_country",
+  "destination_city",
+  "destination_port",
+  "delivery_required",
+  "delivery_address",
+  "sb_dates",
+  "ready_date",
+  "cb_dates",
+  "valid_until",
+  "tab_cargo",
+  "commodity",
+  "hs_code",
+  "cargo_category",
+  "is_stackable",
+  "cb_cargo",
+  "cargo_value",
+  "cargo_currency",
+  "un_number",
+  "temperature_range",
+  "sb_containers",
+  "containers",
+  "sb_packages",
+  "packages",
+  "sb_totals",
+  "total_packages",
+  "total_weight_kg",
+  "cb_tot",
+  "total_volume_cbm",
+  "chargeable_weight_kg",
+  "tab_services",
+  "need_customs_clearance",
+  "need_insurance",
+  "cb_srv",
+  "need_warehousing",
+  "need_packing",
+  "sb_notes",
+  "quote_currency",
+  "notes",
+  "attachment",
+  "tab_contact",
+  "contact_name",
+  "contact_email",
+  "cb_ct",
+  "contact_phone",
+  "contact_company",
+  "contact_note",
+  "tab_activity",
+  "published_on",
+  "leads_sent",
+  "unlock_count",
+  "cb_act",
+  "quote_count",
+  "accepted_quote",
+  "booked_on",
+  "cancel_reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_shipment",
+   "fieldtype": "Tab Break",
+   "label": "Shipment"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Sokan Customer",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Customer Name",
+   "fetch_from": "customer.full_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb0",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nOpen\nBooked\nExpired\nCancelled",
+   "default": "Draft",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "transport_mode",
+   "fieldtype": "Link",
+   "label": "Transport Mode",
+   "options": "Sokan Transport Mode",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "incoterm",
+   "fieldtype": "Select",
+   "label": "Incoterm",
+   "options": "\nEXW\nFCA\nFAS\nFOB\nCFR\nCIF\nCPT\nCIP\nDAP\nDPU\nDDP"
+  },
+  {
+   "fieldname": "sb_origin",
+   "fieldtype": "Section Break",
+   "label": "Origin"
+  },
+  {
+   "fieldname": "origin_country",
+   "fieldtype": "Link",
+   "label": "Origin Country",
+   "options": "Country",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "origin_city",
+   "fieldtype": "Data",
+   "label": "Origin City",
+   "reqd": 1
+  },
+  {
+   "fieldname": "origin_port",
+   "fieldtype": "Data",
+   "label": "Port / Airport of Loading"
+  },
+  {
+   "fieldname": "pickup_required",
+   "fieldtype": "Check",
+   "label": "Door Pickup Required"
+  },
+  {
+   "fieldname": "pickup_address",
+   "fieldtype": "Small Text",
+   "label": "Pickup Address",
+   "depends_on": "pickup_required"
+  },
+  {
+   "fieldname": "cb_dest",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "destination_country",
+   "fieldtype": "Link",
+   "label": "Destination Country",
+   "options": "Country",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "destination_city",
+   "fieldtype": "Data",
+   "label": "Destination City",
+   "reqd": 1
+  },
+  {
+   "fieldname": "destination_port",
+   "fieldtype": "Data",
+   "label": "Port / Airport of Discharge"
+  },
+  {
+   "fieldname": "delivery_required",
+   "fieldtype": "Check",
+   "label": "Door Delivery Required"
+  },
+  {
+   "fieldname": "delivery_address",
+   "fieldtype": "Small Text",
+   "label": "Delivery Address",
+   "depends_on": "delivery_required"
+  },
+  {
+   "fieldname": "sb_dates",
+   "fieldtype": "Section Break",
+   "label": "Timing"
+  },
+  {
+   "fieldname": "ready_date",
+   "fieldtype": "Date",
+   "label": "Cargo Ready Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_dates",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "valid_until",
+   "fieldtype": "Date",
+   "label": "Accept Quotes Until"
+  },
+  {
+   "fieldname": "tab_cargo",
+   "fieldtype": "Tab Break",
+   "label": "Cargo"
+  },
+  {
+   "fieldname": "commodity",
+   "fieldtype": "Data",
+   "label": "Commodity",
+   "reqd": 1
+  },
+  {
+   "fieldname": "hs_code",
+   "fieldtype": "Data",
+   "label": "HS Code"
+  },
+  {
+   "fieldname": "cargo_category",
+   "fieldtype": "Select",
+   "label": "Cargo Category",
+   "options": "General Cargo\nDangerous Goods\nTemperature Controlled\nOversized / Heavy Lift\nFragile\nPerishable\nVehicles\nLivestock\nHigh Value",
+   "default": "General Cargo"
+  },
+  {
+   "fieldname": "is_stackable",
+   "fieldtype": "Check",
+   "label": "Stackable",
+   "default": "1"
+  },
+  {
+   "fieldname": "cb_cargo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cargo_value",
+   "fieldtype": "Currency",
+   "label": "Cargo Value",
+   "options": "cargo_currency"
+  },
+  {
+   "fieldname": "cargo_currency",
+   "fieldtype": "Link",
+   "label": "Cargo Value Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "un_number",
+   "fieldtype": "Data",
+   "label": "UN Number",
+   "depends_on": "eval:doc.cargo_category=='Dangerous Goods'"
+  },
+  {
+   "fieldname": "temperature_range",
+   "fieldtype": "Data",
+   "label": "Temperature Range",
+   "depends_on": "eval:doc.cargo_category=='Temperature Controlled'"
+  },
+  {
+   "fieldname": "sb_containers",
+   "fieldtype": "Section Break",
+   "label": "Containers"
+  },
+  {
+   "fieldname": "containers",
+   "fieldtype": "Table",
+   "label": "Containers",
+   "options": "Freight Request Container"
+  },
+  {
+   "fieldname": "sb_packages",
+   "fieldtype": "Section Break",
+   "label": "Packages"
+  },
+  {
+   "fieldname": "packages",
+   "fieldtype": "Table",
+   "label": "Packages",
+   "options": "Freight Request Package"
+  },
+  {
+   "fieldname": "sb_totals",
+   "fieldtype": "Section Break",
+   "label": "Totals"
+  },
+  {
+   "fieldname": "total_packages",
+   "fieldtype": "Int",
+   "label": "Total Packages",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_weight_kg",
+   "fieldtype": "Float",
+   "label": "Total Gross Weight (kg)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "cb_tot",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_volume_cbm",
+   "fieldtype": "Float",
+   "label": "Total Volume (CBM)",
+   "precision": "3"
+  },
+  {
+   "fieldname": "chargeable_weight_kg",
+   "fieldtype": "Float",
+   "label": "Chargeable Weight (kg)",
+   "precision": "2",
+   "read_only": 1,
+   "description": "Air: max(gross, CBM × 167). Road: max(gross, CBM × 333). Sea: W/M."
+  },
+  {
+   "fieldname": "tab_services",
+   "fieldtype": "Tab Break",
+   "label": "Services & Notes"
+  },
+  {
+   "fieldname": "need_customs_clearance",
+   "fieldtype": "Check",
+   "label": "Customs Clearance"
+  },
+  {
+   "fieldname": "need_insurance",
+   "fieldtype": "Check",
+   "label": "Cargo Insurance"
+  },
+  {
+   "fieldname": "cb_srv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "need_warehousing",
+   "fieldtype": "Check",
+   "label": "Warehousing"
+  },
+  {
+   "fieldname": "need_packing",
+   "fieldtype": "Check",
+   "label": "Packing / Crating"
+  },
+  {
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "quote_currency",
+   "fieldtype": "Link",
+   "label": "Preferred Quote Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes for Forwarders"
+  },
+  {
+   "fieldname": "attachment",
+   "fieldtype": "Attach",
+   "label": "Attachment",
+   "description": "Packing list, MSDS, drawings…"
+  },
+  {
+   "fieldname": "tab_contact",
+   "fieldtype": "Tab Break",
+   "label": "Contact"
+  },
+  {
+   "fieldname": "contact_name",
+   "fieldtype": "Data",
+   "label": "Contact Name"
+  },
+  {
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "label": "Contact Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "cb_ct",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contact_phone",
+   "fieldtype": "Data",
+   "label": "Contact Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "contact_company",
+   "fieldtype": "Data",
+   "label": "Company"
+  },
+  {
+   "fieldname": "contact_note",
+   "fieldtype": "HTML",
+   "options": "<p class='text-muted small'>Contact details are only revealed to forwarders who unlock the request.</p>"
+  },
+  {
+   "fieldname": "tab_activity",
+   "fieldtype": "Tab Break",
+   "label": "Activity"
+  },
+  {
+   "fieldname": "published_on",
+   "fieldtype": "Datetime",
+   "label": "Published On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "leads_sent",
+   "fieldtype": "Int",
+   "label": "Forwarders Notified",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "unlock_count",
+   "fieldtype": "Int",
+   "label": "Unlocks",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_act",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "quote_count",
+   "fieldtype": "Int",
+   "label": "Quotes",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "accepted_quote",
+   "fieldtype": "Link",
+   "label": "Accepted Quote",
+   "options": "Freight Quote",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booked_on",
+   "fieldtype": "Datetime",
+   "label": "Booked On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cancel_reason",
+   "fieldtype": "Small Text",
+   "label": "Cancellation Reason",
+   "depends_on": "eval:doc.status=='Cancelled'"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-10 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Sokan",
+ "name": "Freight Request",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Sokan Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "REQ-.YY.-.#####",
+ "naming_rule": "Expression (old style)",
+ "title_field": "title",
+ "show_title_field_in_link": 1,
+ "search_fields": "title,customer_name,commodity",
+ "track_changes": 1
+}

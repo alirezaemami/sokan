@@ -1,0 +1,208 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-10 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_general",
+  "platform_name",
+  "support_email",
+  "support_phone",
+  "cb_g",
+  "frontend_url",
+  "default_currency",
+  "tab_billing",
+  "default_view_fee",
+  "default_quote_fee",
+  "cb_b",
+  "signup_bonus",
+  "low_balance_threshold",
+  "refund_unlock_if_cancelled",
+  "sb_bank",
+  "topup_instructions",
+  "tab_dist",
+  "match_transport_mode",
+  "match_coverage",
+  "auto_publish_requests",
+  "cb_d",
+  "auto_approve_forwarders",
+  "request_validity_days",
+  "max_quotes_per_request"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_general",
+   "fieldtype": "Tab Break",
+   "label": "General"
+  },
+  {
+   "fieldname": "platform_name",
+   "fieldtype": "Data",
+   "label": "Platform Name",
+   "default": "Sokan"
+  },
+  {
+   "fieldname": "support_email",
+   "fieldtype": "Data",
+   "label": "Support Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "support_phone",
+   "fieldtype": "Data",
+   "label": "Support Phone"
+  },
+  {
+   "fieldname": "cb_g",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "frontend_url",
+   "fieldtype": "Data",
+   "label": "Website URL",
+   "description": "Public Nuxt origin, used in emails. e.g. https://sokan.com"
+  },
+  {
+   "fieldname": "default_currency",
+   "fieldtype": "Link",
+   "label": "Platform Currency",
+   "options": "Currency",
+   "default": "USD",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tab_billing",
+   "fieldtype": "Tab Break",
+   "label": "Billing"
+  },
+  {
+   "fieldname": "default_view_fee",
+   "fieldtype": "Currency",
+   "label": "Default Unlock Fee",
+   "options": "default_currency",
+   "default": "2",
+   "description": "Used when the forwarder's plan does not set one."
+  },
+  {
+   "fieldname": "default_quote_fee",
+   "fieldtype": "Currency",
+   "label": "Default Quote Fee",
+   "options": "default_currency",
+   "default": "1"
+  },
+  {
+   "fieldname": "cb_b",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "signup_bonus",
+   "fieldtype": "Currency",
+   "label": "Signup Bonus Credit",
+   "options": "default_currency",
+   "default": "10",
+   "description": "Credited once when a forwarder is first activated."
+  },
+  {
+   "fieldname": "low_balance_threshold",
+   "fieldtype": "Currency",
+   "label": "Low Balance Warning At",
+   "options": "default_currency",
+   "default": "5"
+  },
+  {
+   "fieldname": "refund_unlock_if_cancelled",
+   "fieldtype": "Check",
+   "label": "Refund Unlocks When Customer Cancels Within 24h",
+   "default": "1"
+  },
+  {
+   "fieldname": "sb_bank",
+   "fieldtype": "Section Break",
+   "label": "Top-up Instructions"
+  },
+  {
+   "fieldname": "topup_instructions",
+   "fieldtype": "Text Editor",
+   "label": "Bank Transfer Instructions",
+   "description": "Shown to forwarders on the wallet page."
+  },
+  {
+   "fieldname": "tab_dist",
+   "fieldtype": "Tab Break",
+   "label": "Distribution"
+  },
+  {
+   "fieldname": "match_transport_mode",
+   "fieldtype": "Check",
+   "label": "Only Send Requests Matching a Forwarder's Modes",
+   "default": "1"
+  },
+  {
+   "fieldname": "match_coverage",
+   "fieldtype": "Check",
+   "label": "Respect Forwarder Country Coverage",
+   "default": "1"
+  },
+  {
+   "fieldname": "auto_publish_requests",
+   "fieldtype": "Check",
+   "label": "Publish Customer Requests Without Review",
+   "default": "1"
+  },
+  {
+   "fieldname": "cb_d",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "auto_approve_forwarders",
+   "fieldtype": "Check",
+   "label": "Activate New Forwarders Automatically",
+   "default": "0"
+  },
+  {
+   "fieldname": "request_validity_days",
+   "fieldtype": "Int",
+   "label": "Default Request Validity (days)",
+   "default": "14"
+  },
+  {
+   "fieldname": "max_quotes_per_request",
+   "fieldtype": "Int",
+   "label": "Max Quotes per Request",
+   "default": "0",
+   "description": "0 = unlimited."
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-10 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Sokan",
+ "name": "Sokan Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Sokan Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "issingle": 1
+}

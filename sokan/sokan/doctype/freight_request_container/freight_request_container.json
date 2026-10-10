@@ -1,0 +1,60 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-10 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "container_type",
+  "quantity",
+  "weight_kg",
+  "is_shipper_owned"
+ ],
+ "fields": [
+  {
+   "fieldname": "container_type",
+   "fieldtype": "Select",
+   "label": "Container Type",
+   "options": "20' Standard\n40' Standard\n40' High Cube\n45' High Cube\n20' Reefer\n40' Reefer\n20' Open Top\n40' Open Top\n20' Flat Rack\n40' Flat Rack\n20' Tank",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 4
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Int",
+   "label": "Qty",
+   "default": "1",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "weight_kg",
+   "fieldtype": "Float",
+   "label": "Gross Weight / Container (kg)",
+   "in_list_view": 1,
+   "columns": 3
+  },
+  {
+   "fieldname": "is_shipper_owned",
+   "fieldtype": "Check",
+   "label": "Shipper Owned (SOC)",
+   "in_list_view": 1,
+   "columns": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-10 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Sokan",
+ "name": "Freight Request Container",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

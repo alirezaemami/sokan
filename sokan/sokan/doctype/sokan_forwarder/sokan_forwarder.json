@@ -1,0 +1,435 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-10 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_profile",
+  "company_name",
+  "slug",
+  "tagline",
+  "cb_p1",
+  "status",
+  "is_verified",
+  "is_featured",
+  "rejection_reason",
+  "sb_brand",
+  "logo",
+  "cb_p2",
+  "cover_image",
+  "sb_about",
+  "about",
+  "services",
+  "coverage",
+  "certifications",
+  "tab_contact",
+  "email",
+  "phone",
+  "website",
+  "cb_c1",
+  "country",
+  "city",
+  "address",
+  "sb_company",
+  "established_year",
+  "team_size",
+  "cb_c2",
+  "license_number",
+  "license_document",
+  "sb_members",
+  "members",
+  "tab_billing",
+  "plan",
+  "wallet_balance",
+  "wallet_currency",
+  "cb_b1",
+  "usage_period",
+  "free_views_used",
+  "free_quotes_used",
+  "plan_renews_on",
+  "sb_prefs",
+  "notify_new_requests",
+  "notify_quote_updates",
+  "tab_stats",
+  "leads_received",
+  "leads_unlocked",
+  "quotes_sent",
+  "cb_s1",
+  "quotes_won",
+  "rating",
+  "review_count",
+  "sb_seo",
+  "meta_description"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_profile",
+   "fieldtype": "Tab Break",
+   "label": "Profile"
+  },
+  {
+   "fieldname": "company_name",
+   "fieldtype": "Data",
+   "label": "Company Name",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "slug",
+   "fieldtype": "Data",
+   "label": "URL Slug",
+   "unique": 1,
+   "description": "Public profile lives at /forwarders/<slug>. Generated from the name when empty."
+  },
+  {
+   "fieldname": "tagline",
+   "fieldtype": "Data",
+   "label": "Tagline",
+   "length": 160
+  },
+  {
+   "fieldname": "cb_p1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nActive\nSuspended\nRejected",
+   "default": "Pending",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "is_verified",
+   "fieldtype": "Check",
+   "label": "Verified",
+   "in_list_view": 1,
+   "description": "Shows the verified badge. Tick after checking licence and documents."
+  },
+  {
+   "fieldname": "is_featured",
+   "fieldtype": "Check",
+   "label": "Featured on Home Page"
+  },
+  {
+   "fieldname": "rejection_reason",
+   "fieldtype": "Small Text",
+   "label": "Rejection / Suspension Reason",
+   "depends_on": "eval:['Rejected','Suspended'].includes(doc.status)"
+  },
+  {
+   "fieldname": "sb_brand",
+   "fieldtype": "Section Break",
+   "label": "Branding"
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Logo"
+  },
+  {
+   "fieldname": "cb_p2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cover_image",
+   "fieldtype": "Attach Image",
+   "label": "Cover Image"
+  },
+  {
+   "fieldname": "sb_about",
+   "fieldtype": "Section Break",
+   "label": "About"
+  },
+  {
+   "fieldname": "about",
+   "fieldtype": "Text Editor",
+   "label": "About the Company"
+  },
+  {
+   "fieldname": "services",
+   "fieldtype": "Table MultiSelect",
+   "label": "Transport Modes",
+   "options": "Sokan Forwarder Service",
+   "description": "Requests in these modes are sent to this forwarder."
+  },
+  {
+   "fieldname": "coverage",
+   "fieldtype": "Table MultiSelect",
+   "label": "Countries Covered",
+   "options": "Sokan Forwarder Country",
+   "description": "Leave empty to receive requests on every lane."
+  },
+  {
+   "fieldname": "certifications",
+   "fieldtype": "Small Text",
+   "label": "Certifications & Memberships",
+   "description": "FIATA, IATA, WCA, ISO 9001… one per line."
+  },
+  {
+   "fieldname": "tab_contact",
+   "fieldtype": "Tab Break",
+   "label": "Contact"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email",
+   "reqd": 1
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website",
+   "options": "URL"
+  },
+  {
+   "fieldname": "cb_c1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "sb_company",
+   "fieldtype": "Section Break",
+   "label": "Company Facts"
+  },
+  {
+   "fieldname": "established_year",
+   "fieldtype": "Int",
+   "label": "Established"
+  },
+  {
+   "fieldname": "team_size",
+   "fieldtype": "Select",
+   "label": "Team Size",
+   "options": "\n1-10\n11-50\n51-200\n201-500\n500+"
+  },
+  {
+   "fieldname": "cb_c2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "license_number",
+   "fieldtype": "Data",
+   "label": "Licence / Registration No."
+  },
+  {
+   "fieldname": "license_document",
+   "fieldtype": "Attach",
+   "label": "Licence Document"
+  },
+  {
+   "fieldname": "sb_members",
+   "fieldtype": "Section Break",
+   "label": "Team"
+  },
+  {
+   "fieldname": "members",
+   "fieldtype": "Table",
+   "label": "Members",
+   "options": "Sokan Forwarder Member",
+   "description": "Users who can act for this company in the partner portal."
+  },
+  {
+   "fieldname": "tab_billing",
+   "fieldtype": "Tab Break",
+   "label": "Billing"
+  },
+  {
+   "fieldname": "plan",
+   "fieldtype": "Link",
+   "label": "Plan",
+   "options": "Sokan Plan",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "wallet_balance",
+   "fieldtype": "Currency",
+   "label": "Wallet Balance",
+   "options": "wallet_currency",
+   "read_only": 1,
+   "in_list_view": 1,
+   "description": "Maintained by Sokan Wallet Transaction. Use an Adjustment transaction to correct it."
+  },
+  {
+   "fieldname": "wallet_currency",
+   "fieldtype": "Link",
+   "label": "Wallet Currency",
+   "options": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_b1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "usage_period",
+   "fieldtype": "Data",
+   "label": "Usage Period",
+   "read_only": 1,
+   "description": "YYYY-MM the counters below belong to."
+  },
+  {
+   "fieldname": "free_views_used",
+   "fieldtype": "Int",
+   "label": "Free Unlocks Used",
+   "read_only": 1
+  },
+  {
+   "fieldname": "free_quotes_used",
+   "fieldtype": "Int",
+   "label": "Free Quotes Used",
+   "read_only": 1
+  },
+  {
+   "fieldname": "plan_renews_on",
+   "fieldtype": "Date",
+   "label": "Plan Renews On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_prefs",
+   "fieldtype": "Section Break",
+   "label": "Preferences"
+  },
+  {
+   "fieldname": "notify_new_requests",
+   "fieldtype": "Check",
+   "label": "Email Me New Matching Requests",
+   "default": "1"
+  },
+  {
+   "fieldname": "notify_quote_updates",
+   "fieldtype": "Check",
+   "label": "Email Me When a Quote Is Accepted",
+   "default": "1"
+  },
+  {
+   "fieldname": "tab_stats",
+   "fieldtype": "Tab Break",
+   "label": "Performance"
+  },
+  {
+   "fieldname": "leads_received",
+   "fieldtype": "Int",
+   "label": "Requests Received",
+   "read_only": 1
+  },
+  {
+   "fieldname": "leads_unlocked",
+   "fieldtype": "Int",
+   "label": "Requests Unlocked",
+   "read_only": 1
+  },
+  {
+   "fieldname": "quotes_sent",
+   "fieldtype": "Int",
+   "label": "Quotes Sent",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_s1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "quotes_won",
+   "fieldtype": "Int",
+   "label": "Quotes Won",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rating",
+   "fieldtype": "Float",
+   "label": "Average Rating",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "review_count",
+   "fieldtype": "Int",
+   "label": "Reviews",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_seo",
+   "fieldtype": "Section Break",
+   "label": "SEO"
+  },
+  {
+   "fieldname": "meta_description",
+   "fieldtype": "Small Text",
+   "label": "Meta Description",
+   "length": 160
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-10 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Sokan",
+ "name": "Sokan Forwarder",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Sokan Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "FWD-.#####",
+ "naming_rule": "Expression (old style)",
+ "title_field": "company_name",
+ "show_title_field_in_link": 1,
+ "search_fields": "company_name,country,city",
+ "image_field": "logo",
+ "track_changes": 1
+}

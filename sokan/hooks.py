@@ -86,7 +86,8 @@ app_license = "mit"
 # ------------
 
 # before_install = "sokan.install.before_install"
-# after_install = "sokan.install.after_install"
+after_install = "sokan.setup.install.after_install"
+after_migrate = "sokan.setup.install.after_migrate"
 
 # Uninstallation
 # ------------
@@ -147,6 +148,24 @@ app_license = "mit"
 # }
 
 # Scheduled Tasks
+# ---------------
+
+scheduler_events = {
+	"daily": [
+		"sokan.tasks.expire_requests",
+		"sokan.tasks.expire_quotes",
+	],
+	"monthly": [
+		"sokan.tasks.charge_subscriptions",
+	],
+}
+
+# Portal users (customers / forwarders) live in the Nuxt app, not Frappe's /me.
+role_home_page = {
+	"Sokan Customer": "/account",
+	"Sokan Forwarder": "/partner",
+}
+
 # ---------------
 
 # scheduler_events = {
@@ -255,4 +274,3 @@ app_license = "mit"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-

@@ -1,0 +1,269 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-10 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "request",
+  "forwarder",
+  "forwarder_name",
+  "lead",
+  "cb1",
+  "status",
+  "currency",
+  "total_amount",
+  "sb_charges",
+  "charges",
+  "sb_service",
+  "transit_days_min",
+  "transit_days_max",
+  "valid_until",
+  "cb2",
+  "carrier",
+  "routing",
+  "free_days",
+  "service_level",
+  "sb_notes",
+  "inclusions",
+  "exclusions",
+  "notes",
+  "sb_meta",
+  "submitted_by",
+  "quote_fee",
+  "was_free",
+  "cb3",
+  "wallet_transaction",
+  "accepted_on",
+  "rejection_reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "request",
+   "fieldtype": "Link",
+   "label": "Request",
+   "options": "Freight Request",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "forwarder",
+   "fieldtype": "Link",
+   "label": "Forwarder",
+   "options": "Sokan Forwarder",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "forwarder_name",
+   "fieldtype": "Data",
+   "label": "Forwarder Name",
+   "fetch_from": "forwarder.company_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "lead",
+   "fieldtype": "Link",
+   "label": "Lead",
+   "options": "Freight Request Lead",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Submitted\nAccepted\nRejected\nWithdrawn\nExpired",
+   "default": "Submitted",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1,
+   "default": "USD"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total",
+   "options": "currency",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sb_charges",
+   "fieldtype": "Section Break",
+   "label": "Charges"
+  },
+  {
+   "fieldname": "charges",
+   "fieldtype": "Table",
+   "label": "Charges",
+   "options": "Freight Quote Charge",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_service",
+   "fieldtype": "Section Break",
+   "label": "Service"
+  },
+  {
+   "fieldname": "transit_days_min",
+   "fieldtype": "Int",
+   "label": "Transit Time Min (days)"
+  },
+  {
+   "fieldname": "transit_days_max",
+   "fieldtype": "Int",
+   "label": "Transit Time Max (days)"
+  },
+  {
+   "fieldname": "valid_until",
+   "fieldtype": "Date",
+   "label": "Valid Until",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "carrier",
+   "fieldtype": "Data",
+   "label": "Carrier / Airline"
+  },
+  {
+   "fieldname": "routing",
+   "fieldtype": "Data",
+   "label": "Routing",
+   "description": "e.g. Direct, or via Jebel Ali"
+  },
+  {
+   "fieldname": "free_days",
+   "fieldtype": "Int",
+   "label": "Free Days at Destination"
+  },
+  {
+   "fieldname": "service_level",
+   "fieldtype": "Select",
+   "label": "Service Level",
+   "options": "Standard\nExpress\nEconomy",
+   "default": "Standard"
+  },
+  {
+   "fieldname": "sb_notes",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "inclusions",
+   "fieldtype": "Small Text",
+   "label": "Included"
+  },
+  {
+   "fieldname": "exclusions",
+   "fieldtype": "Small Text",
+   "label": "Excluded"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes to Customer"
+  },
+  {
+   "fieldname": "sb_meta",
+   "fieldtype": "Section Break",
+   "label": "Tracking",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "submitted_by",
+   "fieldtype": "Link",
+   "label": "Submitted By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "quote_fee",
+   "fieldtype": "Currency",
+   "label": "Quote Fee Charged",
+   "read_only": 1
+  },
+  {
+   "fieldname": "was_free",
+   "fieldtype": "Check",
+   "label": "Used Free Allowance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "wallet_transaction",
+   "fieldtype": "Link",
+   "label": "Wallet Transaction",
+   "options": "Sokan Wallet Transaction",
+   "read_only": 1
+  },
+  {
+   "fieldname": "accepted_on",
+   "fieldtype": "Datetime",
+   "label": "Accepted On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rejection_reason",
+   "fieldtype": "Small Text",
+   "label": "Rejection Reason"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-10 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Sokan",
+ "name": "Freight Quote",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Sokan Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "QT-.YY.-.#####",
+ "naming_rule": "Expression (old style)",
+ "title_field": "forwarder_name",
+ "track_changes": 1
+}
