@@ -42,7 +42,7 @@ useSchemaOrg([
   <div v-if="f">
     <section class="relative overflow-hidden bg-night-950 pt-[72px] text-white">
       <img v-if="f.cover_image" :src="f.cover_image" alt="" class="absolute inset-0 size-full object-cover opacity-25" />
-      <AuroraBackground />
+      <ChartBackground tone="night" />
       <div class="relative mx-auto max-w-6xl px-4 pt-10 pb-16 sm:px-6 lg:px-8">
         <NuxtLinkLocale to="/forwarders" class="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white">
           <AppIcon name="arrow-left" :size="16" flip /> {{ $t('profile.back') }}
@@ -50,9 +50,9 @@ useSchemaOrg([
         <div class="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end">
           <CompanyAvatar :name="f.company_name" :logo="f.logo" size="xl" />
           <div class="min-w-0 flex-1">
-            <h1 class="flex flex-wrap items-center gap-2 text-3xl font-extrabold sm:text-4xl">
+            <h1 class="font-display flex flex-wrap items-center gap-2 text-4xl sm:text-5xl">
               {{ f.company_name }}
-              <span v-if="f.is_verified" class="inline-flex items-center gap-1 rounded-full bg-lagoon/15 px-2.5 py-1 text-xs font-bold text-lagoon">
+              <span v-if="f.is_verified" class="inline-flex items-center gap-1 rounded-full bg-tide/15 px-2.5 py-1 text-xs font-bold text-tide">
                 <AppIcon name="badge-check" :size="15" /> {{ $t('common.verified') }}
               </span>
             </h1>
@@ -79,7 +79,7 @@ useSchemaOrg([
           <h2 class="text-lg font-bold">{{ $t('profile.services') }}</h2>
           <div class="mt-5 grid gap-3 sm:grid-cols-2">
             <div v-for="m in f.modes" :key="m.name" class="flex items-center gap-3 rounded-xl bg-sunken p-3.5">
-              <span class="grid size-10 place-items-center rounded-xl bg-brand/10 text-brand"><AppIcon :name="m.icon" :size="20" /></span>
+              <span class="grid size-10 place-items-center rounded-xl bg-sea/10 text-sea"><AppIcon :name="m.icon" :size="20" /></span>
               <span class="font-semibold">{{ $t(`modes.${m.code}.name`) }}</span>
             </div>
           </div>
@@ -104,11 +104,11 @@ useSchemaOrg([
       <aside class="space-y-6">
         <section class="card grid grid-cols-2 gap-px overflow-hidden bg-line p-0">
           <div class="bg-surface p-5">
-            <p class="text-2xl font-extrabold">{{ fmt.number(f.stats.quotes_sent) }}</p>
+            <p class="text-2xl font-bold">{{ fmt.number(f.stats.quotes_sent) }}</p>
             <p class="text-xs text-muted">{{ $t('profile.quotesSent') }}</p>
           </div>
           <div class="bg-surface p-5">
-            <p class="text-2xl font-extrabold">{{ f.stats.win_rate != null ? `${fmt.number(f.stats.win_rate)}%` : '—' }}</p>
+            <p class="text-2xl font-bold">{{ f.stats.win_rate != null ? `${fmt.number(f.stats.win_rate)}%` : '—' }}</p>
             <p class="text-xs text-muted">{{ $t('profile.winRate') }}</p>
           </div>
         </section>
@@ -127,14 +127,14 @@ useSchemaOrg([
         <section v-if="f.certifications.length" class="card p-6">
           <h2 class="font-bold">{{ $t('profile.certifications') }}</h2>
           <ul class="mt-4 space-y-2">
-            <li v-for="c in f.certifications" :key="c" class="flex items-center gap-2 text-sm"><AppIcon name="award" :size="16" class="text-brand" /> {{ c }}</li>
+            <li v-for="c in f.certifications" :key="c" class="flex items-center gap-2 text-sm"><AppIcon name="award" :size="16" class="text-sea" /> {{ c }}</li>
           </ul>
         </section>
 
-        <section class="rounded-2xl bg-brand-gradient p-6 text-white">
+        <section class="rounded-2xl bg-night-900 p-6 text-white">
           <h2 class="font-bold">{{ $t('profile.ctaTitle') }}</h2>
           <p class="mt-2 text-sm text-white/80">{{ $t('profile.ctaText') }}</p>
-          <AppButton to="/get-quote" variant="glass" class="mt-5" block icon-end="arrow-right">{{ $t('nav.getQuoteFree') }}</AppButton>
+          <AppButton to="/get-quote" variant="night" class="mt-5" block icon-end="arrow-right">{{ $t('nav.getQuoteFree') }}</AppButton>
         </section>
       </aside>
     </div>
@@ -144,5 +144,5 @@ useSchemaOrg([
 <style scoped>
 .prose-sokan :deep(p) { margin-bottom: 0.9em; }
 .prose-sokan :deep(ul) { list-style: disc; padding-inline-start: 1.25rem; margin-bottom: 0.9em; }
-.prose-sokan :deep(a) { color: var(--color-brand); text-decoration: underline; }
+.prose-sokan :deep(a) { color: var(--sea); text-decoration: underline; }
 </style>

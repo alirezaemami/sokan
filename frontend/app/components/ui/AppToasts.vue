@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { toasts, dismiss } = useToast()
 const icons = { success: 'circle-check', error: 'alert', info: 'info' }
-const tones = { success: 'text-success', error: 'text-danger', info: 'text-brand' }
+const tones = { success: 'text-success', error: 'text-danger', info: 'text-sea' }
 </script>
 
 <template>

@@ -33,8 +33,11 @@ Scheduled: daily expiry of requests/quotes, monthly plan fees (unpaid → defaul
 bench new-site sokan.local
 bench --site sokan.local install-app sokan     # creates roles, transport modes, 3 plans, settings
 bench --site sokan.local set-config developer_mode 1
-bench --site sokan.local serve --port 8002
+bench start                                     # web server on :8000
 ```
+
+The frontend selects the site with an `X-Frappe-Site-Name` header, so it
+works on a multi-site bench whatever `default_site` is.
 
 Then in Desk: **Sokan Settings** (website URL, fees, auto-approve), and approve
 forwarders by setting **Sokan Forwarder → Status = Active**.

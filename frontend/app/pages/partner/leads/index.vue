@@ -34,7 +34,7 @@ const tabs = computed(() => [
           <option v-for="m in modes" :key="m.name" :value="m.name">{{ $t(`modes.${m.code}.name`) }}</option>
         </template>
       </FormField>
-      <label class="flex items-center gap-2 text-sm font-semibold text-ink-soft"><input v-model="onlyOpen" type="checkbox" class="size-4 accent-brand" /> {{ $t('leads.onlyOpen') }}</label>
+      <label class="flex items-center gap-2 text-sm font-semibold text-ink-soft"><input v-model="onlyOpen" type="checkbox" class="size-4 accent-sea" /> {{ $t('leads.onlyOpen') }}</label>
     </div>
     <FilterTabs v-model="status" :options="tabs" class="mt-4" />
     <div v-if="loading === 'pending' && !data" class="grid gap-4 md:grid-cols-2"><div v-for="i in 4" :key="i" class="skeleton h-52" /></div>

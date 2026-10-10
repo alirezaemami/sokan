@@ -12,31 +12,36 @@ const items = computed(() => {
   const mature = s.forwarders >= 25 && s.requests >= 100
   return mature
     ? [
-        { value: s.forwarders, suffix: '+', key: 'home.stats.forwarders', icon: 'building' },
-        { value: s.requests, suffix: '+', key: 'home.stats.requests', icon: 'send' },
-        { value: s.quotes, suffix: '+', key: 'home.stats.quotes', icon: 'receipt' },
-        { value: s.countries, suffix: '', key: 'home.stats.countries', icon: 'earth' },
+        { value: s.forwarders, suffix: '+', key: 'home.stats.forwarders' },
+        { value: s.requests, suffix: '+', key: 'home.stats.requests' },
+        { value: s.quotes, suffix: '+', key: 'home.stats.quotes' },
+        { value: s.countries, suffix: '', key: 'home.stats.countries' },
       ]
     : [
-        { value: 0, suffix: '', key: 'home.stats.costForShippers', icon: 'coins', text: '$0' },
-        { value: props.modeCount || 8, suffix: '', key: 'home.stats.modes', icon: 'layers' },
-        { value: 24, suffix: '/7', key: 'home.stats.alwaysOn', icon: 'clock' },
-        { value: 100, suffix: '%', key: 'home.stats.private', icon: 'shield-check' },
+        { value: 0, suffix: '', key: 'home.stats.costForShippers', text: '$0' },
+        { value: props.modeCount || 8, suffix: '', key: 'home.stats.modes' },
+        { value: 24, suffix: '/7', key: 'home.stats.alwaysOn' },
+        { value: 100, suffix: '%', key: 'home.stats.private' },
       ]
 })
 </script>
 
 <template>
   <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="card grid grid-cols-2 divide-line overflow-hidden lg:grid-cols-4 lg:divide-x rtl:lg:divide-x-reverse">
-      <div v-for="(it, i) in items" :key="it.key" v-reveal="i * 80" class="relative p-6 sm:p-8" :class="i < 2 && 'border-b border-line lg:border-b-0'">
-        <AppIcon :name="it.icon" :size="22" class="text-brand" />
-        <p class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
+    <dl class="grid grid-cols-2 border-y border-line-strong lg:grid-cols-4">
+      <div
+        v-for="(it, i) in items"
+        :key="it.key"
+        v-reveal="i * 80"
+        class="border-line px-4 py-7 sm:px-6"
+        :class="[i % 2 === 0 && 'border-e', i < 2 && 'border-b lg:border-b-0', i === 1 && 'lg:border-e', i === 2 && 'lg:border-e']"
+      >
+        <dt class="chart-label text-muted">{{ $t(it.key) }}</dt>
+        <dd class="font-display mt-3 text-4xl text-ink sm:text-5xl">
           <template v-if="it.text">{{ it.text }}</template>
           <CountUp v-else :to="it.value" :suffix="it.suffix" />
-        </p>
-        <p class="mt-1 text-sm text-muted">{{ $t(it.key) }}</p>
+        </dd>
       </div>
-    </div>
+    </dl>
   </section>
 </template>

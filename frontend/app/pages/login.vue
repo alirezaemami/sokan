@@ -27,24 +27,24 @@ async function submit() {
 
 <template>
   <div>
-    <h1 class="text-3xl font-extrabold">{{ $t('auth.loginTitle') }}</h1>
+    <h1 class="font-display text-4xl text-ink">{{ $t('auth.loginTitle') }}</h1>
     <p class="mt-2 text-muted">{{ $t('auth.loginSubtitle') }}</p>
     <form class="mt-8 space-y-5" @submit.prevent="submit">
       <FormField v-model="form.email" type="email" :label="$t('fields.email')" icon="mail" required autocomplete="email" dir="ltr" />
       <FormField v-model="form.password" type="password" :label="$t('fields.password')" icon="lock" required autocomplete="current-password" />
       <div class="flex justify-end">
-        <NuxtLinkLocale to="/forgot-password" class="text-sm font-semibold text-brand">{{ $t('auth.forgot') }}</NuxtLinkLocale>
+        <NuxtLinkLocale to="/forgot-password" class="text-sm font-semibold text-sea">{{ $t('auth.forgot') }}</NuxtLinkLocale>
       </div>
       <Transition name="fade"><p v-if="error" class="rounded-xl bg-danger/10 p-3 text-sm text-danger">{{ error }}</p></Transition>
       <AppButton type="submit" variant="primary" size="lg" block :loading="loading" icon-end="arrow-right">{{ $t('auth.login') }}</AppButton>
     </form>
     <div class="mt-8 grid gap-3 sm:grid-cols-2">
-      <NuxtLinkLocale to="/register" class="card flex items-center gap-3 p-4 transition-colors hover:border-brand/40">
-        <AppIcon name="package" class="text-brand" />
+      <NuxtLinkLocale to="/register" class="card flex items-center gap-3 p-4 transition-colors hover:border-sea/40">
+        <AppIcon name="package" class="text-sea" />
         <span class="text-sm"><span class="block font-bold">{{ $t('auth.newShipper') }}</span><span class="text-muted">{{ $t('auth.createFree') }}</span></span>
       </NuxtLinkLocale>
-      <NuxtLinkLocale to="/register/forwarder" class="card flex items-center gap-3 p-4 transition-colors hover:border-brand/40">
-        <AppIcon name="building" class="text-coral" />
+      <NuxtLinkLocale to="/register/forwarder" class="card flex items-center gap-3 p-4 transition-colors hover:border-sea/40">
+        <AppIcon name="building" class="text-buoy" />
         <span class="text-sm"><span class="block font-bold">{{ $t('auth.newForwarder') }}</span><span class="text-muted">{{ $t('auth.joinNetwork') }}</span></span>
       </NuxtLinkLocale>
     </div>

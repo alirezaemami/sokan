@@ -3,10 +3,11 @@
  * Deliberately not under /api — the proxy rule would swallow it.
  */
 export default defineSitemapEventHandler(async () => {
-  const { frappeApiBase } = useRuntimeConfig().public
+  const config = useRuntimeConfig()
   try {
     const res = await $fetch<{ message: { slug: string; modified: string }[] }>(
-      `${frappeApiBase}/api/method/sokan.api.public.sitemap_urls`,
+      `${config.public.frappeApiBase}/api/method/sokan.api.public.sitemap_urls`,
+      { headers: { 'X-Frappe-Site-Name': config.frappeSiteName } },
     )
     return res.message.map((f) => ({
       loc: `/forwarders/${f.slug}`,

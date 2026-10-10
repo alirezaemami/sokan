@@ -8,13 +8,13 @@ const modeIcon = (name: string) => modes.value.find((m) => m.name === name)?.ico
 </script>
 
 <template>
-  <NuxtLinkLocale :to="`/forwarders/${f.slug}`" class="card group flex h-full flex-col p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-xl">
+  <NuxtLinkLocale :to="`/forwarders/${f.slug}`" class="card group flex h-full flex-col p-5 transition-all duration-300 hover:-translate-y-1 hover:border-sea/40 hover:shadow-xl">
     <div class="flex items-start gap-4">
       <CompanyAvatar :name="f.company_name" :logo="f.logo" size="lg" />
       <div class="min-w-0 flex-1">
         <h3 class="flex items-center gap-1.5 font-bold">
           <span class="truncate">{{ f.company_name }}</span>
-          <AppIcon v-if="f.is_verified" name="badge-check" :size="18" class="shrink-0 text-brand" :aria-label="$t('common.verified')" />
+          <AppIcon v-if="f.is_verified" name="badge-check" :size="18" class="shrink-0 text-sea" :aria-label="$t('common.verified')" />
         </h3>
         <p class="mt-0.5 truncate text-sm text-muted">{{ fmt.flag(f.country_code) }} {{ fmt.place(f) }}</p>
         <div v-if="f.review_count" class="mt-1.5 flex items-center gap-1.5 text-sm">
@@ -30,7 +30,7 @@ const modeIcon = (name: string) => modes.value.find((m) => m.name === name)?.ico
           <AppIcon :name="modeIcon(m)" :size="15" />
         </span>
       </div>
-      <span class="inline-flex items-center gap-1 text-sm font-semibold text-brand opacity-0 transition-opacity group-hover:opacity-100">
+      <span class="inline-flex items-center gap-1 text-sm font-semibold text-sea opacity-0 transition-opacity group-hover:opacity-100">
         {{ $t('common.view') }} <AppIcon name="arrow-right" :size="14" flip />
       </span>
     </div>

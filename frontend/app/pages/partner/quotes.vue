@@ -29,7 +29,7 @@ const tabs = computed(() => [
           <p class="truncate font-semibold">{{ q.request_title }}</p>
           <p class="mt-0.5 text-xs text-faint">{{ q.name }} · {{ fmt.relative(q.creation) }}</p>
         </div>
-        <p class="font-extrabold tabular-nums">{{ fmt.money(q.total_amount, q.currency) }}</p>
+        <p class="font-bold tabular-nums">{{ fmt.money(q.total_amount, q.currency) }}</p>
         <StatusPill :status="q.status" />
       </NuxtLinkLocale>
     </div>

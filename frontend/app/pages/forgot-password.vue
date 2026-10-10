@@ -25,7 +25,7 @@ async function submit() {
 
 <template>
   <div>
-    <h1 class="text-3xl font-extrabold">{{ $t('auth.forgotTitle') }}</h1>
+    <h1 class="font-display text-4xl text-ink">{{ $t('auth.forgotTitle') }}</h1>
     <p class="mt-2 text-muted">{{ $t('auth.forgotSubtitle') }}</p>
     <div v-if="sent" class="mt-8 rounded-2xl bg-success/10 p-5 text-sm">
       <AppIcon name="mail" class="text-success" />
@@ -36,6 +36,6 @@ async function submit() {
       <p v-if="error" class="rounded-xl bg-danger/10 p-3 text-sm text-danger">{{ error }}</p>
       <AppButton type="submit" variant="primary" size="lg" block :loading="loading">{{ $t('auth.sendLink') }}</AppButton>
     </form>
-    <p class="mt-8 text-center text-sm"><NuxtLinkLocale to="/login" class="font-semibold text-brand">{{ $t('auth.backToLogin') }}</NuxtLinkLocale></p>
+    <p class="mt-8 text-center text-sm"><NuxtLinkLocale to="/login" class="font-semibold text-sea">{{ $t('auth.backToLogin') }}</NuxtLinkLocale></p>
   </div>
 </template>

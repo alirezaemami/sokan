@@ -1,15 +1,14 @@
 import tailwindcss from '@tailwindcss/vite'
 
-// Origin of the Frappe backend serving the sokan site.
-//
-// This bench runs with `serve_default_site: true`, so port 8000 serves the
-// default site no matter what Host header is sent. In development run a
-// dedicated server for this site:
-//
-//     bench --site sokan.local serve --port 8002
-//
-// Override per-environment with NUXT_PUBLIC_FRAPPE_API_BASE.
-const frappeApiBase = process.env.NUXT_PUBLIC_FRAPPE_API_BASE || 'http://127.0.0.1:8002'
+// Origin of the Frappe backend — in development the `bench start` web
+// server. Override per-environment with NUXT_PUBLIC_FRAPPE_API_BASE.
+const frappeApiBase = process.env.NUXT_PUBLIC_FRAPPE_API_BASE || 'http://127.0.0.1:8000'
+
+// One bench serves many sites. Frappe picks the site from the
+// X-Frappe-Site-Name header before the Host header, so the proxy names it
+// explicitly and works whatever the bench's default site is.
+const frappeSiteName = process.env.NUXT_FRAPPE_SITE_NAME || 'sokan.local'
+const toFrappe = (path: string) => ({ proxy: { to: `${frappeApiBase}${path}`, headers: { 'X-Frappe-Site-Name': frappeSiteName } } })
 
 // Public canonical origin. Every absolute URL (sitemap, canonical, hreflang,
 // OG tags) is built from this, so it must be the real domain in production.
@@ -40,6 +39,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    frappeSiteName,
     public: {
       frappeApiBase,
       siteUrl,
@@ -73,9 +73,9 @@ export default defineNuxtConfig({
   // /api and /files to Frappe. No CORS, the Frappe session cookie just works,
   // and it mirrors the production nginx layout.
   routeRules: {
-    '/api/**': { proxy: `${frappeApiBase}/api/**` },
-    '/files/**': { proxy: `${frappeApiBase}/files/**` },
-    '/private/files/**': { proxy: `${frappeApiBase}/private/files/**` },
+    '/api/**': toFrappe('/api/**'),
+    '/files/**': toFrappe('/files/**'),
+    '/private/files/**': toFrappe('/private/files/**'),
 
     '/account/**': portal,
     '/partner/**': portal,
@@ -95,7 +95,8 @@ export default defineNuxtConfig({
     head: {
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
-        { name: 'theme-color', content: '#0b1020' },
+        { name: 'theme-color', content: '#e7eff0', media: '(prefers-color-scheme: light)' },
+        { name: 'theme-color', content: '#08202a', media: '(prefers-color-scheme: dark)' },
         { name: 'format-detection', content: 'telephone=no' },
       ],
       link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],

@@ -8,12 +8,12 @@ const fmt = useFormat()
 <template>
   <NuxtLinkLocale
     :to="`/partner/leads/${r.name}`"
-    class="card group relative block overflow-hidden p-5 transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-lg"
+    class="card group relative block overflow-hidden p-5 transition-all hover:-translate-y-0.5 hover:border-sea/40 hover:shadow-lg"
   >
-    <span v-if="r.lead.is_new" class="absolute inset-y-0 start-0 w-1 bg-brand-gradient" />
+    <span v-if="r.lead.is_new" class="absolute inset-y-0 start-0 w-1 bg-night-900" />
     <div class="flex items-center justify-between gap-3">
       <span class="flex items-center gap-2 text-xs font-semibold text-faint">
-        <span v-if="r.lead.is_new" class="rounded-md bg-coral px-1.5 py-0.5 text-[0.65rem] font-bold text-white uppercase">{{ $t('common.new') }}</span>
+        <span v-if="r.lead.is_new" class="rounded-md bg-buoy px-1.5 py-0.5 text-[0.65rem] font-bold text-white uppercase">{{ $t('common.new') }}</span>
         {{ fmt.relative(r.lead.sent_on) }}
       </span>
       <StatusPill :status="r.lead.status" group="leadStatus" />

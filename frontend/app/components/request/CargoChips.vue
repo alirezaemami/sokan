@@ -7,7 +7,7 @@ const fmt = useFormat()
 
 <template>
   <div class="flex flex-wrap gap-1.5 text-xs">
-    <span v-if="r.mode" class="inline-flex items-center gap-1 rounded-lg bg-brand/10 px-2 py-1 font-semibold text-brand dark:text-brand-soft">
+    <span v-if="r.mode" class="inline-flex items-center gap-1 rounded-lg bg-sea/10 px-2 py-1 font-semibold text-sea">
       <AppIcon :name="r.mode.icon" :size="13" /> {{ $t(`modes.${r.mode.code}.name`) }}
     </span>
     <span v-for="c in r.cargo.containers" :key="c.type" class="rounded-lg bg-sunken px-2 py-1 font-medium">{{ fmt.number(c.qty) }} × {{ c.type }}</span>

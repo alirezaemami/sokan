@@ -61,14 +61,14 @@ async function choosePlan(name: string) {
     <div v-if="!s" class="grid gap-4 md:grid-cols-3"><div v-for="i in 3" :key="i" class="skeleton h-36" /></div>
     <template v-else>
       <div class="grid gap-4 md:grid-cols-3">
-        <div class="relative overflow-hidden rounded-3xl bg-brand-gradient p-6 text-white md:col-span-1">
+        <div class="relative overflow-hidden rounded-3xl bg-night-900 p-6 text-white md:col-span-1">
           <div class="absolute -end-10 -top-10 size-40 rounded-full bg-white/10 blur-2xl" />
           <p class="relative text-sm text-white/75">{{ $t('portal.walletBalance') }}</p>
-          <p class="relative mt-2 text-4xl font-black tabular-nums">{{ fmt.money(s.balance, s.currency) }}</p>
+          <p class="font-display relative mt-2 text-5xl tabular-nums">{{ fmt.money(s.balance, s.currency) }}</p>
           <p v-if="s.low_balance" class="relative mt-2 inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-xs font-semibold"><AppIcon name="alert" :size="13" /> {{ $t('wallet.low') }}</p>
         </div>
         <StatTile icon="lock-open" :label="$t('partner.freeUnlocks')" :value="fmt.number(s.free_views_left)" :hint="$t('partner.thenFee', { fee: fmt.money(s.view_fee, s.currency) })" />
-        <StatTile icon="send" tone="coral" :label="$t('wallet.freeQuotes')" :value="fmt.number(s.free_quotes_left)" :hint="$t('partner.thenFee', { fee: fmt.money(s.quote_fee, s.currency) })" />
+        <StatTile icon="send" tone="buoy" :label="$t('wallet.freeQuotes')" :value="fmt.number(s.free_quotes_left)" :hint="$t('partner.thenFee', { fee: fmt.money(s.quote_fee, s.currency) })" />
       </div>
 
       <!-- Pending top-ups -->
@@ -85,7 +85,7 @@ async function choosePlan(name: string) {
         <p class="mt-1 text-sm text-muted">{{ $t('wallet.plansText') }}</p>
         <div class="mt-5 grid gap-4 lg:grid-cols-3">
           <PlanCard v-for="pl in plans" :key="pl.name" :plan="pl" :current="pl.name === s.plan" :highlight="pl.name === s.plan">
-            <AppButton v-if="pl.name === s.plan" block variant="glass" disabled icon="check">{{ $t('pricing.current') }}</AppButton>
+            <AppButton v-if="pl.name === s.plan" block variant="night" disabled icon="check">{{ $t('pricing.current') }}</AppButton>
             <AppButton v-else block variant="secondary" :loading="planBusy === pl.name" @click="choosePlan(pl.name)">
               {{ pl.monthly_fee ? $t('wallet.switchPaid', { fee: fmt.money(pl.monthly_fee, pl.currency) }) : $t('wallet.switch') }}
             </AppButton>
@@ -119,7 +119,7 @@ async function choosePlan(name: string) {
     <AppModal v-model="topupOpen" :title="$t('wallet.topupTitle')">
       <div class="space-y-5">
         <div class="flex flex-wrap gap-2">
-          <button v-for="a in PRESETS" :key="a" type="button" class="rounded-xl px-4 py-2 text-sm font-bold transition-all" :class="topup.amount === a ? 'bg-brand text-white' : 'bg-sunken hover:bg-brand/10'" @click="topup.amount = a">
+          <button v-for="a in PRESETS" :key="a" type="button" class="rounded-full px-4 py-2 text-sm font-semibold transition-all" :class="topup.amount === a ? 'bg-helm text-helm-ink' : 'bg-sunken hover:bg-sea/10'" @click="topup.amount = a">
             {{ fmt.money(a, s?.currency || 'USD') }}
           </button>
         </div>
@@ -129,7 +129,7 @@ async function choosePlan(name: string) {
         </FormField>
         <div v-if="data?.instructions" class="rounded-xl bg-sunken p-4 text-sm leading-relaxed" v-html="data.instructions" />
         <FormField v-model="topup.payment_reference" :label="$t('wallet.reference')" :hint="$t('wallet.referenceHint')" />
-        <label class="flex cursor-pointer items-center gap-3 rounded-xl border-2 border-dashed border-line-strong p-4 text-sm hover:border-brand/50">
+        <label class="flex cursor-pointer items-center gap-3 rounded-xl border-2 border-dashed border-line-strong p-4 text-sm hover:border-sea/50">
           <AppIcon name="upload" :size="18" class="text-faint" />
           <span class="flex-1 truncate">{{ receipt ? receipt.name : $t('wallet.receipt') }}</span>
           <input type="file" class="sr-only" accept=".pdf,.jpg,.jpeg,.png" @change="receipt = ($event.target as HTMLInputElement).files?.[0] ?? null" />

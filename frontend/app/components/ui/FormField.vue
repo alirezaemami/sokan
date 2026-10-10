@@ -29,7 +29,7 @@ const props = withDefaults(
 
 const id = useId()
 const control =
-  'w-full rounded-xl border bg-surface text-ink placeholder:text-faint transition-[border-color,box-shadow] duration-200 outline-none focus:border-brand focus:ring-4 focus:ring-[var(--ring)]'
+  'w-full rounded-xl border bg-surface text-ink placeholder:text-faint transition-[border-color,box-shadow] duration-200 outline-none focus:border-sea focus:ring-4 focus:ring-[var(--ring)]'
 const cls = computed(() => [
   control,
   props.error ? 'border-danger/60' : 'border-line-strong',
@@ -42,7 +42,7 @@ const cls = computed(() => [
 <template>
   <div class="flex flex-col gap-1.5">
     <label v-if="label" :for="id" class="text-sm font-semibold text-ink-soft">
-      {{ label }}<span v-if="required" class="text-coral"> *</span>
+      {{ label }}<span v-if="required" class="text-buoy"> *</span>
     </label>
     <div class="relative">
       <AppIcon v-if="icon" :name="icon" :size="18" class="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-faint" />

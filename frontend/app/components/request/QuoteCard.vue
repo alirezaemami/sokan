@@ -23,22 +23,22 @@ const groups = computed(() => {
   <article
     class="relative overflow-hidden rounded-2xl border bg-surface transition-all duration-300"
     :class="[
-      q.status === 'Accepted' ? 'border-success ring-4 ring-success/15' : best ? 'border-brand/50 shadow-lg shadow-brand/10' : 'border-line',
+      q.status === 'Accepted' ? 'border-success ring-4 ring-success/15' : best ? 'border-sea/50' : 'border-line',
       ['Rejected', 'Expired'].includes(q.status) && 'opacity-60',
     ]"
   >
     <div v-if="best || fastest || q.status === 'Accepted'" class="flex gap-2 px-5 pt-4">
       <span v-if="q.status === 'Accepted'" class="rounded-full bg-success px-2.5 py-1 text-xs font-bold text-white">{{ $t('quotes.booked') }}</span>
-      <span v-if="best" class="rounded-full bg-brand-gradient px-2.5 py-1 text-xs font-bold text-white">{{ $t('quotes.bestPrice') }}</span>
-      <span v-if="fastest" class="rounded-full bg-lagoon/15 px-2.5 py-1 text-xs font-bold text-lagoon-deep dark:text-lagoon">{{ $t('quotes.fastest') }}</span>
+      <span v-if="best" class="rounded-full bg-night-900 px-2.5 py-1 text-xs font-bold text-white">{{ $t('quotes.bestPrice') }}</span>
+      <span v-if="fastest" class="rounded-full bg-tide/15 px-2.5 py-1 text-xs font-bold text-sea dark:text-tide">{{ $t('quotes.fastest') }}</span>
     </div>
     <div class="grid gap-5 p-5 sm:grid-cols-[1fr_auto] sm:items-center">
       <div class="flex items-center gap-3">
         <CompanyAvatar v-if="q.forwarder" :name="q.forwarder.company_name" :logo="q.forwarder.logo" />
         <div class="min-w-0">
-          <NuxtLinkLocale v-if="q.forwarder" :to="`/forwarders/${q.forwarder.slug}`" target="_blank" class="flex items-center gap-1 font-bold hover:text-brand">
+          <NuxtLinkLocale v-if="q.forwarder" :to="`/forwarders/${q.forwarder.slug}`" target="_blank" class="flex items-center gap-1 font-bold hover:text-sea">
             <span class="truncate">{{ q.forwarder.company_name }}</span>
-            <AppIcon v-if="q.forwarder.is_verified" name="badge-check" :size="16" class="shrink-0 text-brand" />
+            <AppIcon v-if="q.forwarder.is_verified" name="badge-check" :size="16" class="shrink-0 text-sea" />
           </NuxtLinkLocale>
           <p class="mt-0.5 flex flex-wrap items-center gap-x-3 text-xs text-muted">
             <span v-if="q.forwarder?.review_count" class="inline-flex items-center gap-1"><AppIcon name="star" :size="12" class="fill-warning text-warning" /> {{ fmt.number(q.forwarder.rating, 1) }}</span>
@@ -47,7 +47,7 @@ const groups = computed(() => {
         </div>
       </div>
       <div class="text-start sm:text-end">
-        <p class="text-3xl font-black tracking-tight tabular-nums">{{ fmt.money(q.total_amount, q.currency) }}</p>
+        <p class="font-display text-4xl tabular-nums">{{ fmt.money(q.total_amount, q.currency) }}</p>
         <p class="text-xs text-muted">{{ $t('quotes.allIn') }}</p>
       </div>
     </div>

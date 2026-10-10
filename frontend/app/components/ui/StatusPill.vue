@@ -5,7 +5,7 @@ const fmt = useFormat()
 const tone = computed(() => {
   const s = props.status
   if (['Open', 'Active', 'Accepted', 'Approved', 'Booked', 'Quoted'].includes(s)) return 'bg-success/12 text-success'
-  if (['New', 'Submitted', 'Unlocked'].includes(s)) return 'bg-brand/12 text-brand dark:text-brand-soft'
+  if (['New', 'Submitted', 'Unlocked'].includes(s)) return 'bg-sea/12 text-sea'
   if (['Pending', 'Draft'].includes(s)) return 'bg-warning/15 text-warning'
   if (['Rejected', 'Cancelled', 'Suspended', 'Declined'].includes(s)) return 'bg-danger/12 text-danger'
   return 'bg-sunken text-muted'

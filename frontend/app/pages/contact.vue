@@ -30,7 +30,7 @@ async function submit() {
     <section class="mx-auto grid max-w-6xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_1.4fr] lg:px-8">
       <div class="space-y-4">
         <div v-for="(c, i) in [{ icon: 'mail', key: 'email' }, { icon: 'message', key: 'chat' }, { icon: 'clock', key: 'hours' }]" :key="c.key" v-reveal="i * 80" class="card flex gap-4 p-6">
-          <span class="grid size-12 shrink-0 place-items-center rounded-2xl bg-brand/10 text-brand"><AppIcon :name="c.icon" :size="22" /></span>
+          <span class="grid size-12 shrink-0 place-items-center rounded-2xl bg-sea/10 text-sea"><AppIcon :name="c.icon" :size="22" /></span>
           <div>
             <h3 class="font-bold">{{ $t(`contact.${c.key}.title`) }}</h3>
             <p class="mt-1 text-sm text-muted">{{ $t(`contact.${c.key}.text`) }}</p>
@@ -42,7 +42,7 @@ async function submit() {
         <Transition name="fade" mode="out-in">
           <div v-if="sent" class="py-10 text-center">
             <div class="mx-auto grid size-16 place-items-center rounded-full bg-success/15 text-success"><AppIcon name="check" :size="30" /></div>
-            <h2 class="mt-5 text-2xl font-bold">{{ $t('contact.sentTitle') }}</h2>
+            <h2 class="font-display mt-5 text-3xl">{{ $t('contact.sentTitle') }}</h2>
             <p class="mt-2 text-muted">{{ $t('contact.sentText') }}</p>
           </div>
           <form v-else class="grid gap-5 sm:grid-cols-2" @submit.prevent="submit">

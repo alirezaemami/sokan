@@ -82,9 +82,9 @@ async function sendReview() {
         <div class="card p-5 sm:p-6">
           <RouteLine :origin="r.origin" :destination="r.destination" :icon="r.mode?.icon" size="lg" />
           <div v-if="r.status === 'Open'" class="mt-6 grid grid-cols-3 gap-3 text-center">
-            <div class="rounded-xl bg-sunken p-3"><p class="text-xl font-extrabold">{{ fmt.number(data.leads_sent) }}</p><p class="text-xs text-muted">{{ $t('requestDetail.notified') }}</p></div>
-            <div class="rounded-xl bg-sunken p-3"><p class="text-xl font-extrabold">{{ fmt.number(data.unlock_count) }}</p><p class="text-xs text-muted">{{ $t('requestDetail.reviewing') }}</p></div>
-            <div class="rounded-xl bg-brand/10 p-3 text-brand"><p class="text-xl font-extrabold">{{ fmt.number(data.quotes.length) }}</p><p class="text-xs">{{ $t('requestDetail.quotes') }}</p></div>
+            <div class="rounded-xl bg-sunken p-3"><p class="text-xl font-bold">{{ fmt.number(data.leads_sent) }}</p><p class="text-xs text-muted">{{ $t('requestDetail.notified') }}</p></div>
+            <div class="rounded-xl bg-sunken p-3"><p class="text-xl font-bold">{{ fmt.number(data.unlock_count) }}</p><p class="text-xs text-muted">{{ $t('requestDetail.reviewing') }}</p></div>
+            <div class="rounded-xl bg-sea/10 p-3 text-sea"><p class="text-xl font-bold">{{ fmt.number(data.quotes.length) }}</p><p class="text-xs">{{ $t('requestDetail.quotes') }}</p></div>
           </div>
         </div>
 

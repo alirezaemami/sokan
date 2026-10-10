@@ -1,54 +1,75 @@
 @import 'tailwindcss';
 
-/* Self-hosted variable fonts — no third-party font CDN, no render-blocking
-   DNS lookup, and it keeps working on filtered connections. */
-@import '@fontsource-variable/plus-jakarta-sans';
+/* Self-hosted fonts — no third-party font CDN, no render-blocking DNS
+   lookup, and they keep working on filtered connections. Fontsource
+   splits by unicode-range, so a page only downloads the subsets it uses. */
+@import '@fontsource-variable/figtree';
+@import '@fontsource/dm-serif-display/400.css';
+@import '@fontsource/dm-serif-display/400-italic.css';
+@import '@fontsource/martian-mono/400.css';
+@import '@fontsource/martian-mono/500.css';
 @import '@fontsource-variable/vazirmatn';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ============================================================
-   Tokens — "Night Harbour"
-   Electric indigo → lagoon cyan for the brand gradient, a warm
-   coral for calls to action, and slate neutrals that invert for
-   dark mode. Components only ever use the semantic names below.
+   Chart Room
+   A nautical chart: sea-paper ground, navy chart ink, depth
+   contours, buoy red (port / origin) and starboard green
+   (destination / success). Dark mode is the same chart read
+   at night. Components only use the semantic names below.
    ============================================================ */
 
 :root {
-  --bg: #f6f7fb;
-  --surface: #ffffff;
+  --bg: #e7eff0;
+  --surface: #f7fafa;
   --elevated: #ffffff;
-  --sunken: #eef0f7;
-  --ink: #0b1020;
-  --ink-soft: #2a3247;
-  --muted: #5d6680;
-  --faint: #8a93ab;
-  --line: rgb(15 23 42 / 0.08);
-  --line-strong: rgb(15 23 42 / 0.14);
-  --ring: rgb(91 92 246 / 0.35);
-  --shadow-color: 222 40% 20%;
+  --sunken: #dbe7e9;
+  --ink: #0f2d3a;
+  --ink-soft: #24485a;
+  --muted: #4f6b78;
+  --faint: #7b939d;
+  --line: rgb(15 45 58 / 0.1);
+  --line-strong: rgb(15 45 58 / 0.18);
+  --contour: rgb(15 45 58 / 0.11);
+  --ring: rgb(43 122 140 / 0.35);
+
+  --helm: #0f2d3a;
+  --helm-ink: #f2f7f7;
+  --sea: #2b7a8c;
+  --buoy: #c0392b;
+  --buoy-deep: #a02e22;
+  --starboard: #1e8449;
+  --sand: #efe3c4;
+  --shadow-color: 197 45% 15%;
 }
 
 .dark {
-  --bg: #070b16;
-  --surface: #0d1324;
-  --elevated: #121a30;
-  --sunken: #0a0f1d;
-  --ink: #eef1fb;
-  --ink-soft: #c9cfe2;
-  --muted: #94a0bd;
-  --faint: #6b7694;
-  --line: rgb(255 255 255 / 0.07);
-  --line-strong: rgb(255 255 255 / 0.13);
-  --ring: rgb(129 140 248 / 0.45);
-  --shadow-color: 230 60% 2%;
+  --bg: #08202a;
+  --surface: #0d2a36;
+  --elevated: #113241;
+  --sunken: #0a2530;
+  --ink: #e3eef0;
+  --ink-soft: #c2d6db;
+  --muted: #8eaab3;
+  --faint: #66838d;
+  --line: rgb(227 238 240 / 0.09);
+  --line-strong: rgb(227 238 240 / 0.16);
+  --contour: rgb(127 211 221 / 0.1);
+  --ring: rgb(108 195 209 / 0.4);
+
+  --helm: #e3eef0;
+  --helm-ink: #0b2530;
+  --sea: #6cc3d1;
+  --buoy: #ef6b5b;
+  --buoy-deep: #e0503f;
+  --starboard: #4cc489;
+  --sand: #3a3624;
+  --shadow-color: 200 70% 2%;
   color-scheme: dark;
 }
 
 @theme inline {
-  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-fa: 'Vazirmatn Variable', ui-sans-serif, system-ui, sans-serif;
-
   --color-bg: var(--bg);
   --color-surface: var(--surface);
   --color-elevated: var(--elevated);
@@ -59,63 +80,68 @@
   --color-faint: var(--faint);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
+  --color-contour: var(--contour);
+
+  --color-helm: var(--helm);
+  --color-helm-ink: var(--helm-ink);
+  --color-sea: var(--sea);
+  --color-buoy: var(--buoy);
+  --color-buoy-deep: var(--buoy-deep);
+  --color-starboard: var(--starboard);
+  --color-sand: var(--sand);
+
+  /* Semantic states map onto the chart's own signal colours. */
+  --color-success: var(--starboard);
+  --color-danger: var(--buoy);
 }
 
 @theme {
-  --color-brand: #5b5cf6;
-  --color-brand-deep: #4338ca;
-  --color-brand-soft: #a5b4fc;
-  --color-lagoon: #22d3ee;
-  --color-lagoon-deep: #0891b2;
-  --color-coral: #ff6b4a;
-  --color-coral-deep: #e54b2a;
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
+  --font-sans: 'Figtree Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'DM Serif Display', ui-serif, Georgia, serif;
+  --font-mono: 'Martian Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Fixed dark ground for the hero and CTA bands, regardless of theme. */
-  --color-night-950: #050814;
-  --color-night-900: #0a1024;
-  --color-night-800: #121a38;
+  --color-warning: #c98a12;
 
-  --radius-xl: 1rem;
-  --radius-2xl: 1.25rem;
-  --radius-3xl: 1.75rem;
+  /* Fixed night-chart ground for the footer, auth panel and feature
+     bands — dark in both themes. */
+  --color-night-950: #061820;
+  --color-night-900: #0b2530;
+  --color-night-800: #12313e;
+  /* Light sea-cyan for accents that sit on night surfaces. */
+  --color-tide: #7fd3dd;
+
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.125rem;
+  --radius-3xl: 1.5rem;
 
   --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --animate-aurora: aurora 22s ease-in-out infinite alternate;
   --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
   --animate-float: float 7s ease-in-out infinite;
   --animate-dash: dash 3.2s linear infinite;
   --animate-ping-slow: ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
-  --animate-gradient: gradient 8s ease infinite;
   --animate-shimmer: shimmer 1.6s linear infinite;
-  --animate-spin-slow: spin 40s linear infinite;
+  --animate-swell: swell 22s ease-in-out infinite alternate;
 
-  @keyframes aurora {
-    0% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
-    50% { transform: translate3d(6%, -4%, 0) scale(1.12) rotate(8deg); }
-    100% { transform: translate3d(-5%, 5%, 0) scale(0.95) rotate(-6deg); }
-  }
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(calc(-50% - 0.5rem)); }
   }
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
+    50% { transform: translateY(-10px); }
   }
   @keyframes dash {
     to { stroke-dashoffset: -40; }
   }
-  @keyframes gradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
   @keyframes shimmer {
     from { background-position: -200% 0; }
     to { background-position: 200% 0; }
+  }
+  /* Contours drift like a slow swell. */
+  @keyframes swell {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-3%, 1.5%, 0); }
   }
 }
 
@@ -131,26 +157,21 @@
   }
   body {
     @apply bg-bg font-sans text-ink antialiased;
-    font-feature-settings: 'ss01', 'cv11';
     text-rendering: optimizeLegibility;
   }
   html[lang^='fa'] body {
-    font-family: var(--font-fa);
-    font-feature-settings: 'ss01';
+    font-family: 'Vazirmatn Variable', var(--font-sans);
   }
   ::selection {
-    background: color-mix(in oklab, var(--color-brand) 30%, transparent);
+    background: color-mix(in oklab, var(--sea) 28%, transparent);
   }
   :focus-visible {
-    outline: 2px solid var(--color-brand);
+    outline: 2px solid var(--sea);
     outline-offset: 3px;
     border-radius: 6px;
   }
   h1, h2, h3, h4 {
-    @apply tracking-tight text-balance;
-  }
-  html[lang^='fa'] :is(h1, h2, h3, h4) {
-    letter-spacing: 0;
+    text-wrap: balance;
   }
   input, textarea, select, button {
     font: inherit;
@@ -158,55 +179,76 @@
 }
 
 /* ============================================================
-   Reusable surfaces
+   Typography roles
    ============================================================ */
 
-@utility glass {
-  background: color-mix(in oklab, var(--surface) 72%, transparent);
-  backdrop-filter: blur(18px) saturate(1.4);
-  -webkit-backdrop-filter: blur(18px) saturate(1.4);
-  border: 1px solid var(--line);
+/* Display serif for headlines. DM Serif ships one weight, so never
+   combine with font-bold — the browser would fake it. Persian has no serif
+   counterpart that suits the chart, so it uses heavy Vazirmatn instead,
+   with room for its taller ascenders and dots. */
+@utility font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  html[lang^='fa'] & {
+    font-family: 'Vazirmatn Variable', var(--font-sans);
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
 }
 
-@utility glass-dark {
-  background: rgb(255 255 255 / 0.05);
-  backdrop-filter: blur(16px) saturate(1.3);
-  -webkit-backdrop-filter: blur(16px) saturate(1.3);
-  border: 1px solid rgb(255 255 255 / 0.1);
+/* The headline emphasis: serif italic in buoy red, like a hand-marked
+   chart annotation. Persian has no italic; it keeps the colour. */
+@utility chart-em {
+  font-style: italic;
+  color: var(--buoy);
+  html[lang^='fa'] & {
+    font-style: normal;
+  }
 }
+
+/* Small uppercase mono label, as printed on charts (coordinates, scales). */
+@utility chart-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  html[lang^='fa'] & {
+    font-family: 'Vazirmatn Variable', var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0;
+    font-weight: 600;
+  }
+}
+
+/* ============================================================
+   Surfaces
+   ============================================================ */
 
 @utility card {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-2xl);
-  box-shadow:
-    0 1px 2px hsl(var(--shadow-color) / 0.05),
-    0 8px 24px -12px hsl(var(--shadow-color) / 0.12);
+  box-shadow: 0 1px 2px hsl(var(--shadow-color) / 0.05), 0 10px 26px -18px hsl(var(--shadow-color) / 0.22);
 }
 
-@utility text-gradient {
-  background-image: linear-gradient(100deg, var(--color-brand) 0%, #8b5cf6 35%, var(--color-lagoon) 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: var(--animate-gradient);
+@utility glass {
+  background: color-mix(in oklab, var(--surface) 78%, transparent);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border: 1px solid var(--line);
 }
 
-@utility bg-brand-gradient {
-  background-image: linear-gradient(120deg, var(--color-brand) 0%, #7c3aed 45%, var(--color-lagoon-deep) 100%);
-}
-
-@utility grid-fade {
-  background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+/* Translucent panel for night surfaces. */
+@utility glass-night {
+  background: rgb(127 211 221 / 0.06);
+  border: 1px solid rgb(127 211 221 / 0.14);
 }
 
 @utility skeleton {
-  background: linear-gradient(90deg, var(--sunken) 0%, color-mix(in oklab, var(--sunken) 50%, var(--surface)) 50%, var(--sunken) 100%);
+  background: linear-gradient(90deg, var(--sunken) 0%, color-mix(in oklab, var(--sunken) 45%, var(--surface)) 50%, var(--sunken) 100%);
   background-size: 200% 100%;
   animation: var(--animate-shimmer);
   border-radius: 0.75rem;
@@ -234,10 +276,8 @@
    once JS runs, so crawlers and no-JS readers never see hidden content. */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity 0.8s var(--ease-spring),
-    transform 0.8s var(--ease-spring);
+  transform: translateY(18px);
+  transition: opacity 0.8s var(--ease-spring), transform 0.8s var(--ease-spring);
   transition-delay: var(--reveal-delay, 0ms);
 }
 [data-reveal='in'] {
@@ -248,7 +288,7 @@
 /* Entrance for server-rendered hero copy. Pure CSS, so it plays before
    hydration and never leaves above-the-fold text stuck invisible. */
 @keyframes rise {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: none; }
 }
 .rise {
@@ -256,15 +296,24 @@
   animation-delay: var(--d, 0ms);
 }
 
+/* A route line that draws itself. Set --len to the path length. */
+@keyframes plot {
+  from { stroke-dashoffset: var(--len, 600); }
+  to { stroke-dashoffset: 0; }
+}
+.plot {
+  stroke-dasharray: var(--len, 600);
+  animation: plot 2.4s var(--ease-spring) both;
+  animation-delay: var(--d, 0ms);
+}
+
 .page-enter-active,
 .page-leave-active {
-  transition:
-    opacity 0.28s ease,
-    transform 0.28s var(--ease-spring);
+  transition: opacity 0.25s ease, transform 0.25s var(--ease-spring);
 }
 .page-enter-from {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(6px);
 }
 .page-leave-to {
   opacity: 0;
@@ -301,5 +350,11 @@
   [data-reveal] {
     opacity: 1;
     transform: none;
+  }
+  /* Entrances carry stagger delays; drop them entirely so the page is
+     static and complete at once, not merely fast. */
+  .rise,
+  .plot {
+    animation: none !important;
   }
 }

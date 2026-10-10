@@ -29,7 +29,7 @@ useSchemaOrg([
             @click="open = open === i ? null : i"
           >
             {{ it.q }}
-            <span class="grid size-8 shrink-0 place-items-center rounded-full bg-sunken transition-transform duration-300" :class="open === i && 'rotate-45 bg-brand text-white'">
+            <span class="grid size-8 shrink-0 place-items-center rounded-full bg-sunken transition-transform duration-300" :class="open === i && 'rotate-45 bg-helm text-helm-ink'">
               <AppIcon name="plus" :size="16" />
             </span>
           </button>

@@ -140,7 +140,7 @@ async function decline() {
       <div class="space-y-6">
         <!-- Won -->
         <Motion v-if="data.won" as="div" class="relative overflow-hidden rounded-3xl bg-success p-6 text-white" :initial="{ scale: 0.96, opacity: 0 }" :animate="{ scale: 1, opacity: 1 }">
-          <p class="text-2xl font-extrabold">🎉 {{ $t('leads.wonTitle') }}</p>
+          <p class="font-display text-3xl">{{ $t('leads.wonTitle') }}</p>
           <p class="mt-1 text-white/85">{{ $t('leads.wonText') }}</p>
         </Motion>
 
@@ -155,8 +155,8 @@ async function decline() {
             <div class="rounded-xl bg-sunken p-3"><dt class="text-xs text-faint">{{ $t('leads.quotesSoFar') }}</dt><dd class="font-bold">{{ fmt.number(data.competition.quotes) }}</dd></div>
           </dl>
           <div class="mt-4 flex flex-wrap gap-1.5">
-            <span v-if="r.pickup_required" class="rounded-lg bg-brand/10 px-2 py-1 text-xs font-semibold text-brand">{{ $t('wizard.route.pickup') }}</span>
-            <span v-if="r.delivery_required" class="rounded-lg bg-brand/10 px-2 py-1 text-xs font-semibold text-brand">{{ $t('wizard.route.delivery') }}</span>
+            <span v-if="r.pickup_required" class="rounded-lg bg-sea/10 px-2 py-1 text-xs font-semibold text-sea">{{ $t('wizard.route.pickup') }}</span>
+            <span v-if="r.delivery_required" class="rounded-lg bg-sea/10 px-2 py-1 text-xs font-semibold text-sea">{{ $t('wizard.route.delivery') }}</span>
             <span v-for="(on, k) in r.services" v-show="on" :key="k" class="rounded-lg bg-success/10 px-2 py-1 text-xs font-semibold text-success">{{ $t(`services.${k}`) }}</span>
           </div>
         </div>
@@ -168,7 +168,7 @@ async function decline() {
           </div>
           <div class="absolute inset-0 grid place-items-center bg-surface/60 p-6 text-center backdrop-blur-[2px]">
             <div class="max-w-sm">
-              <span class="mx-auto grid size-14 place-items-center rounded-2xl bg-brand-gradient text-white shadow-lg shadow-brand/30"><AppIcon name="lock" :size="24" /></span>
+              <span class="mx-auto grid size-14 place-items-center rounded-2xl bg-night-900 text-white"><AppIcon name="lock" :size="24" /></span>
               <h2 class="mt-4 text-lg font-bold">{{ $t('leads.lockedTitle') }}</h2>
               <p class="mt-1 text-sm text-muted">{{ $t('leads.lockedText') }}</p>
             </div>
@@ -177,13 +177,13 @@ async function decline() {
         <div v-else class="card p-5 sm:p-6">
           <h2 class="font-bold">{{ $t('leads.details') }}</h2>
           <div class="mt-4 grid gap-4 sm:grid-cols-2">
-            <div class="rounded-xl bg-brand/6 p-4 ring-1 ring-brand/15">
-              <p class="text-xs font-semibold text-brand">{{ $t('leads.customer') }}</p>
+            <div class="rounded-xl bg-sea/6 p-4 ring-1 ring-sea/15">
+              <p class="text-xs font-semibold text-sea">{{ $t('leads.customer') }}</p>
               <p class="mt-1 font-bold">{{ full.contact.name }}</p>
               <p v-if="full.contact.company" class="text-sm text-muted">{{ full.contact.company }}</p>
               <p class="mt-2 space-y-1 text-sm">
-                <a v-if="full.contact.email" :href="`mailto:${full.contact.email}`" class="flex items-center gap-1.5 font-semibold text-brand" dir="ltr"><AppIcon name="mail" :size="14" /> {{ full.contact.email }}</a>
-                <a v-if="full.contact.phone" :href="`tel:${full.contact.phone}`" class="flex items-center gap-1.5 font-semibold text-brand" dir="ltr"><AppIcon name="phone" :size="14" /> {{ full.contact.phone }}</a>
+                <a v-if="full.contact.email" :href="`mailto:${full.contact.email}`" class="flex items-center gap-1.5 font-semibold text-sea" dir="ltr"><AppIcon name="mail" :size="14" /> {{ full.contact.email }}</a>
+                <a v-if="full.contact.phone" :href="`tel:${full.contact.phone}`" class="flex items-center gap-1.5 font-semibold text-sea" dir="ltr"><AppIcon name="phone" :size="14" /> {{ full.contact.phone }}</a>
               </p>
             </div>
             <dl class="space-y-2 text-sm">
@@ -211,7 +211,7 @@ async function decline() {
             </table>
           </div>
           <p v-if="full.notes" class="mt-4 rounded-xl bg-sunken p-3 text-sm">{{ full.notes }}</p>
-          <a v-if="full.attachment" :href="full.attachment" target="_blank" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand"><AppIcon name="file-text" :size="16" /> {{ $t('leads.attachment') }}</a>
+          <a v-if="full.attachment" :href="full.attachment" target="_blank" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-sea"><AppIcon name="file-text" :size="16" /> {{ $t('leads.attachment') }}</a>
         </div>
 
         <!-- Quote builder -->
@@ -241,7 +241,7 @@ async function decline() {
           </TransitionGroup>
           <div class="mt-3 flex flex-wrap gap-2">
             <AppButton size="sm" variant="ghost" icon="plus" @click="addCharge('Other')">{{ $t('quoteBuilder.addLine') }}</AppButton>
-            <button v-for="g in QUICK" :key="g" type="button" class="rounded-lg bg-sunken px-3 py-1.5 text-xs font-semibold text-ink-soft hover:bg-brand/10 hover:text-brand" @click="addCharge(g)">+ {{ fmt.label('chargeGroups', g) }}</button>
+            <button v-for="g in QUICK" :key="g" type="button" class="rounded-lg bg-sunken px-3 py-1.5 text-xs font-semibold text-ink-soft hover:bg-sea/10 hover:text-sea" @click="addCharge(g)">+ {{ fmt.label('chargeGroups', g) }}</button>
           </div>
 
           <div class="mt-6 grid gap-4 sm:grid-cols-3">
@@ -261,7 +261,7 @@ async function decline() {
           <div class="mt-6 flex flex-col gap-4 rounded-2xl bg-night-950 p-5 text-white sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p class="text-sm text-white/60">{{ $t('quoteBuilder.total') }}</p>
-              <p class="text-3xl font-black tabular-nums">{{ fmt.money(total, quote.currency) }}</p>
+              <p class="font-display text-4xl tabular-nums">{{ fmt.money(total, quote.currency) }}</p>
               <p v-if="!data.my_quote" class="mt-1 text-xs text-white/60">
                 {{ p.quote_fee ? $t('quoteBuilder.feeNote', { fee: fmt.money(p.quote_fee, p.currency) }) : $t('quoteBuilder.freeNote', { n: fmt.number(p.free_quotes_left) }) }}
               </p>
@@ -277,7 +277,7 @@ async function decline() {
             <h2 class="font-bold">{{ $t('quoteBuilder.yourQuote') }}</h2>
             <StatusPill :status="data.my_quote.status" />
           </div>
-          <p class="mt-3 text-3xl font-black">{{ fmt.money(data.my_quote.total_amount, data.my_quote.currency) }}</p>
+          <p class="font-display mt-3 text-4xl">{{ fmt.money(data.my_quote.total_amount, data.my_quote.currency) }}</p>
         </section>
       </div>
 
@@ -286,17 +286,17 @@ async function decline() {
         <div class="sticky top-24 space-y-4">
           <div v-if="!data.lead.unlocked && r.status === 'Open'" class="overflow-hidden rounded-3xl bg-night-950 p-6 text-white">
             <p class="text-sm text-white/60">{{ $t('leads.unlockCost') }}</p>
-            <p class="mt-1 text-4xl font-black">{{ p.unlock_fee ? fmt.money(p.unlock_fee, p.currency) : $t('pricing.free') }}</p>
+            <p class="mt-1 text-4xl font-bold">{{ p.unlock_fee ? fmt.money(p.unlock_fee, p.currency) : $t('pricing.free') }}</p>
             <p class="mt-1 text-xs text-white/60">
               {{ p.free_views_left ? $t('leads.freeLeft', { n: fmt.number(p.free_views_left) }) : $t('leads.balance', { b: fmt.money(p.balance, p.currency) }) }}
             </p>
             <ul class="mt-5 space-y-2 text-sm text-white/80">
-              <li v-for="k in ['u1', 'u2', 'u3']" :key="k" class="flex gap-2"><AppIcon name="check" :size="16" class="mt-0.5 shrink-0 text-lagoon" />{{ $t(`leads.${k}`) }}</li>
+              <li v-for="k in ['u1', 'u2', 'u3']" :key="k" class="flex gap-2"><AppIcon name="check" :size="16" class="mt-0.5 shrink-0 text-tide" />{{ $t(`leads.${k}`) }}</li>
             </ul>
             <AppButton class="mt-6" block variant="accent" size="lg" icon="lock-open" :loading="busy === 'unlock'" @click="act('unlock', () => api.partner.unlock(name), $t('leads.unlocked'))">
               {{ $t('leads.unlock') }}
             </AppButton>
-            <p v-if="p.unlock_fee && p.balance < p.unlock_fee" class="mt-3 text-center text-xs text-coral">
+            <p v-if="p.unlock_fee && p.balance < p.unlock_fee" class="mt-3 text-center text-xs text-buoy">
               {{ $t('leads.needTopUp') }} <NuxtLinkLocale to="/partner/wallet" class="font-bold underline">{{ $t('portal.topUp') }}</NuxtLinkLocale>
             </p>
           </div>

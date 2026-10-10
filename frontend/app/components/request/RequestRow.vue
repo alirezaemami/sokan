@@ -6,7 +6,7 @@ const fmt = useFormat()
 </script>
 
 <template>
-  <NuxtLinkLocale :to="`/account/requests/${r.name}`" class="card group block p-5 transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-lg">
+  <NuxtLinkLocale :to="`/account/requests/${r.name}`" class="card group block p-5 transition-all hover:-translate-y-0.5 hover:border-sea/40 hover:shadow-lg">
     <div class="flex items-center justify-between gap-3">
       <span class="text-xs font-semibold text-faint">{{ r.name }} · {{ fmt.relative(r.creation) }}</span>
       <StatusPill :status="r.status" />

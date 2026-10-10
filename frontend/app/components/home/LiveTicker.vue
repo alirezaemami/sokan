@@ -34,7 +34,7 @@ const items = computed(() =>
     <div class="mx-auto mb-5 flex max-w-7xl items-center gap-3 px-4 sm:px-6 lg:px-8">
       <span class="relative flex size-2.5">
         <span v-if="isLive" class="animate-ping-slow absolute inline-flex size-full rounded-full bg-success" />
-        <span class="relative size-2.5 rounded-full" :class="isLive ? 'bg-success' : 'bg-brand'" />
+        <span class="relative size-2.5 rounded-full" :class="isLive ? 'bg-success' : 'bg-sea'" />
       </span>
       <p class="text-sm font-bold text-ink-soft">{{ isLive ? $t('home.live.title') : $t('home.live.popular') }}</p>
     </div>
@@ -47,7 +47,7 @@ const items = computed(() =>
             class="card flex shrink-0 items-center gap-3 px-4 py-3"
             :aria-hidden="copy === 2 || undefined"
           >
-            <span class="grid size-9 place-items-center rounded-xl bg-brand/10 text-brand"><AppIcon :name="it.icon" :size="18" /></span>
+            <span class="grid size-9 place-items-center rounded-xl bg-sea/10 text-sea"><AppIcon :name="it.icon" :size="18" /></span>
             <span class="text-sm font-semibold whitespace-nowrap">
               {{ fmt.flag(it.from.country_code) }} {{ it.from.city || fmt.country(it.from.country_code) }}
               <AppIcon name="arrow-right" :size="14" flip class="mx-1 inline text-faint" />

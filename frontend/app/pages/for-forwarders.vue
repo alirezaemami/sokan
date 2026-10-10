@@ -21,14 +21,14 @@ const benefits = [
     <PageHero :eyebrow="$t('forForwarders.eyebrow')" :title="$t('forForwarders.title')" :subtitle="$t('forForwarders.subtitle')">
       <div class="flex flex-col justify-center gap-3 sm:flex-row">
         <AppButton to="/register/forwarder" variant="accent" size="lg" icon-end="arrow-right">{{ $t('home.forwarders.cta') }}</AppButton>
-        <AppButton to="/pricing" variant="glass" size="lg">{{ $t('nav.pricing') }}</AppButton>
+        <AppButton to="/pricing" variant="night" size="lg">{{ $t('nav.pricing') }}</AppButton>
       </div>
     </PageHero>
 
     <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div v-for="(b, i) in benefits" :key="b.key" v-reveal="(i % 3) * 80" class="card p-7">
-          <span class="grid size-12 place-items-center rounded-2xl bg-brand/10 text-brand"><AppIcon :name="b.icon" :size="24" /></span>
+          <span class="grid size-12 place-items-center rounded-2xl bg-sea/10 text-sea"><AppIcon :name="b.icon" :size="24" /></span>
           <h3 class="mt-5 text-lg font-bold">{{ $t(`forForwarders.${b.key}.title`) }}</h3>
           <p class="mt-2 text-sm leading-relaxed text-muted">{{ $t(`forForwarders.${b.key}.text`) }}</p>
         </div>
@@ -42,7 +42,7 @@ const benefits = [
       <div class="card overflow-hidden p-0">
         <div class="grid md:grid-cols-3">
           <div v-for="(k, i) in ['free', 'unlock', 'quote']" :key="k" v-reveal="i * 90" class="border-line p-7 md:border-e last:border-e-0" :class="i < 2 && 'border-b md:border-b-0'">
-            <span class="text-sm font-bold text-brand">0{{ i + 1 }}</span>
+            <span class="text-sm font-bold text-sea">0{{ i + 1 }}</span>
             <h3 class="mt-2 text-lg font-bold">{{ $t(`forForwarders.billing.${k}.title`) }}</h3>
             <p class="mt-2 text-sm leading-relaxed text-muted">{{ $t(`forForwarders.billing.${k}.text`) }}</p>
           </div>

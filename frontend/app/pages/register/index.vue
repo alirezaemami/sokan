@@ -32,7 +32,7 @@ async function submit() {
 
 <template>
   <div>
-    <h1 class="text-3xl font-extrabold">{{ $t('auth.registerTitle') }}</h1>
+    <h1 class="font-display text-4xl text-ink">{{ $t('auth.registerTitle') }}</h1>
     <p class="mt-2 text-muted">{{ $t('auth.registerSubtitle') }}</p>
     <form class="mt-8 space-y-5" @submit.prevent="submit">
       <div class="grid grid-cols-2 rounded-xl bg-sunken p-1 text-sm font-semibold">
@@ -52,8 +52,8 @@ async function submit() {
       </p>
     </form>
     <p class="mt-8 text-center text-sm text-muted">
-      {{ $t('auth.haveAccount') }} <NuxtLinkLocale to="/login" class="font-semibold text-brand">{{ $t('auth.login') }}</NuxtLinkLocale>
-      · <NuxtLinkLocale to="/register/forwarder" class="font-semibold text-brand">{{ $t('auth.imForwarder') }}</NuxtLinkLocale>
+      {{ $t('auth.haveAccount') }} <NuxtLinkLocale to="/login" class="font-semibold text-sea">{{ $t('auth.login') }}</NuxtLinkLocale>
+      · <NuxtLinkLocale to="/register/forwarder" class="font-semibold text-sea">{{ $t('auth.imForwarder') }}</NuxtLinkLocale>
     </p>
   </div>
 </template>

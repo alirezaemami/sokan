@@ -67,7 +67,7 @@ async function save() {
       <section class="card overflow-hidden p-0">
         <div class="relative h-36 bg-night-950 sm:h-44">
           <img v-if="form.cover_image" :src="form.cover_image" alt="" class="size-full object-cover" />
-          <AuroraBackground v-else :grid="false" />
+          <ChartBackground v-else tone="night" />
           <label class="absolute end-3 bottom-3 inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-black/50 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur hover:bg-black/70">
             <AppIcon :name="uploading === 'cover_image' ? 'loader' : 'upload'" :size="14" :class="uploading === 'cover_image' && 'animate-spin'" /> {{ $t('partner.cover') }}
             <input type="file" accept="image/*" class="sr-only" @change="upload('cover_image', $event)" />
@@ -76,7 +76,7 @@ async function save() {
         <div class="flex flex-wrap items-end gap-4 px-6 pb-6">
           <label class="relative -mt-10 cursor-pointer">
             <CompanyAvatar :name="form.company_name || '?'" :logo="form.logo" size="xl" class="ring-4 ring-surface" />
-            <span class="absolute -end-1 -bottom-1 grid size-8 place-items-center rounded-full bg-brand text-white shadow"><AppIcon :name="uploading === 'logo' ? 'loader' : 'upload'" :size="14" :class="uploading === 'logo' && 'animate-spin'" /></span>
+            <span class="absolute -end-1 -bottom-1 grid size-8 place-items-center rounded-full bg-helm text-helm-ink shadow"><AppIcon :name="uploading === 'logo' ? 'loader' : 'upload'" :size="14" :class="uploading === 'logo' && 'animate-spin'" /></span>
             <input type="file" accept="image/*" class="sr-only" @change="upload('logo', $event)" />
           </label>
           <div class="pb-1">
@@ -107,7 +107,7 @@ async function save() {
             :key="m.name"
             type="button"
             class="flex items-center gap-2 rounded-xl border-2 px-3 py-2.5 text-start text-sm font-semibold transition-all"
-            :class="form.modes.includes(m.name) ? 'border-brand bg-brand/8 text-brand' : 'border-line hover:border-brand/30'"
+            :class="form.modes.includes(m.name) ? 'border-sea bg-sea/8 text-sea' : 'border-line hover:border-sea/30'"
             @click="toggle(form.modes, m.name)"
           >
             <AppIcon :name="m.icon" :size="17" /> {{ $t(`modes.${m.code}.name`) }}
@@ -137,8 +137,8 @@ async function save() {
 
       <section class="card space-y-3 p-6">
         <h2 class="font-bold">{{ $t('partner.sections.notifications') }}</h2>
-        <label class="flex items-center gap-3 text-sm"><input v-model="form.notify_new_requests" type="checkbox" :true-value="1" :false-value="0" class="size-5 accent-brand" /> {{ $t('partner.notifyRequests') }}</label>
-        <label class="flex items-center gap-3 text-sm"><input v-model="form.notify_quote_updates" type="checkbox" :true-value="1" :false-value="0" class="size-5 accent-brand" /> {{ $t('partner.notifyQuotes') }}</label>
+        <label class="flex items-center gap-3 text-sm"><input v-model="form.notify_new_requests" type="checkbox" :true-value="1" :false-value="0" class="size-5 accent-sea" /> {{ $t('partner.notifyRequests') }}</label>
+        <label class="flex items-center gap-3 text-sm"><input v-model="form.notify_quote_updates" type="checkbox" :true-value="1" :false-value="0" class="size-5 accent-sea" /> {{ $t('partner.notifyQuotes') }}</label>
       </section>
 
       <section class="card p-6">

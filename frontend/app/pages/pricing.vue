@@ -37,16 +37,16 @@ const cheapest = computed(() => costs.value.reduce((a, b) => (b.total < a.total 
 
     <section v-if="costs.length" class="mx-auto max-w-4xl px-4 pb-24 sm:px-6 lg:px-8">
       <div class="card p-7 sm:p-10">
-        <h2 class="text-2xl font-extrabold">{{ $t('pricing.calcTitle') }}</h2>
+        <h2 class="font-display text-3xl text-ink">{{ $t('pricing.calcTitle') }}</h2>
         <p class="mt-2 text-muted">{{ $t('pricing.calcText') }}</p>
         <div class="mt-8 grid gap-8 sm:grid-cols-2">
           <label class="block">
-            <span class="flex justify-between text-sm font-semibold"><span>{{ $t('pricing.calcUnlocks') }}</span><span class="text-brand">{{ fmt.number(unlocks) }}</span></span>
-            <input v-model.number="unlocks" type="range" min="0" max="400" step="5" class="mt-3 w-full accent-brand" />
+            <span class="flex justify-between text-sm font-semibold"><span>{{ $t('pricing.calcUnlocks') }}</span><span class="text-sea">{{ fmt.number(unlocks) }}</span></span>
+            <input v-model.number="unlocks" type="range" min="0" max="400" step="5" class="mt-3 w-full accent-sea" />
           </label>
           <label class="block">
-            <span class="flex justify-between text-sm font-semibold"><span>{{ $t('pricing.calcQuotes') }}</span><span class="text-brand">{{ fmt.number(quotes) }}</span></span>
-            <input v-model.number="quotes" type="range" min="0" max="400" step="5" class="mt-3 w-full accent-brand" />
+            <span class="flex justify-between text-sm font-semibold"><span>{{ $t('pricing.calcQuotes') }}</span><span class="text-sea">{{ fmt.number(quotes) }}</span></span>
+            <input v-model.number="quotes" type="range" min="0" max="400" step="5" class="mt-3 w-full accent-sea" />
           </label>
         </div>
         <div class="mt-8 grid gap-3 sm:grid-cols-3">
@@ -54,10 +54,10 @@ const cheapest = computed(() => costs.value.reduce((a, b) => (b.total < a.total 
             v-for="c in costs"
             :key="c.name"
             class="rounded-2xl p-5 transition-all duration-300"
-            :class="c.name === cheapest?.name ? 'bg-brand-gradient text-white shadow-xl shadow-brand/25' : 'bg-sunken'"
+            :class="c.name === cheapest?.name ? 'bg-night-900 text-white' : 'bg-sunken'"
           >
             <p class="text-sm font-semibold opacity-80">{{ c.name }}</p>
-            <p class="mt-1 text-2xl font-black tabular-nums">{{ fmt.money(c.total, c.currency) }}</p>
+            <p class="font-display mt-1 text-3xl tabular-nums">{{ fmt.money(c.total, c.currency) }}</p>
             <p v-if="c.name === cheapest?.name" class="mt-1 text-xs font-bold">{{ $t('pricing.bestForYou') }}</p>
           </div>
         </div>

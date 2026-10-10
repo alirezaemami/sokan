@@ -24,7 +24,7 @@ const details = [
       <SectionHeading :title="$t('how.detailTitle')" />
       <ol class="relative mt-14 space-y-10 border-s-2 border-dashed border-line-strong ps-10">
         <li v-for="(d, i) in details" :key="d.key" v-reveal="i * 60" class="relative">
-          <span class="absolute -start-[3.35rem] grid size-11 place-items-center rounded-2xl bg-brand-gradient text-white shadow-lg">
+          <span class="absolute -start-[3.35rem] grid size-11 place-items-center rounded-2xl bg-night-900 text-white shadow-lg">
             <AppIcon :name="d.icon" :size="20" />
           </span>
           <h3 class="text-xl font-bold">{{ $t(`how.${d.key}.title`) }}</h3>

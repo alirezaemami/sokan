@@ -7,7 +7,7 @@ const props = withDefaults(
   defineProps<{
     to?: string | Record<string, unknown>
     href?: string
-    variant?: 'primary' | 'accent' | 'secondary' | 'ghost' | 'glass' | 'danger'
+    variant?: 'primary' | 'accent' | 'secondary' | 'ghost' | 'night' | 'danger'
     size?: 'sm' | 'md' | 'lg'
     icon?: string
     iconEnd?: string
@@ -20,23 +20,23 @@ const props = withDefaults(
 )
 
 const base =
-  'group relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-xl font-semibold transition-all duration-300 ease-[var(--ease-spring)] focus-visible:outline-2 disabled:pointer-events-none disabled:opacity-55 active:scale-[0.97]'
+  'group relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-semibold transition-all duration-300 ease-[var(--ease-spring)] focus-visible:outline-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.97]'
 
+// Chart Room: navy chart ink for primary, buoy red for the one key action
+// per screen, outlined for secondary. `night` sits on night-chart surfaces.
 const variants: Record<string, string> = {
-  primary:
-    'bg-brand-gradient text-white shadow-[0_10px_30px_-10px_rgb(91_92_246/0.65)] hover:shadow-[0_16px_40px_-12px_rgb(91_92_246/0.8)] hover:-translate-y-0.5',
-  accent:
-    'bg-coral text-white shadow-[0_10px_30px_-10px_rgb(255_107_74/0.7)] hover:bg-coral-deep hover:-translate-y-0.5',
-  secondary: 'bg-surface text-ink border border-line-strong hover:border-brand/40 hover:text-brand',
+  primary: 'bg-helm text-helm-ink hover:bg-ink-soft',
+  accent: 'bg-buoy text-white shadow-[0_10px_24px_-12px_rgb(192_57_43/0.7)] hover:bg-buoy-deep',
+  secondary: 'border border-line-strong bg-surface text-ink hover:border-sea hover:text-sea',
   ghost: 'text-ink-soft hover:bg-sunken hover:text-ink',
-  glass: 'glass-dark text-white hover:bg-white/12',
+  night: 'border border-tide/30 text-white hover:border-tide hover:bg-tide/10',
   danger: 'bg-danger/10 text-danger hover:bg-danger hover:text-white',
 }
 
 const sizes: Record<string, string> = {
-  sm: 'h-9 px-3.5 text-sm',
+  sm: 'h-9 px-4 text-sm',
   md: 'h-11 px-5 text-[0.94rem]',
-  lg: 'h-13 px-7 text-base',
+  lg: 'h-12 px-7 text-base',
 }
 
 const cls = computed(() => [base, variants[props.variant], sizes[props.size], props.block && 'w-full'])

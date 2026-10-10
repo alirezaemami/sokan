@@ -65,8 +65,8 @@ async function submit() {
 
 <template>
   <div>
-    <p class="text-sm font-bold text-brand">{{ $t('wizard.stepOf', { n: step + 1, total: 2 }) }}</p>
-    <h1 class="mt-1 text-3xl font-extrabold">{{ $t('auth.fwdTitle') }}</h1>
+    <p class="text-sm font-bold text-sea">{{ $t('wizard.stepOf', { n: step + 1, total: 2 }) }}</p>
+    <h1 class="mt-1 text-3xl font-bold">{{ $t('auth.fwdTitle') }}</h1>
     <p class="mt-2 text-muted">{{ $t('auth.fwdSubtitle') }}</p>
 
     <div v-if="isLoggedIn && !isForwarder" class="mt-6 rounded-xl bg-warning/12 p-4 text-sm">{{ $t('auth.fwdLoggedIn') }}</div>
@@ -79,14 +79,14 @@ async function submit() {
           <FormField v-model="form.city" :label="$t('fields.city')" />
         </div>
         <div>
-          <p class="mb-2 text-sm font-semibold text-ink-soft">{{ $t('auth.fwdModes') }} <span class="text-coral">*</span></p>
+          <p class="mb-2 text-sm font-semibold text-ink-soft">{{ $t('auth.fwdModes') }} <span class="text-buoy">*</span></p>
           <div class="grid grid-cols-2 gap-2">
             <button
               v-for="m in modes"
               :key="m.name"
               type="button"
               class="flex items-center gap-2 rounded-xl border-2 px-3 py-2.5 text-start text-sm font-semibold transition-all"
-              :class="form.modes.includes(m.name) ? 'border-brand bg-brand/8 text-brand' : 'border-line hover:border-brand/30'"
+              :class="form.modes.includes(m.name) ? 'border-sea bg-sea/8 text-sea' : 'border-line hover:border-sea/30'"
               @click="toggle(m.name)"
             >
               <AppIcon :name="m.icon" :size="17" /> {{ $t(`modes.${m.code}.name`) }}
@@ -116,7 +116,7 @@ async function submit() {
     </AnimatePresence>
 
     <p class="mt-8 text-center text-sm text-muted">
-      {{ $t('auth.haveAccount') }} <NuxtLinkLocale to="/login" class="font-semibold text-brand">{{ $t('auth.login') }}</NuxtLinkLocale>
+      {{ $t('auth.haveAccount') }} <NuxtLinkLocale to="/login" class="font-semibold text-sea">{{ $t('auth.login') }}</NuxtLinkLocale>
     </p>
   </div>
 </template>

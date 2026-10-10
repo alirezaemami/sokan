@@ -54,23 +54,23 @@ function isActive(item: { to: string; exact?: boolean }) {
           :key="item.to"
           :to="item.to"
           class="group flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[0.94rem] font-semibold transition-all"
-          :class="isActive(item) ? 'bg-brand/10 text-brand dark:text-brand-soft' : 'text-ink-soft hover:bg-sunken hover:text-ink'"
+          :class="isActive(item) ? 'bg-sea/10 text-sea' : 'text-ink-soft hover:bg-sunken hover:text-ink'"
         >
           <AppIcon :name="item.icon" :size="19" class="transition-transform group-hover:scale-110" />
           {{ $t(item.key) }}
         </NuxtLinkLocale>
       </nav>
 
-      <div v-if="isPartner && me?.forwarder" class="mx-4 mb-4 overflow-hidden rounded-2xl bg-brand-gradient p-4 text-white">
+      <div v-if="isPartner && me?.forwarder" class="mx-4 mb-4 overflow-hidden rounded-2xl bg-night-900 p-4 text-white">
         <p class="text-xs font-medium text-white/75">{{ $t('portal.walletBalance') }}</p>
-        <p class="mt-1 text-2xl font-extrabold tabular-nums">{{ fmt.money(me.forwarder.wallet_balance, me.forwarder.wallet_currency) }}</p>
+        <p class="font-display mt-1 text-3xl tabular-nums">{{ fmt.money(me.forwarder.wallet_balance, me.forwarder.wallet_currency) }}</p>
         <NuxtLinkLocale to="/partner/wallet" class="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-white/90 hover:text-white">
           {{ $t('portal.topUp') }} <AppIcon name="arrow-right" :size="14" flip />
         </NuxtLinkLocale>
       </div>
 
       <div class="flex items-center gap-3 border-t border-line p-4">
-        <span class="grid size-10 place-items-center rounded-full bg-brand/10 font-bold text-brand">{{ (me?.full_name || '?').charAt(0) }}</span>
+        <span class="grid size-10 place-items-center rounded-full bg-sea/10 font-bold text-sea">{{ (me?.full_name || '?').charAt(0) }}</span>
         <div class="min-w-0 flex-1">
           <p class="truncate text-sm font-semibold">{{ me?.full_name }}</p>
           <p class="truncate text-xs text-faint">{{ me?.user }}</p>
@@ -94,7 +94,7 @@ function isActive(item: { to: string; exact?: boolean }) {
           to="/partner/wallet"
           class="inline-flex items-center gap-2 rounded-xl bg-sunken px-3 py-2 text-sm font-bold tabular-nums lg:hidden"
         >
-          <AppIcon name="wallet" :size="16" class="text-brand" />
+          <AppIcon name="wallet" :size="16" class="text-sea" />
           {{ fmt.money(me.forwarder.wallet_balance, me.forwarder.wallet_currency) }}
         </NuxtLinkLocale>
         <div class="hidden sm:block"><LangSwitch /></div>
@@ -119,9 +119,9 @@ function isActive(item: { to: string; exact?: boolean }) {
           :key="item.to"
           :to="item.to"
           class="flex flex-col items-center gap-1 pt-2.5 pb-1 text-[0.68rem] font-semibold transition-colors"
-          :class="isActive(item) ? 'text-brand' : 'text-faint'"
+          :class="isActive(item) ? 'text-sea' : 'text-faint'"
         >
-          <span class="grid h-7 w-12 place-items-center rounded-full transition-all" :class="isActive(item) && 'bg-brand/12'">
+          <span class="grid h-7 w-12 place-items-center rounded-full transition-all" :class="isActive(item) && 'bg-sea/12'">
             <AppIcon :name="item.icon" :size="20" />
           </span>
           {{ $t(item.key) }}

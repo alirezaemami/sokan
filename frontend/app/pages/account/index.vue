@@ -20,14 +20,14 @@ const c = computed(() => data.value?.counts ?? {})
 
     <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
       <StatTile icon="send" :label="$t('account.open')" :value="fmt.number(c.Open || 0)" />
-      <StatTile icon="receipt" tone="coral" :label="$t('account.quotesWaiting')" :value="fmt.number(data?.quotes_waiting || 0)" />
+      <StatTile icon="receipt" tone="buoy" :label="$t('account.quotesWaiting')" :value="fmt.number(data?.quotes_waiting || 0)" />
       <StatTile icon="handshake" tone="success" :label="$t('account.booked')" :value="fmt.number(c.Booked || 0)" />
       <StatTile icon="clock" tone="warning" :label="$t('account.expired')" :value="fmt.number((c.Expired || 0) + (c.Cancelled || 0))" />
     </div>
 
     <div class="mt-10 flex items-center justify-between">
       <h2 class="text-lg font-bold">{{ $t('account.recent') }}</h2>
-      <NuxtLinkLocale to="/account/requests" class="text-sm font-semibold text-brand">{{ $t('common.viewAll') }}</NuxtLinkLocale>
+      <NuxtLinkLocale to="/account/requests" class="text-sm font-semibold text-sea">{{ $t('common.viewAll') }}</NuxtLinkLocale>
     </div>
     <div v-if="status === 'pending'" class="mt-4 grid gap-4 md:grid-cols-2"><div v-for="i in 2" :key="i" class="skeleton h-48" /></div>
     <div v-else-if="data?.recent.length" class="mt-4 grid gap-4 md:grid-cols-2">

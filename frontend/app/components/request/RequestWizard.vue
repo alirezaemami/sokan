@@ -259,7 +259,7 @@ function onFile(e: Event) {
       <AppIcon name="check" :size="44" :stroke-width="3" />
     </Motion>
     <Motion as="div" :initial="{ opacity: 0, y: 16 }" :animate="{ opacity: 1, y: 0 }" :transition="{ delay: 0.25 }">
-      <h2 class="mt-8 text-3xl font-extrabold">{{ result.status === 'Open' ? $t('wizard.successTitle') : $t('wizard.reviewTitle') }}</h2>
+      <h2 class="font-display mt-8 text-4xl">{{ result.status === 'Open' ? $t('wizard.successTitle') : $t('wizard.reviewTitle') }}</h2>
       <p class="mt-3 text-lg text-muted">
         {{ result.status === 'Open' ? $t('wizard.successText', { n: fmt.number(result.leads_sent || 0) }) : $t('wizard.reviewText') }}
       </p>
@@ -278,13 +278,13 @@ function onFile(e: Event) {
         <li v-for="(s, i) in STEPS" :key="s">
           <button type="button" class="group w-full text-start" :disabled="i > step" @click="goto(i)">
             <span class="block h-1.5 overflow-hidden rounded-full bg-line-strong">
-              <span class="block h-full rounded-full bg-brand-gradient transition-all duration-700 ease-[var(--ease-spring)]" :style="{ width: i < step ? '100%' : i === step ? '50%' : '0%' }" />
+              <span class="block h-full rounded-full bg-night-900 transition-all duration-700 ease-[var(--ease-spring)]" :style="{ width: i < step ? '100%' : i === step ? '50%' : '0%' }" />
             </span>
             <span class="mt-2 hidden text-xs font-semibold sm:block" :class="i <= step ? 'text-ink' : 'text-faint'">{{ i + 1 }}. {{ $t(`wizard.steps.${s}`) }}</span>
           </button>
         </li>
       </ol>
-      <p class="mb-6 text-sm font-semibold text-brand sm:hidden">{{ $t('wizard.stepOf', { n: step + 1, total: STEPS.length }) }} · {{ $t(`wizard.steps.${STEPS[step]}`) }}</p>
+      <p class="mb-6 text-sm font-semibold text-sea sm:hidden">{{ $t('wizard.stepOf', { n: step + 1, total: STEPS.length }) }} · {{ $t(`wizard.steps.${STEPS[step]}`) }}</p>
 
       <AnimatePresence mode="wait" :custom="direction">
         <Motion
@@ -298,7 +298,7 @@ function onFile(e: Event) {
           <!-- STEP 1: route -->
           <div v-if="step === 0" class="space-y-6">
             <div>
-              <h2 class="text-2xl font-extrabold">{{ $t('wizard.route.title') }}</h2>
+              <h2 class="font-display text-3xl text-ink">{{ $t('wizard.route.title') }}</h2>
               <p class="mt-1 text-muted">{{ $t('wizard.route.subtitle') }}</p>
             </div>
             <div class="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
@@ -307,10 +307,10 @@ function onFile(e: Event) {
                 :key="m.name"
                 type="button"
                 class="flex flex-col items-start gap-2 rounded-2xl border-2 p-4 text-start transition-all duration-300"
-                :class="form.transport_mode === m.name ? 'border-brand bg-brand/8 shadow-lg shadow-brand/10' : 'border-line bg-surface hover:border-brand/30'"
+                :class="form.transport_mode === m.name ? 'border-sea bg-sea/8' : 'border-line bg-surface hover:border-sea/30'"
                 @click="form.transport_mode = m.name"
               >
-                <span class="grid size-10 place-items-center rounded-xl transition-colors" :class="form.transport_mode === m.name ? 'bg-brand-gradient text-white' : 'bg-sunken text-ink-soft'">
+                <span class="grid size-10 place-items-center rounded-xl transition-colors" :class="form.transport_mode === m.name ? 'bg-night-900 text-white' : 'bg-sunken text-ink-soft'">
                   <AppIcon :name="m.icon" :size="20" />
                 </span>
                 <span class="text-sm font-bold">{{ $t(`modes.${m.code}.name`) }}</span>
@@ -320,20 +320,20 @@ function onFile(e: Event) {
             <div class="grid gap-5 md:grid-cols-2">
               <fieldset class="card space-y-4 p-5">
                 <legend class="sr-only">{{ $t('wizard.route.origin') }}</legend>
-                <p class="flex items-center gap-2 font-bold"><span class="size-2.5 rounded-full bg-brand" /> {{ $t('wizard.route.origin') }}</p>
+                <p class="flex items-center gap-2 font-bold"><span class="size-2.5 rounded-full bg-buoy" /> {{ $t('wizard.route.origin') }}</p>
                 <CountrySelect v-model="form.origin_country" :label="$t('fields.country')" required :error="errors.origin_country" />
                 <FormField v-model="form.origin_city" :label="$t('fields.city')" required :error="errors.origin_city" icon="map-pin" />
                 <FormField v-model="form.origin_port" :label="$t('wizard.route.port')" :hint="$t('common.optional')" />
-                <label class="flex items-center gap-3 text-sm font-semibold"><input v-model="form.pickup_required" type="checkbox" class="size-5 accent-brand" /> {{ $t('wizard.route.pickup') }}</label>
+                <label class="flex items-center gap-3 text-sm font-semibold"><input v-model="form.pickup_required" type="checkbox" class="size-5 accent-sea" /> {{ $t('wizard.route.pickup') }}</label>
                 <FormField v-if="form.pickup_required" v-model="form.pickup_address" as="textarea" :rows="2" :label="$t('wizard.route.pickupAddress')" />
               </fieldset>
               <fieldset class="card space-y-4 p-5">
                 <legend class="sr-only">{{ $t('wizard.route.destination') }}</legend>
-                <p class="flex items-center gap-2 font-bold"><span class="size-2.5 rounded-full bg-lagoon" /> {{ $t('wizard.route.destination') }}</p>
+                <p class="flex items-center gap-2 font-bold"><span class="size-2.5 rounded-full bg-starboard" /> {{ $t('wizard.route.destination') }}</p>
                 <CountrySelect v-model="form.destination_country" :label="$t('fields.country')" required :error="errors.destination_country" />
                 <FormField v-model="form.destination_city" :label="$t('fields.city')" required :error="errors.destination_city" icon="map-pin" />
                 <FormField v-model="form.destination_port" :label="$t('wizard.route.port')" :hint="$t('common.optional')" />
-                <label class="flex items-center gap-3 text-sm font-semibold"><input v-model="form.delivery_required" type="checkbox" class="size-5 accent-brand" /> {{ $t('wizard.route.delivery') }}</label>
+                <label class="flex items-center gap-3 text-sm font-semibold"><input v-model="form.delivery_required" type="checkbox" class="size-5 accent-sea" /> {{ $t('wizard.route.delivery') }}</label>
                 <FormField v-if="form.delivery_required" v-model="form.delivery_address" as="textarea" :rows="2" :label="$t('wizard.route.deliveryAddress')" />
               </fieldset>
             </div>
@@ -352,7 +352,7 @@ function onFile(e: Event) {
           <!-- STEP 2: cargo -->
           <div v-else-if="step === 1" class="space-y-6">
             <div>
-              <h2 class="text-2xl font-extrabold">{{ $t('wizard.cargo.title') }}</h2>
+              <h2 class="font-display text-3xl text-ink">{{ $t('wizard.cargo.title') }}</h2>
               <p class="mt-1 text-muted">{{ $t('wizard.cargo.subtitle') }}</p>
             </div>
             <div class="grid gap-5 sm:grid-cols-2">
@@ -393,7 +393,7 @@ function onFile(e: Event) {
               <div class="flex flex-wrap items-center justify-between gap-3">
                 <h3 class="font-bold">{{ $t('wizard.cargo.packages') }}</h3>
                 <label class="flex items-center gap-2 text-sm font-semibold text-muted">
-                  <input v-model="form.totals_only" type="checkbox" class="size-4 accent-brand" /> {{ $t('wizard.cargo.totalsOnly') }}
+                  <input v-model="form.totals_only" type="checkbox" class="size-4 accent-sea" /> {{ $t('wizard.cargo.totalsOnly') }}
                 </label>
               </div>
               <div v-if="form.totals_only" class="mt-4 grid gap-4 sm:grid-cols-2">
@@ -419,7 +419,7 @@ function onFile(e: Event) {
                 <AppButton size="sm" variant="ghost" icon="plus" class="mt-3" @click="addPackage">{{ $t('wizard.cargo.addLine') }}</AppButton>
               </template>
               <p v-if="errors.weight" class="mt-2 text-sm text-danger">{{ errors.weight }}</p>
-              <label class="mt-4 flex items-center gap-3 text-sm font-semibold"><input v-model="form.is_stackable" type="checkbox" class="size-5 accent-brand" /> {{ $t('wizard.cargo.stackable') }}</label>
+              <label class="mt-4 flex items-center gap-3 text-sm font-semibold"><input v-model="form.is_stackable" type="checkbox" class="size-5 accent-sea" /> {{ $t('wizard.cargo.stackable') }}</label>
             </div>
 
             <div class="grid gap-5 sm:grid-cols-[1fr_140px]">
@@ -433,7 +433,7 @@ function onFile(e: Event) {
           <!-- STEP 3: services -->
           <div v-else-if="step === 2" class="space-y-6">
             <div>
-              <h2 class="text-2xl font-extrabold">{{ $t('wizard.services.title') }}</h2>
+              <h2 class="font-display text-3xl text-ink">{{ $t('wizard.services.title') }}</h2>
               <p class="mt-1 text-muted">{{ $t('wizard.services.subtitle') }}</p>
             </div>
             <div class="grid gap-3 sm:grid-cols-2">
@@ -446,17 +446,17 @@ function onFile(e: Event) {
                 ] as const"
                 :key="s.k"
                 class="flex cursor-pointer items-start gap-4 rounded-2xl border-2 p-4 transition-all"
-                :class="form[s.k] ? 'border-brand bg-brand/6' : 'border-line bg-surface hover:border-brand/30'"
+                :class="form[s.k] ? 'border-sea bg-sea/6' : 'border-line bg-surface hover:border-sea/30'"
               >
                 <input v-model="form[s.k]" type="checkbox" class="sr-only" />
-                <span class="grid size-11 shrink-0 place-items-center rounded-xl transition-colors" :class="form[s.k] ? 'bg-brand-gradient text-white' : 'bg-sunken text-ink-soft'">
+                <span class="grid size-11 shrink-0 place-items-center rounded-xl transition-colors" :class="form[s.k] ? 'bg-night-900 text-white' : 'bg-sunken text-ink-soft'">
                   <AppIcon :name="s.icon" :size="20" />
                 </span>
                 <span class="flex-1">
                   <span class="block font-bold">{{ $t(`wizard.services.${s.k}.title`) }}</span>
                   <span class="mt-0.5 block text-sm text-muted">{{ $t(`wizard.services.${s.k}.text`) }}</span>
                 </span>
-                <AppIcon name="circle-check" :size="22" class="shrink-0 transition-all" :class="form[s.k] ? 'scale-100 text-brand' : 'scale-0'" />
+                <AppIcon name="circle-check" :size="22" class="shrink-0 transition-all" :class="form[s.k] ? 'scale-100 text-sea' : 'scale-0'" />
               </label>
             </div>
             <div class="grid gap-5 sm:grid-cols-2">
@@ -466,7 +466,7 @@ function onFile(e: Event) {
               <FormField v-model="form.valid_until" type="date" :min="inDays(1)" :label="$t('wizard.services.deadline')" :hint="$t('wizard.services.deadlineHint')" />
             </div>
             <FormField v-model="form.notes" as="textarea" :rows="4" :label="$t('wizard.services.notes')" :placeholder="$t('wizard.services.notesPh')" />
-            <label class="flex cursor-pointer items-center gap-4 rounded-2xl border-2 border-dashed border-line-strong p-5 transition-colors hover:border-brand/50">
+            <label class="flex cursor-pointer items-center gap-4 rounded-2xl border-2 border-dashed border-line-strong p-5 transition-colors hover:border-sea/50">
               <span class="grid size-11 place-items-center rounded-xl bg-sunken text-ink-soft"><AppIcon name="upload" :size="20" /></span>
               <span class="flex-1 text-sm">
                 <span class="block font-bold">{{ file ? file.name : $t('wizard.services.attach') }}</span>
@@ -479,7 +479,7 @@ function onFile(e: Event) {
           <!-- STEP 4: review + account -->
           <div v-else class="space-y-6">
             <div>
-              <h2 class="text-2xl font-extrabold">{{ $t('wizard.review.title') }}</h2>
+              <h2 class="font-display text-3xl text-ink">{{ $t('wizard.review.title') }}</h2>
               <p class="mt-1 text-muted">{{ $t('wizard.review.subtitle') }}</p>
             </div>
 
@@ -492,7 +492,7 @@ function onFile(e: Event) {
                   </p>
                   <p class="mt-1 text-sm text-muted">{{ mode && $t(`modes.${mode.code}.name`) }} · {{ $t('wizard.review.ready') }} {{ fmt.date(form.ready_date) }}<template v-if="form.incoterm"> · {{ form.incoterm }}</template></p>
                 </div>
-                <button type="button" class="text-sm font-semibold text-brand" @click="goto(0)">{{ $t('common.edit') }}</button>
+                <button type="button" class="text-sm font-semibold text-sea" @click="goto(0)">{{ $t('common.edit') }}</button>
               </div>
               <div class="flex items-start justify-between gap-4 p-5">
                 <div>
@@ -504,7 +504,7 @@ function onFile(e: Event) {
                     · {{ fmt.label('categories', form.cargo_category) }}
                   </p>
                 </div>
-                <button type="button" class="text-sm font-semibold text-brand" @click="goto(1)">{{ $t('common.edit') }}</button>
+                <button type="button" class="text-sm font-semibold text-sea" @click="goto(1)">{{ $t('common.edit') }}</button>
               </div>
             </div>
 
@@ -550,18 +550,18 @@ function onFile(e: Event) {
         <div class="overflow-hidden rounded-3xl bg-night-950 p-6 text-white">
           <p class="text-xs font-semibold tracking-wide text-white/50 uppercase">{{ $t('wizard.summary') }}</p>
           <div class="mt-4 flex items-center gap-3">
-            <span class="grid size-11 place-items-center rounded-xl bg-brand-gradient"><AppIcon :name="mode?.icon || 'package'" :size="20" /></span>
+            <span class="grid size-11 place-items-center rounded-xl bg-night-900"><AppIcon :name="mode?.icon || 'package'" :size="20" /></span>
             <span class="font-bold">{{ mode ? $t(`modes.${mode.code}.name`) : '—' }}</span>
           </div>
           <div class="mt-5 space-y-2 text-sm">
-            <p class="flex items-center gap-2"><span class="size-2 rounded-full bg-brand" />{{ form.origin_city || '…' }}<span v-if="form.origin_country" class="text-white/50">· {{ form.origin_country }}</span></p>
+            <p class="flex items-center gap-2"><span class="size-2 rounded-full bg-[#ef6b5b]" />{{ form.origin_city || '…' }}<span v-if="form.origin_country" class="text-white/50">· {{ form.origin_country }}</span></p>
             <p class="ms-[3px] h-4 border-s border-dashed border-white/30" />
-            <p class="flex items-center gap-2"><span class="size-2 rounded-full bg-lagoon" />{{ form.destination_city || '…' }}<span v-if="form.destination_country" class="text-white/50">· {{ form.destination_country }}</span></p>
+            <p class="flex items-center gap-2"><span class="size-2 rounded-full bg-[#4cc489]" />{{ form.destination_city || '…' }}<span v-if="form.destination_country" class="text-white/50">· {{ form.destination_country }}</span></p>
           </div>
           <dl class="mt-6 grid grid-cols-2 gap-3 border-t border-white/10 pt-5 text-sm">
             <div><dt class="text-white/50">{{ $t('wizard.grossWeight') }}</dt><dd class="font-bold tabular-nums">{{ fmt.weight(totals.weight) }}</dd></div>
             <div v-if="!usesContainers"><dt class="text-white/50">{{ $t('wizard.volume') }}</dt><dd class="font-bold tabular-nums">{{ fmt.number(totals.volume, 2) }} {{ $t('units.cbm') }}</dd></div>
-            <div v-if="!usesContainers" class="col-span-2"><dt class="text-white/50">{{ $t('wizard.chargeable') }}</dt><dd class="text-lg font-extrabold text-lagoon tabular-nums">{{ fmt.weight(chargeable) }}</dd></div>
+            <div v-if="!usesContainers" class="col-span-2"><dt class="text-white/50">{{ $t('wizard.chargeable') }}</dt><dd class="text-lg font-bold text-tide tabular-nums">{{ fmt.weight(chargeable) }}</dd></div>
             <div v-else><dt class="text-white/50">{{ $t('wizard.units') }}</dt><dd class="font-bold tabular-nums">{{ fmt.number(totals.count) }}</dd></div>
           </dl>
         </div>

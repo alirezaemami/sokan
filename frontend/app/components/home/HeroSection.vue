@@ -6,7 +6,7 @@ const props = defineProps<{ modes: TransportMode[] }>()
 const { t } = useI18n()
 const localePath = useLocalePath()
 
-const mode = ref<string>('')
+const mode = ref('')
 const from = ref<string | null>(null)
 const to = ref<string | null>(null)
 
@@ -23,87 +23,59 @@ function start() {
 </script>
 
 <template>
-  <section class="relative overflow-hidden bg-night-950 pt-[72px] text-white">
-    <AuroraBackground />
-    <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pt-14 pb-20 sm:px-6 lg:grid-cols-[1.08fr_1fr] lg:gap-10 lg:px-8 lg:pt-20 lg:pb-28">
-      <div>
-        <p
-          class="rise glass-dark inline-flex items-center gap-2 rounded-full py-1.5 ps-1.5 pe-4 text-sm text-white/80"
-        >
-          <span class="rounded-full bg-brand-gradient px-2.5 py-0.5 text-xs font-bold text-white">{{ t('home.hero.badge') }}</span>
-          {{ t('home.hero.eyebrow') }}
+  <!-- Clip only sideways: the country list must be free to drop below the hero. -->
+  <section class="relative z-10 overflow-x-clip pt-[72px]">
+    <ChartBackground compass />
+    <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-4 pt-10 pb-16 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:px-8 lg:pt-16 lg:pb-24">
+      <div class="min-w-0">
+        <p class="rise chart-label inline-flex items-center gap-2 text-sea">
+          <span class="size-2 rounded-full bg-buoy" /> {{ t('home.hero.eyebrow') }}
         </p>
 
-        <h1 style="--d: 80ms"
-          class="rise mt-6 text-[2.6rem] leading-[1.05] font-extrabold tracking-tight sm:text-6xl lg:text-[4.2rem]"
-        >
+        <h1 class="rise font-display mt-5 text-[2.75rem] leading-[1.02] text-ink sm:text-6xl lg:text-[4.4rem]" style="--d: 60ms">
           {{ t('home.hero.title1') }}
-          <span class="text-gradient block">{{ t('home.hero.titleHighlight') }}</span>
+          <span class="chart-em block">{{ t('home.hero.titleHighlight') }}</span>
         </h1>
 
-        <p style="--d: 160ms"
-          class="rise mt-6 max-w-xl text-lg leading-relaxed text-white/70 sm:text-xl"
-        >
+        <p class="rise mt-6 max-w-xl text-lg leading-relaxed text-muted" style="--d: 140ms">
           {{ t('home.hero.subtitle') }}
         </p>
 
         <!-- Quick start -->
-        <form style="--d: 260ms"
-          class="rise glass-dark mt-9 max-w-xl rounded-3xl p-3 shadow-2xl shadow-black/30 sm:p-4"
-          @submit.prevent="start"
-        >
-          <div class="no-scrollbar -mx-1 flex gap-1.5 overflow-x-auto px-1 pb-3">
+        <form class="rise card relative z-20 mt-8 max-w-xl p-3 sm:p-4" style="--d: 220ms" @submit.prevent="start">
+          <div class="no-scrollbar -mx-1 flex gap-1.5 overflow-x-auto px-1 pb-3" role="radiogroup" :aria-label="t('wizard.route.title')">
             <button
               v-for="m in modes"
               :key="m.name"
               type="button"
-              class="inline-flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition-all"
-              :class="mode === m.name ? 'bg-white text-night-950 shadow-lg' : 'text-white/70 hover:bg-white/10 hover:text-white'"
+              role="radio"
+              :aria-checked="mode === m.name"
+              class="inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors"
+              :class="mode === m.name ? 'border-helm bg-helm text-helm-ink' : 'border-line-strong text-ink-soft hover:border-sea hover:text-sea'"
               @click="mode = m.name"
             >
-              <AppIcon :name="m.icon" :size="16" />
+              <AppIcon :name="m.icon" :size="15" />
               {{ $t(`modes.${m.code}.name`) }}
             </button>
           </div>
           <div class="grid gap-2 sm:grid-cols-[1fr_1fr_auto]">
-            <div class="hero-select"><CountrySelect v-model="from" :placeholder="t('home.hero.from')" /></div>
-            <div class="hero-select"><CountrySelect v-model="to" :placeholder="t('home.hero.to')" /></div>
+            <CountrySelect v-model="from" :placeholder="t('home.hero.from')" />
+            <CountrySelect v-model="to" :placeholder="t('home.hero.to')" />
             <AppButton type="submit" variant="accent" size="lg" icon-end="arrow-right" class="h-12">{{ t('home.hero.cta') }}</AppButton>
           </div>
         </form>
 
-        <ul style="--d: 450ms"
-          class="rise mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/70"
-        >
+        <ul class="rise mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-soft" style="--d: 320ms">
           <li v-for="k in ['trust1', 'trust2', 'trust3']" :key="k" class="flex items-center gap-2">
-            <AppIcon name="circle-check" :size="18" class="text-lagoon" />
+            <AppIcon name="circle-check" :size="17" class="text-starboard" />
             {{ t(`home.hero.${k}`) }}
           </li>
         </ul>
       </div>
 
-      <div style="--d: 200ms"
-      >
+      <div class="rise min-w-0" style="--d: 180ms">
         <HeroVisual />
       </div>
     </div>
-
-    <!-- Curved bottom edge into the page -->
-    <svg class="relative block w-full text-bg" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
-      <path fill="currentColor" d="M0 60h1440V0c-240 40-480 60-720 60S240 40 0 0z" />
-    </svg>
   </section>
 </template>
-
-<style scoped>
-/* The country picker is a light-surface control; inside the dark hero it
-   reads better as glass. */
-.hero-select :deep(button) {
-  background: rgb(255 255 255 / 0.08);
-  border-color: rgb(255 255 255 / 0.12);
-  color: #fff;
-}
-.hero-select :deep(button span) {
-  color: rgb(255 255 255 / 0.85);
-}
-</style>

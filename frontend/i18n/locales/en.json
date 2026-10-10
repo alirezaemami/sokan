@@ -115,35 +115,43 @@
   "modes": {
     "sea_fcl": {
       "name": "Sea FCL",
-      "desc": "Full container loads — book whole 20' or 40' containers."
+      "desc": "Full container loads — book whole 20' or 40' containers.",
+      "category": "Sea"
     },
     "sea_lcl": {
       "name": "Sea LCL",
-      "desc": "Share container space and pay only for the cubic metres you use."
+      "desc": "Share container space and pay only for the cubic metres you use.",
+      "category": "Sea"
     },
     "air": {
       "name": "Air freight",
-      "desc": "The fastest way to move urgent, high-value or perishable cargo."
+      "desc": "The fastest way to move urgent, high-value or perishable cargo.",
+      "category": "Air"
     },
     "road_ftl": {
       "name": "Road FTL",
-      "desc": "A full truck, door to door, across borders."
+      "desc": "A full truck, door to door, across borders.",
+      "category": "Road"
     },
     "road_ltl": {
       "name": "Road LTL",
-      "desc": "Groupage trucking for pallets and smaller loads."
+      "desc": "Groupage trucking for pallets and smaller loads.",
+      "category": "Road"
     },
     "rail": {
       "name": "Rail freight",
-      "desc": "Cost-efficient overland transport, e.g. China to Europe."
+      "desc": "Cost-efficient overland transport, e.g. China to Europe.",
+      "category": "Rail"
     },
     "courier": {
       "name": "Express courier",
-      "desc": "Parcels and documents delivered door to door."
+      "desc": "Parcels and documents delivered door to door.",
+      "category": "Express"
     },
     "project": {
       "name": "Project cargo",
-      "desc": "Oversized, heavy-lift and breakbulk shipments."
+      "desc": "Oversized, heavy-lift and breakbulk shipments.",
+      "category": "Heavy lift"
     }
   },
   "categories": {
@@ -222,12 +230,15 @@
       "trust3": "Quotes within hours"
     },
     "visual": {
-      "live": "Request live",
       "example": "Example",
       "origin": "Shanghai",
       "destination": "Hamburg",
       "commodity": "Furniture",
-      "best": "Best price"
+      "best": "Best price",
+      "voyage": "Plotted voyage",
+      "log": "Quote log",
+      "mapLabel": "Chart of a voyage from Shanghai to Hamburg",
+      "live": "Live"
     },
     "live": {
       "title": "Live requests on Sokan",
@@ -301,7 +312,8 @@
         "title": "Real quotes, compared side by side",
         "text": "Every offer shows the all-in price, a full charge breakdown, transit time and validity — so you compare like for like.",
         "quote": "Quote {n}",
-        "best": "Best"
+        "best": "Best",
+        "label": "Shanghai → Hamburg · 3 quotes"
       },
       "verified": {
         "title": "Verified network",
