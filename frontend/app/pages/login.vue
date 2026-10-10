@@ -4,19 +4,20 @@ const { t } = useI18n()
 usePageSeo({ title: t('auth.loginTitle'), noIndex: true })
 
 const route = useRoute()
-const { login, homePath } = useAuth()
+const { login, homePath, needsVerification, verifyPath } = useAuth()
 const errorMessage = useErrorMessage()
 const form = reactive({ email: '', password: '' })
 const loading = ref(false)
 const error = ref('')
+const captcha = ref<{ getToken: () => Promise<string> } | null>(null)
 
 async function submit() {
   loading.value = true
   error.value = ''
   try {
-    await login(form.email, form.password)
+    await login(form.email, form.password, await captcha.value!.getToken())
     const redirect = typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/') ? route.query.redirect : homePath.value
-    await navigateTo(redirect)
+    await navigateTo(needsVerification.value ? verifyPath(redirect) : redirect)
   } catch (e) {
     error.value = errorMessage(e, t('auth.badCredentials'))
   } finally {
@@ -35,6 +36,7 @@ async function submit() {
       <div class="flex justify-end">
         <NuxtLinkLocale to="/forgot-password" class="text-sm font-semibold text-sea">{{ $t('auth.forgot') }}</NuxtLinkLocale>
       </div>
+      <CaptchaCheck ref="captcha" />
       <Transition name="fade"><p v-if="error" class="rounded-xl bg-danger/10 p-3 text-sm text-danger">{{ error }}</p></Transition>
       <AppButton type="submit" variant="primary" size="lg" block :loading="loading" icon-end="arrow-right">{{ $t('auth.login') }}</AppButton>
     </form>

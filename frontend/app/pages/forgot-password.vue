@@ -10,12 +10,13 @@ const email = ref(String(route.query.email || ''))
 const loading = ref(false)
 const sent = ref(false)
 const error = ref('')
+const captcha = ref<{ getToken: () => Promise<string> } | null>(null)
 
 async function submit() {
   loading.value = true
   error.value = ''
   try {
-    await api.forgotPassword(email.value.trim().toLowerCase())
+    await api.forgotPassword(email.value.trim().toLowerCase(), await captcha.value!.getToken())
     sent.value = true
   } catch (e) {
     error.value = errorMessage(e)
@@ -35,6 +36,7 @@ async function submit() {
     </div>
     <form v-else class="mt-8 space-y-5" @submit.prevent="submit">
       <FormField v-model="email" type="email" :label="$t('fields.email')" icon="mail" required autocomplete="email" dir="ltr" />
+      <CaptchaCheck ref="captcha" />
       <p v-if="error" class="rounded-xl bg-danger/10 p-3 text-sm text-danger">{{ error }}</p>
       <AppButton type="submit" variant="primary" size="lg" block :loading="loading">{{ $t('auth.sendLink') }}</AppButton>
     </form>

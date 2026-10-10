@@ -89,6 +89,8 @@ export default defineNuxtConfig({
     '/fa/login': { robots: false },
     '/forgot-password': { robots: false },
     '/fa/forgot-password': { robots: false },
+    '/verify-email': portal,
+    '/fa/verify-email': portal,
 
     // Directory pages change rarely; serve them stale while revalidating.
     '/forwarders/**': { swr: 300 },

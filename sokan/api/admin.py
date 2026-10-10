@@ -28,6 +28,8 @@ from frappe.utils import (
 from sokan import billing
 from sokan.api.serializers import quote_payload, request_full
 from sokan.utils import ROLE_ADMIN, add_role, platform_currency
+from sokan.verification import FIELD as VERIFIED_FIELD
+from sokan.verification import mark_verified
 
 # Ledger types that are platform income (charged to forwarders).
 REVENUE_TYPES = ("Request Unlock", "Quote Fee", "Subscription")
@@ -106,9 +108,28 @@ def _daily(sql: str, start, end, args: dict | None = None) -> dict[str, float]:
 # ---------------------------------------------------------------- overview
 
 
+def _verified_map(emails) -> dict[str, bool]:
+	"""Whether each address has been confirmed with a code (Desk users always count)."""
+	emails = [e for e in set(emails) if e]
+	if not emails:
+		return {}
+	rows = frappe.get_all(
+		"User", filters={"name": ("in", emails)}, fields=["name", "user_type", VERIFIED_FIELD]
+	)
+	return {r.name: bool(r.get(VERIFIED_FIELD)) or r.user_type == "System User" for r in rows}
+
+
+def _awaiting_email() -> list[str]:
+	"""Pending forwarders whose owner hasn't confirmed their email yet: not ready for review."""
+	return frappe.db.sql_list(
+		f"""select f.name from `tabSokan Forwarder` f join `tabUser` u on u.name = f.email
+		where f.status = 'Pending' and u.user_type = 'Website User' and ifnull(u.{VERIFIED_FIELD}, 0) = 0"""
+	)
+
+
 def _attention() -> dict:
 	return {
-		"forwarders": frappe.db.count("Sokan Forwarder", {"status": "Pending"}),
+		"forwarders": frappe.db.count("Sokan Forwarder", {"status": "Pending"}) - len(_awaiting_email()),
 		"topups": frappe.db.count("Sokan Top Up", {"status": "Pending"}),
 		"reviews": frappe.db.count("Sokan Review", {"status": "Pending"}),
 		"messages": frappe.db.count("Sokan Contact Message", {"status": "New"}),
@@ -201,7 +222,7 @@ def overview():
 		),
 		"pending_forwarders": frappe.get_all(
 			"Sokan Forwarder",
-			filters={"status": "Pending"},
+			filters={"status": "Pending", "name": ("not in", _awaiting_email() or [""])},
 			fields=["name", "company_name", "country", "city", "logo", "creation"],
 			order_by="creation asc",
 			limit=5,
@@ -400,6 +421,9 @@ def list_forwarders(search: str | None = None, status: str | None = None, page: 
 	)
 	total = len(frappe.get_all("Sokan Forwarder", filters=filters, or_filters=or_filters, pluck="name"))
 	counts = dict(frappe.db.sql("select status, count(*) from `tabSokan Forwarder` group by status"))
+	verified = _verified_map(i.email for i in items)
+	for i in items:
+		i.email_verified = verified.get(i.email, True)
 	return {"items": items, "total": total, "counts": counts}
 
 
@@ -422,6 +446,7 @@ def get_forwarder(name: str):
 			"certifications": doc.certifications,
 			"rejection_reason": doc.rejection_reason,
 			"leads_unlocked": doc.leads_unlocked,
+			"email_verified": _verified_map([doc.email]).get(doc.email, True),
 			"services": [s.transport_mode for s in doc.services],
 			"coverage": [c.country for c in doc.coverage],
 			"members": [
@@ -570,6 +595,9 @@ def list_customers(search: str | None = None, blocked: int | None = None, page: 
 		page_length=size,
 	)
 	total = len(frappe.get_all("Sokan Customer", filters=filters, or_filters=or_filters, pluck="name"))
+	verified = _verified_map(i.user for i in items)
+	for i in items:
+		i.email_verified = verified.get(i.user, True)
 	return {"items": items, "total": total}
 
 
@@ -581,6 +609,7 @@ def get_customer(name: str):
 	data["name"] = doc.name
 	data["creation"] = doc.creation
 	data["last_login"] = frappe.db.get_value("User", doc.user, "last_login") if doc.user else None
+	data["email_verified"] = _verified_map([doc.user]).get(doc.user, True)
 	data["requests"] = frappe.get_all(
 		"Freight Request",
 		filters={"customer": name},
@@ -589,6 +618,17 @@ def get_customer(name: str):
 		limit=20,
 	)
 	return data
+
+
+@frappe.whitelist(methods=["POST"])
+def mark_email_verified(user: str):
+	"""A manager vouches for an address (e.g. the person confirmed it by phone).
+	Does what confirming the code does: welcome email, review queue or auto-approval."""
+	_require_admin()
+	if frappe.db.get_value("User", user, "user_type") != "Website User":
+		frappe.throw(_("Only website accounts need email confirmation."))
+	mark_verified(user)
+	return {"user": user, "email_verified": True}
 
 
 @frappe.whitelist(methods=["POST"])

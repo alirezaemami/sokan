@@ -124,6 +124,10 @@ def notify_welcome_forwarder(forwarder):
 		)
 
 
+def notify_verification_code(user: str, code: str, minutes: int):
+	emails.send("verify_code", [user], {"email": user, "code": code, "minutes": minutes}, now=True)
+
+
 def notify_password_reset(user: str, key: str, minutes: int):
 	emails.send(
 		"password_reset",
@@ -514,11 +518,14 @@ def send_admin_digest():
 	"""Daily: what's waiting, plus yesterday's activity. Skipped when nothing is waiting."""
 	from frappe.utils import add_days, nowdate
 
+	from sokan.api.admin import _attention
+
+	att = _attention()
 	waiting = {
-		"companies": frappe.db.count("Sokan Forwarder", {"status": "Pending"}),
-		"topups": frappe.db.count("Sokan Top Up", {"status": "Pending"}),
-		"reviews": frappe.db.count("Sokan Review", {"status": "Pending"}),
-		"messages": frappe.db.count("Sokan Contact Message", {"status": "New"}),
+		"companies": att["forwarders"],
+		"topups": att["topups"],
+		"reviews": att["reviews"],
+		"messages": att["messages"],
 	}
 	total = sum(waiting.values())
 	if not total:

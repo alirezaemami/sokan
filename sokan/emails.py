@@ -72,6 +72,29 @@ MESSAGES: dict[str, dict] = {
 			"cta": "تکمیل پروفایل",
 		},
 	},
+	"verify_code": {
+		"audience": "security",
+		"en": {
+			"subject": "{code} is your Sokan verification code",
+			"eyebrow": "Confirm your email",
+			"heading": "Your verification code",
+			"body": [
+				"Enter this code on Sokan to confirm that <b>{email}</b> is your address.",
+				"It expires in {minutes} minutes.",
+			],
+			"note": "Didn't sign up for Sokan? Someone may have typed your address by mistake. Ignore this email and the account won't be activated.",
+		},
+		"fa": {
+			"subject": "کد تأیید سکان شما: {code}",
+			"eyebrow": "تأیید ایمیل",
+			"heading": "کد تأیید شما",
+			"body": [
+				"این کد را در سکان وارد کنید تا تأیید شود <b>{email}</b> متعلق به شماست.",
+				"این کد تا {minutes} دقیقه معتبر است.",
+			],
+			"note": "در سکان ثبت‌نام نکرده‌اید؟ ممکن است کسی نشانی شما را اشتباه وارد کرده باشد. این ایمیل را نادیده بگیرید؛ حساب فعال نمی‌شود.",
+		},
+	},
 	"password_reset": {
 		"audience": "security",
 		"en": {
@@ -911,6 +934,10 @@ def render(
 			"heading": _fill(m["heading"], ctx),
 			"body": body,
 			"facts": fact_rows,
+			# A one-time code, shown large; digits only, so no escaping concerns.
+			"code": "".join(ch for ch in str(ctx.get("code") or "") if ch.isdigit())
+			if "{code}" in m["subject"]
+			else "",
 			"cta": cta_label,
 			"cta_url": cta_url,
 			"link_hint": common["link_hint"],

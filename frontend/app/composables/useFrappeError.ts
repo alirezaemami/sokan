@@ -34,11 +34,28 @@ export function frappeErrorMessage(err: unknown, fallback: string): string {
   return fallback
 }
 
+/** The server exception class (`exc_type`), for errors the UI explains in its own words. */
+export function frappeErrorType(err: unknown): string | undefined {
+  const e = err as { data?: Record<string, unknown>; response?: { _data?: Record<string, unknown> } }
+  const type = (e?.data ?? e?.response?._data)?.exc_type
+  return typeof type === 'string' ? type : undefined
+}
+
 export function useErrorMessage() {
   const { t } = useI18n()
   return (err: unknown, fallback?: string) => {
     const status = (err as { statusCode?: number })?.statusCode
     if (status === 429) return t('errors.rateLimited')
+    switch (frappeErrorType(err)) {
+      case 'CaptchaError':
+        return t('captcha.failed')
+      case 'EmailNotVerified':
+        return t('verify.required')
+      case 'VerificationCodeError':
+        return t('verify.wrong')
+      case 'VerificationCodeExpired':
+        return t('verify.expired')
+    }
     return frappeErrorMessage(err, fallback ?? t('errors.generic'))
   }
 }

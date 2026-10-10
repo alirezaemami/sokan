@@ -6,6 +6,7 @@ from frappe.utils import cint, now_datetime
 
 from sokan.api.serializers import quote_payload, request_full, request_teaser
 from sokan.utils import customer_for_user, get_settings, require_login
+from sokan.verification import is_verified, require_verified
 
 REQUEST_FIELDS = {
 	"transport_mode",
@@ -141,7 +142,10 @@ def create_request(data: dict | str, publish: int = 1):
 	for c in data.get("containers") or []:
 		doc.append("containers", {k: c.get(k) for k in CONTAINER_FIELDS})
 
-	if cint(publish):
+	# An unconfirmed email keeps the request a draft: the form isn't lost, and it
+	# is published once the shipper enters their code.
+	needs_verification = bool(cint(publish)) and not is_verified()
+	if cint(publish) and not needs_verification:
 		doc.status = "Open" if get_settings().auto_publish_requests else "Draft"
 	doc.insert(ignore_permissions=True)
 	frappe.db.set_value(
@@ -151,6 +155,7 @@ def create_request(data: dict | str, publish: int = 1):
 		"name": doc.name,
 		"status": doc.status,
 		"leads_sent": frappe.db.get_value("Freight Request", doc.name, "leads_sent"),
+		"needs_verification": needs_verification,
 	}
 
 
@@ -263,6 +268,7 @@ def publish_request(name: str):
 	doc = _own_request(name)
 	if doc.status != "Draft":
 		frappe.throw(_("Only drafts can be published."))
+	require_verified()
 	doc.status = "Open"
 	doc.save(ignore_permissions=True)
 	return get_request(name)

@@ -180,7 +180,9 @@ function scrollTop() {
 const account = reactive({ mode: 'register' as 'register' | 'login', full_name: '', email: '', phone: '', company_name: '', password: '' })
 const file = ref<File | null>(null)
 const submitting = ref(false)
-const result = ref<{ name: string; status: string; leads_sent: number } | null>(null)
+const result = ref<{ name: string; status: string; leads_sent: number; needs_verification?: boolean } | null>(null)
+const captcha = ref<{ getToken: () => Promise<string> } | null>(null)
+const publishing = ref(false)
 
 async function ensureCustomer() {
   if (!isLoggedIn.value) {
@@ -193,10 +195,11 @@ async function ensureCustomer() {
           phone: account.phone,
           company_name: account.company_name,
           country: form.origin_country,
+          captcha: await captcha.value!.getToken(),
         }),
       )
     } else {
-      await login(account.email, account.password)
+      await login(account.email, account.password, await captcha.value!.getToken())
     }
   }
   if (!isCustomer.value) setMe(await api.becomeCustomer({ phone: account.phone || undefined }))
@@ -229,6 +232,20 @@ async function submit() {
   }
 }
 
+/** The code is confirmed: send the draft out to forwarders. */
+async function publishAfterVerify() {
+  if (!result.value) return
+  publishing.value = true
+  try {
+    const detail = await api.customer.publish(result.value.name)
+    result.value = { name: result.value.name, status: detail.request.status, leads_sent: detail.leads_sent }
+  } catch (e) {
+    toast.error(errorMessage(e))
+  } finally {
+    publishing.value = false
+  }
+}
+
 function addContainer() {
   form.containers.push({ container_type: "40' Standard", quantity: 1, weight_kg: null })
 }
@@ -246,8 +263,22 @@ function onFile(e: Event) {
 </script>
 
 <template>
+  <!-- Saved, waiting for the emailed code -->
+  <div v-if="result?.needs_verification" class="mx-auto max-w-md py-10">
+    <span class="grid size-14 place-items-center rounded-2xl bg-sea/10 text-sea"><AppIcon name="mail" :size="26" /></span>
+    <h2 class="font-display mt-6 text-4xl">{{ $t('verify.wizardTitle') }}</h2>
+    <p class="mt-3 text-muted">{{ $t('verify.wizardText') }}</p>
+    <p class="mt-2 text-sm text-faint">{{ $t('wizard.reference', { ref: result.name }) }}</p>
+    <div class="mt-8">
+      <div v-if="publishing" class="flex items-center justify-center gap-3 py-10 text-muted">
+        <AppIcon name="loader" class="animate-spin" /> {{ $t('verify.publishing') }}
+      </div>
+      <EmailCodeForm v-else @verified="publishAfterVerify" />
+    </div>
+  </div>
+
   <!-- Success -->
-  <div v-if="result" class="mx-auto max-w-xl py-10 text-center">
+  <div v-else-if="result" class="mx-auto max-w-xl py-10 text-center">
     <Motion
       as="div"
       class="relative mx-auto grid size-24 place-items-center rounded-full bg-success text-white shadow-2xl shadow-success/40"
@@ -522,6 +553,7 @@ function onFile(e: Event) {
                   <FormField v-if="account.mode === 'register'" v-model="account.phone" type="tel" :label="$t('fields.phone')" autocomplete="tel" dir="ltr" />
                   <FormField v-model="account.password" type="password" :label="$t('fields.password')" required :autocomplete="account.mode === 'register' ? 'new-password' : 'current-password'" :error="errors.password" :class="account.mode === 'login' && 'sm:col-span-2'" />
                 </div>
+                <CaptchaCheck ref="captcha" class="mt-4" />
               </div>
               <div v-else class="flex items-center gap-3 rounded-2xl bg-success/10 p-4 text-sm">
                 <AppIcon name="circle-check" class="text-success" />

@@ -49,7 +49,7 @@ const tabs = computed(() => {
             <AppIcon v-if="f.is_verified" name="badge-check" :size="15" class="shrink-0 text-sea" />
             <AppIcon v-if="f.is_featured" name="sparkles" :size="15" class="shrink-0 text-warning" />
           </p>
-          <p class="truncate text-xs text-faint">{{ [f.city, countryLabel(f.country)].filter(Boolean).join(', ') }} · {{ f.email }}</p>
+          <p class="truncate text-xs text-faint">{{ [f.city, countryLabel(f.country)].filter(Boolean).join(', ') }} · {{ f.email }}<span v-if="f.email_verified === false" class="ms-1 rounded-full bg-warning/15 px-1.5 py-px text-[11px] font-semibold text-warning">{{ $t('admin.emailUnverified.badge') }}</span></p>
         </div>
         <div class="col-start-2 text-xs text-muted md:col-start-auto">
           <span class="md:block">{{ f.plan }}</span>

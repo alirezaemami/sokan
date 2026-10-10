@@ -189,6 +189,8 @@ export interface Me {
   full_name?: string
   image?: string | null
   is_admin?: boolean
+  /** Confirmed with the emailed code. Requests stay drafts and forwarder applications wait until then. */
+  email_verified?: boolean
   csrf_token?: string
   customer?: { name: string; full_name: string; company_name: string | null; is_blocked: 0 | 1 } | null
   forwarder?: {

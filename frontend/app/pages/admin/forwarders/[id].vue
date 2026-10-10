@@ -30,6 +30,17 @@ async function run(key: string, call: () => Promise<Record<string, any>>, done?:
   }
 }
 
+// ---- email confirmation (a manager can vouch for the address)
+const markVerified = () =>
+  run(
+    'verify',
+    async () => {
+      await api.admin.markEmailVerified(f.value!.email)
+      return api.admin.forwarder(id.value)
+    },
+    t('admin.emailUnverified.done'),
+  )
+
 // ---- status
 type Action = { status: string; label: string; variant: 'accent' | 'danger' | 'primary'; reason: boolean }
 const actions = computed<Action[]>(() => {
@@ -127,6 +138,11 @@ const leadTotal = computed(() => Object.values((f.value?.lead_counts || {}) as R
           <p v-if="f.tagline" class="mt-1 text-sm text-muted">{{ f.tagline }}</p>
           <p class="mt-0.5 font-mono text-xs text-faint">{{ f.name }}</p>
         </div>
+      </div>
+      <div v-if="f.email_verified === false" class="mb-6 flex flex-wrap items-center gap-3 rounded-2xl bg-warning/12 p-4 text-sm">
+        <AppIcon name="mail" class="shrink-0 text-warning" />
+        <p class="min-w-0 flex-1">{{ $t('admin.emailUnverified.forwarder') }}</p>
+        <AppButton size="sm" variant="secondary" icon="check" :loading="busy === 'verify'" @click="markVerified">{{ $t('admin.emailUnverified.mark') }}</AppButton>
       </div>
       <p v-if="f.rejection_reason" class="mb-6 rounded-2xl bg-danger/10 p-4 text-sm text-danger"><b>{{ $t('admin.forwarders.reasonShown') }}</b> {{ f.rejection_reason }}</p>
 

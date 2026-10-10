@@ -7,12 +7,17 @@
  */
 export default defineNuxtRouteMiddleware(async (to) => {
   if (import.meta.server) return
-  const { ensure, isCustomer, isForwarder, isAdmin, homePath } = useAuth()
+  const { ensure, isCustomer, isForwarder, isAdmin, homePath, needsVerification, verifyPath } = useAuth()
   const localePath = useLocalePath()
   const me = await ensure()
 
   if (!me?.user) {
     return navigateTo({ path: localePath('/login'), query: { redirect: to.fullPath } })
+  }
+
+  // Nothing in the portals is open until the email is confirmed (the code page itself opts out).
+  if (needsVerification.value && !to.meta.allowUnverified) {
+    return navigateTo(verifyPath(to.fullPath))
   }
 
   const role = to.meta.role as 'customer' | 'forwarder' | 'admin' | undefined

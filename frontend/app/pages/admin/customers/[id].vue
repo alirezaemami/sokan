@@ -27,6 +27,21 @@ async function toggleBlock() {
   }
 }
 
+const verifying = ref(false)
+async function markVerified() {
+  if (!c.value?.user) return
+  verifying.value = true
+  try {
+    await api.admin.markEmailVerified(c.value.user)
+    c.value = await api.admin.customer(id.value)
+    toast.success(t('admin.emailUnverified.done'))
+  } catch (e) {
+    toast.error(errorMessage(e))
+  } finally {
+    verifying.value = false
+  }
+}
+
 const facts = computed(() => {
   const v = c.value
   if (!v) return []
@@ -55,6 +70,11 @@ const facts = computed(() => {
     <div v-else-if="error" class="card"><EmptyState icon="alert" :title="$t('admin.notFound')" /></div>
     <template v-else-if="c">
       <p v-if="c.is_blocked" class="mb-6 rounded-2xl bg-danger/10 p-4 text-sm text-danger">{{ $t('admin.customers.blockedNote') }}</p>
+      <div v-if="c.email_verified === false" class="mb-6 flex flex-wrap items-center gap-3 rounded-2xl bg-warning/12 p-4 text-sm">
+        <AppIcon name="mail" class="shrink-0 text-warning" />
+        <p class="min-w-0 flex-1">{{ $t('admin.emailUnverified.customer') }}</p>
+        <AppButton size="sm" variant="secondary" icon="check" :loading="verifying" @click="markVerified">{{ $t('admin.emailUnverified.mark') }}</AppButton>
+      </div>
       <div class="grid gap-4 lg:grid-cols-3">
         <section class="card p-5 lg:col-span-1">
           <h2 class="mb-4 font-semibold">{{ $t('admin.customers.profile') }}</h2>

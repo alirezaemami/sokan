@@ -89,6 +89,9 @@ app_license = "mit"
 after_install = "sokan.setup.install.after_install"
 after_migrate = "sokan.setup.install.after_migrate"
 
+# Website sign-ins must carry a solved captcha (Desk users are exempt).
+before_login = ["sokan.captcha.before_login"]
+
 # Uninstallation
 # ------------
 

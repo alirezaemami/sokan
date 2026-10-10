@@ -41,7 +41,7 @@ const tabs = computed(() => [
         <span class="row-span-2 grid size-9 place-items-center rounded-full bg-sea/10 text-sm font-bold text-sea md:row-span-1">{{ (c.full_name || '?').charAt(0) }}</span>
         <div class="min-w-0">
           <p class="truncate font-semibold">{{ c.full_name }}<span v-if="c.company_name" class="font-normal text-muted"> · {{ c.company_name }}</span></p>
-          <p class="truncate text-xs text-faint">{{ c.email }}<template v-if="c.phone"> · {{ c.phone }}</template></p>
+          <p class="truncate text-xs text-faint">{{ c.email }}<template v-if="c.phone"> · {{ c.phone }}</template><span v-if="c.email_verified === false" class="ms-1 rounded-full bg-warning/15 px-1.5 py-px text-[11px] font-semibold text-warning">{{ $t('admin.emailUnverified.badge') }}</span></p>
         </div>
         <p class="col-start-2 truncate text-xs text-muted md:col-start-auto">{{ countryLabel(c.country, { flag: true }) || '—' }}</p>
         <p class="hidden text-xs text-muted tabular-nums md:block">{{ $t('admin.customers.counts', { r: c.requests_count, b: c.bookings_count }) }}</p>

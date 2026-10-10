@@ -4,7 +4,7 @@ const { t } = useI18n()
 usePageSeo({ title: t('auth.fwdTitle'), description: t('auth.fwdSubtitle') })
 
 const api = useSokan()
-const { setMe, isLoggedIn, isForwarder } = useAuth()
+const { setMe, isLoggedIn, isForwarder, verifyPath } = useAuth()
 const localePath = useLocalePath()
 const errorMessage = useErrorMessage()
 const { modes, load } = useModes()
@@ -45,6 +45,8 @@ function next() {
   step.value = 1
 }
 
+const captcha = ref<{ getToken: () => Promise<string> } | null>(null)
+
 async function submit() {
   if (form.password.length < 8) {
     error.value = t('auth.passwordShort')
@@ -53,8 +55,8 @@ async function submit() {
   loading.value = true
   error.value = ''
   try {
-    setMe(await api.registerForwarder({ ...form }))
-    await navigateTo(localePath('/partner'))
+    setMe(await api.registerForwarder({ ...form, captcha: await captcha.value!.getToken() }))
+    await navigateTo(verifyPath(localePath('/partner')))
   } catch (e) {
     error.value = errorMessage(e)
   } finally {
@@ -106,6 +108,7 @@ async function submit() {
         <FormField v-model="form.email" type="email" :label="$t('fields.workEmail')" icon="mail" required autocomplete="email" dir="ltr" />
         <FormField v-model="form.phone" type="tel" :label="$t('fields.phone')" icon="phone" required autocomplete="tel" dir="ltr" />
         <FormField v-model="form.password" type="password" :label="$t('fields.password')" icon="lock" required autocomplete="new-password" :hint="$t('auth.passwordHint')" />
+        <CaptchaCheck ref="captcha" />
         <Transition name="fade"><p v-if="error" class="rounded-xl bg-danger/10 p-3 text-sm text-danger">{{ error }}</p></Transition>
         <div class="flex gap-3">
           <AppButton variant="secondary" size="lg" icon="arrow-left" @click="step = 0">{{ $t('common.back') }}</AppButton>

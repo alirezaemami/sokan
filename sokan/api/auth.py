@@ -1,7 +1,8 @@
 """Sign-up, identity and password recovery.
 
-Sign-in and sign-out use Frappe's own endpoints (/api/method/login, logout).
-Sign-up, "who am I" and the password reset flow live here, so every email
+Sign-in and sign-out use Frappe's own endpoints (/api/method/login, logout);
+sokan.captcha.before_login checks the captcha on sign-in. Sign-up, email
+verification, "who am I" and the password reset flow live here, so every email
 uses the Sokan template and every link points at the website, not Desk.
 """
 
@@ -10,13 +11,15 @@ from frappe import _
 from frappe.rate_limiter import rate_limit
 from frappe.sessions import get_csrf_token
 
+from sokan import verification
+from sokan.captcha import create_challenge
+from sokan.captcha import verify as verify_captcha
 from sokan.utils import (
 	ROLE_ADMIN,
 	ROLE_CUSTOMER,
 	ROLE_FORWARDER,
 	customer_for_user,
 	forwarder_for_user,
-	get_settings,
 )
 
 
@@ -62,6 +65,10 @@ def _login(user: str):
 	frappe.local.login_manager.login_as(user)
 
 
+def _check_captcha(payload: str | None):
+	verify_captcha(payload)
+
+
 @frappe.whitelist(allow_guest=True, methods=["POST"])
 @rate_limit(limit=10, seconds=60 * 60)
 def register_customer(
@@ -72,7 +79,9 @@ def register_customer(
 	company_name: str | None = None,
 	country: str | None = None,
 	customer_type: str = "Business",
+	captcha: str | None = None,
 ):
+	_check_captcha(captcha)
 	user = _create_user(email, full_name, password, phone, ROLE_CUSTOMER)
 	frappe.get_doc(
 		{
@@ -87,9 +96,8 @@ def register_customer(
 		}
 	).insert(ignore_permissions=True)
 	_login(user.name)
-	from sokan.notifications import notify_welcome_shipper
-
-	notify_welcome_shipper(user.name, full_name)
+	# The welcome email waits until the address is confirmed.
+	verification.send_code(user.name)
 	return me()
 
 
@@ -106,7 +114,9 @@ def register_forwarder(
 	website: str | None = None,
 	modes: list[str] | str | None = None,
 	license_number: str | None = None,
+	captcha: str | None = None,
 ):
+	_check_captcha(captcha)
 	modes = frappe.parse_json(modes) if isinstance(modes, str) else (modes or [])
 	valid_modes = set(frappe.get_all("Sokan Transport Mode", {"is_active": 1}, pluck="name"))
 	modes = [m for m in modes if m in valid_modes]
@@ -116,7 +126,6 @@ def register_forwarder(
 		frappe.throw(_("Company name is required."))
 
 	user = _create_user(email, full_name, password, phone, ROLE_FORWARDER)
-	auto = get_settings().auto_approve_forwarders
 	fwd = frappe.get_doc(
 		{
 			"doctype": "Sokan Forwarder",
@@ -127,15 +136,17 @@ def register_forwarder(
 			"city": city,
 			"website": website,
 			"license_number": license_number,
-			"status": "Active" if auto else "Pending",
+			# Pending until the email is confirmed; verification.on_verified then
+			# auto-approves it or puts it in front of the managers.
+			"status": "Pending",
 			"services": [{"transport_mode": m} for m in modes],
 			"members": [{"user": user.name, "member_role": "Owner"}],
 		}
-	).insert(ignore_permissions=True)
+	)
+	fwd.flags.awaiting_email_verification = True
+	fwd.insert(ignore_permissions=True)
 	_login(user.name)
-	from sokan.notifications import notify_welcome_forwarder
-
-	notify_welcome_forwarder(fwd)
+	verification.send_code(user.name)
 	return me()
 
 
@@ -151,6 +162,7 @@ def me():
 		"full_name": frappe.utils.get_fullname(user),
 		"image": frappe.db.get_value("User", user, "user_image"),
 		"is_admin": ROLE_ADMIN in roles or "System Manager" in roles,
+		"email_verified": verification.is_verified(user),
 		# Session-cookie POSTs must echo this back as X-Frappe-CSRF-Token.
 		"csrf_token": get_csrf_token(),
 		"customer": None,
@@ -193,9 +205,10 @@ def become_customer(company_name: str | None = None, phone: str | None = None):
 
 @frappe.whitelist(allow_guest=True, methods=["POST"])
 @rate_limit(limit=5, seconds=60 * 60)
-def forgot_password(email: str):
+def forgot_password(email: str, captcha: str | None = None):
 	"""Email a reset link to the website. Always answers the same way, so it can't
 	be used to find out which addresses have accounts."""
+	_check_captcha(captcha)
 	email = (email or "").strip().lower()
 	user = frappe.db.get_value("User", {"name": email, "enabled": 1}, ["name", "user_type"], as_dict=True)
 	# Desk users (Administrator, system users) reset through Frappe itself.
@@ -222,7 +235,39 @@ def reset_password(key: str, new_password: str):
 			result or _("This reset link has expired. Please request a new one."), frappe.LinkExpired
 		)
 	user = frappe.session.user
+	# The reset link was emailed, so following it proves the address.
+	verification.mark_verified(user)
 	from sokan.notifications import notify_password_changed
 
 	notify_password_changed(user)
+	return me()
+
+
+# --------------------------------------------------------------------------- captcha + verification
+
+
+@frappe.whitelist(allow_guest=True, methods=["GET"])
+@rate_limit(limit=120, seconds=10 * 60)
+def captcha_challenge():
+	return create_challenge()
+
+
+@frappe.whitelist(methods=["POST"])
+@rate_limit(limit=10, seconds=60 * 60)
+def send_verification_code(force: int = 0):
+	"""Email the signed-in user a code. `force` is the Resend button."""
+	user = frappe.session.user
+	if verification.is_verified(user):
+		return {"verified": True}
+	return {
+		"verified": False,
+		"email": user,
+		**verification.send_code(user, force=bool(frappe.utils.cint(force))),
+	}
+
+
+@frappe.whitelist(methods=["POST"])
+@rate_limit(limit=30, seconds=60 * 60)
+def verify_email(code: str):
+	verification.check_code(frappe.session.user, code)
 	return me()

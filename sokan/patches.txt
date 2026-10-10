@@ -5,3 +5,4 @@
 [post_model_sync]
 # Patches added in this section will be executed after doctypes are migrated
 sokan.patches.v1.review_moderation
+sokan.patches.v1.email_verification

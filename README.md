@@ -81,10 +81,31 @@ recipient gets their own language (set from the site language they signed up in)
   new review (opt-out).
 - **Managers:** new forwarder, top-up to check, review to moderate, contact
   message, and a daily 08:00 summary when something is waiting.
-- **Account:** password reset (link to the website's `/reset-password`), password
-  changed, manager invitation.
+- **Account:** email verification code, password reset (link to the website's
+  `/reset-password`), password changed, manager invitation.
 
 Nothing is sent until a default outgoing **Email Account** exists in Frappe.
+
+#### Sign-up protection
+
+**Email verification.** Sign-up signs people in, then asks for a 6-digit code
+emailed to them (`sokan/verification.py`; 15 minutes, 5 tries, resend after a
+minute). Until it's entered, a shipper's requests are saved as drafts and published
+once they confirm; a forwarder stays out of the approval queue (and isn't
+auto-approved); welcome emails wait. Following a password-reset link also confirms
+the address, and managers can mark an address verified in the admin portal.
+Desk users and managers count as verified; existing accounts were marked
+verified by the `email_verification` patch.
+
+**Robot check.** Sign-in, both sign-ups and forgot-password need a solved
+proof-of-work captcha (`sokan/captcha.py`, ALTCHA scheme). The browser solves it
+in a Web Worker while the person types; nothing loads from Google or Cloudflare,
+so it works in every region, and there are no keys. Each solution works once
+and expires after 10 minutes. Sign-in is checked in Frappe's `before_login`
+hook, so `/api/method/login` itself is protected; Desk users are exempt.
+Site config: `sokan_captcha_max_number` (default 300000, raise it to make
+bots pay more), `sokan_captcha_disabled` (local testing only; `sokan-check`
+flags it).
 
 #### Go-live check
 

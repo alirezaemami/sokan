@@ -21,6 +21,7 @@ import type {
   WalletTransaction,
   Row,
 } from '~/types/sokan'
+import type { CaptchaChallenge } from '~/utils/captcha'
 
 type Params = Record<string, unknown>
 
@@ -80,10 +81,17 @@ export function useSokan() {
     registerCustomer: (p: Params) => post<Me>(auth('register_customer'), p),
     registerForwarder: (p: Params) => post<Me>(auth('register_forwarder'), p),
     becomeCustomer: (p: Params = {}) => post<Me>(auth('become_customer'), p),
-    login: (usr: string, pwd: string) => post<{ message: string; full_name: string }>('login', { usr, pwd }),
+    login: (usr: string, pwd: string, captcha: string) =>
+      post<{ message: string; full_name: string }>('login', { usr, pwd, captcha }),
+    captchaChallenge: () => get<CaptchaChallenge>(auth('captcha_challenge')),
+    sendVerificationCode: (force = false) =>
+      post<{ verified: boolean; email?: string; sent?: boolean; resend_in?: number }>(auth('send_verification_code'), {
+        force: force ? 1 : 0,
+      }),
+    verifyEmail: (code: string) => post<Me>(auth('verify_email'), { code }),
     logout: () => post<unknown>('logout'),
     // Sokan's own reset flow: branded email, link back to this site.
-    forgotPassword: (email: string) => post<{ ok: boolean }>(auth('forgot_password'), { email }),
+    forgotPassword: (email: string, captcha: string) => post<{ ok: boolean }>(auth('forgot_password'), { email, captcha }),
     resetPassword: (key: string, new_password: string) => post<Me>(auth('reset_password'), { key, new_password }),
 
     // ---- customer
@@ -93,7 +101,10 @@ export function useSokan() {
       requests: (p: { status?: string; page?: number }) => get<Paged<CustomerRequestRow>>(cust('list_requests'), p),
       request: (name: string) => get<CustomerRequestDetail>(cust('get_request'), { name }),
       create: (data: Params, publish = 1) =>
-        post<{ name: string; status: string; leads_sent: number }>(cust('create_request'), { data, publish }),
+        post<{ name: string; status: string; leads_sent: number; needs_verification?: boolean }>(cust('create_request'), {
+          data,
+          publish,
+        }),
       accept: (quote: string) => post<CustomerRequestDetail>(cust('accept_quote'), { quote }),
       reject: (quote: string, reason?: string) => post<CustomerRequestDetail>(cust('reject_quote'), { quote, reason }),
       cancel: (name: string, reason?: string) => post<CustomerRequestDetail>(cust('cancel_request'), { name, reason }),
@@ -141,6 +152,7 @@ export function useSokan() {
       adjustWallet: (name: string, amount: number, note: string) => post<Row>(adm('adjust_wallet'), { name, amount, note }),
       customers: (p: Params) => get<AdminPaged>(adm('list_customers'), p),
       customer: (name: string) => get<Row>(adm('get_customer'), { name }),
+      markEmailVerified: (user: string) => post<{ user: string; email_verified: boolean }>(adm('mark_email_verified'), { user }),
       setCustomerBlocked: (name: string, blocked: boolean) => post<Row>(adm('set_customer_blocked'), { name, blocked: blocked ? 1 : 0 }),
       requests: (p: Params) => get<AdminPaged>(adm('list_requests'), p),
       request: (name: string) => get<Row>(adm('get_request'), { name }),

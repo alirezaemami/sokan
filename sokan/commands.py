@@ -104,6 +104,16 @@ def run_checks() -> list[tuple[str, str, str]]:
 		"is off. Requests won't expire, plans won't renew, managers get no digest.",
 	)
 	check(
+		not frappe.conf.get("sokan_captcha_disabled"),
+		"Robot check (captcha)",
+		"is switched off (sokan_captcha_disabled in site_config). Remove it so sign-in and sign-up are protected.",
+	)
+	check(
+		frappe.db.has_column("User", "sokan_email_verified"),
+		"Email verification field",
+		"is missing. Run bench --site <site> migrate.",
+	)
+	check(
 		not cint(frappe.conf.get("developer_mode")),
 		"Developer mode",
 		"is on. Turn it off in production (bench --site <site> set-config developer_mode 0).",

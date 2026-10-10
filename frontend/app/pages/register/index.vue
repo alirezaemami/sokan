@@ -4,13 +4,14 @@ const { t } = useI18n()
 usePageSeo({ title: t('auth.registerTitle'), description: t('auth.registerSubtitle') })
 
 const api = useSokan()
-const { setMe } = useAuth()
+const { setMe, verifyPath } = useAuth()
 const localePath = useLocalePath()
 const errorMessage = useErrorMessage()
 
 const form = reactive({ full_name: '', email: '', phone: '', company_name: '', password: '', customer_type: 'Business' })
 const loading = ref(false)
 const error = ref('')
+const captcha = ref<{ getToken: () => Promise<string> } | null>(null)
 
 async function submit() {
   if (form.password.length < 8) {
@@ -20,8 +21,8 @@ async function submit() {
   loading.value = true
   error.value = ''
   try {
-    setMe(await api.registerCustomer({ ...form }))
-    await navigateTo(localePath('/get-quote'))
+    setMe(await api.registerCustomer({ ...form, captcha: await captcha.value!.getToken() }))
+    await navigateTo(verifyPath(localePath('/get-quote')))
   } catch (e) {
     error.value = errorMessage(e)
   } finally {
@@ -45,6 +46,7 @@ async function submit() {
       <FormField v-model="form.email" type="email" :label="$t('fields.email')" icon="mail" required autocomplete="email" dir="ltr" />
       <FormField v-model="form.phone" type="tel" :label="$t('fields.phone')" icon="phone" autocomplete="tel" dir="ltr" />
       <FormField v-model="form.password" type="password" :label="$t('fields.password')" icon="lock" required autocomplete="new-password" :hint="$t('auth.passwordHint')" />
+      <CaptchaCheck ref="captcha" />
       <Transition name="fade"><p v-if="error" class="rounded-xl bg-danger/10 p-3 text-sm text-danger">{{ error }}</p></Transition>
       <AppButton type="submit" variant="primary" size="lg" block :loading="loading" icon-end="arrow-right">{{ $t('auth.createAccount') }}</AppButton>
       <p class="text-center text-xs text-faint">

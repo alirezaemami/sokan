@@ -40,11 +40,19 @@ export function useAuth() {
     return me.value
   }
 
-  async function login(email: string, password: string) {
+  async function login(email: string, password: string, captcha: string) {
     // A stale session would demand a CSRF token the login form doesn't have.
     me.value = { user: null }
-    await api.login(email.trim().toLowerCase(), password)
+    await api.login(email.trim().toLowerCase(), password, captcha)
     return refresh()
+  }
+
+  /** Signed in but the email isn't confirmed yet (managers are exempt). */
+  const needsVerification = computed(() => Boolean(me.value?.user) && !me.value?.email_verified && !isAdmin.value)
+
+  /** The code page, coming back to `next` (an already-localised path) afterwards. */
+  function verifyPath(next?: string) {
+    return { path: localePath('/verify-email'), query: next ? { redirect: next } : {} }
   }
 
   async function logout() {
@@ -60,5 +68,19 @@ export function useAuth() {
     me.value = data
   }
 
-  return { me, isLoggedIn, isCustomer, isForwarder, isAdmin, homePath, refresh, ensure, login, logout, setMe }
+  return {
+    me,
+    isLoggedIn,
+    isCustomer,
+    isForwarder,
+    isAdmin,
+    homePath,
+    needsVerification,
+    verifyPath,
+    refresh,
+    ensure,
+    login,
+    logout,
+    setMe,
+  }
 }

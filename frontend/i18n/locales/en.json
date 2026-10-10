@@ -56,7 +56,8 @@
     "update": "Update",
     "verified": "Verified",
     "view": "View",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "retry": "Try again"
   },
   "units": {
     "kg": "kg",
@@ -1428,7 +1429,14 @@
       "removeManager": "Remove manager",
       "removeText": "{name} loses access to the management area. Their account stays."
     },
-    "chartEmpty": "No activity in this period yet"
+    "chartEmpty": "No activity in this period yet",
+    "emailUnverified": {
+      "badge": "Email not confirmed",
+      "forwarder": "This company hasn't confirmed its email yet, so it isn't in the approval queue. Mark it verified only if you've confirmed the address another way.",
+      "customer": "This shipper hasn't confirmed their email yet, so their requests stay drafts. Mark it verified only if you've confirmed the address another way.",
+      "mark": "Mark email verified",
+      "done": "Email marked as verified."
+    }
   },
   "photos": {
     "port": "Container terminal seen from above, stacks of containers and gantry cranes",
@@ -1442,5 +1450,31 @@
     "warehouse": "Warehouse racks full of boxed goods",
     "night": "Container yard from above at night",
     "contract": "Hand signing a freight contract"
+  },
+  "captcha": {
+    "working": "Checking you're not a robot…",
+    "done": "You're not a robot",
+    "error": "The check couldn't run",
+    "hint": "A quick private check on your device. No tracking, no puzzles.",
+    "failed": "The robot check expired. Please try again."
+  },
+  "verify": {
+    "title": "Confirm your email",
+    "whyShipper": "One quick step so forwarders can trust your requests and reach you.",
+    "whyForwarder": "One quick step before we review your company.",
+    "sentTo": "We emailed a 6-digit code to",
+    "codeLabel": "Verification code",
+    "confirm": "Confirm email",
+    "resend": "Send a new code",
+    "resendIn": "Send a new code in {s}s",
+    "resent": "A new code is on its way.",
+    "wrongEmail": "Wrong address? Sign out",
+    "spam": "Can't find it? Check your spam or promotions folder. The code expires in 15 minutes.",
+    "required": "Please confirm your email address first.",
+    "wrong": "That code isn't right. Check the email and try again.",
+    "expired": "This code has expired or was used up. Send yourself a new one.",
+    "wizardTitle": "Almost there: confirm your email",
+    "wizardText": "Your request is saved. Enter the code we just emailed you and we'll send it to matching forwarders straight away.",
+    "publishing": "Sending your request to forwarders…"
   }
 }

@@ -93,6 +93,9 @@ def after_migrate():
 
 
 def setup():
+	from sokan.verification import make_custom_fields
+
+	make_custom_fields()
 	make_roles()
 	make_transport_modes()
 	make_plans()

@@ -57,6 +57,9 @@ class SokanForwarder(Document):
 				notify_forwarder_status(self)
 
 	def after_insert(self):
+		# Self sign-ups reach the managers once their email is confirmed (sokan.verification).
+		if self.flags.awaiting_email_verification:
+			return
 		from sokan.notifications import notify_admin_new_forwarder
 
 		notify_admin_new_forwarder(self)
