@@ -382,8 +382,14 @@
 .marquee-track:hover {
   animation-play-state: paused;
 }
+/* In RTL the track starts at the right edge and overflows to the left, so it has
+   to travel rightwards; sliding it left (even reversed) leaves the strip empty. */
 [dir='rtl'] .marquee-track {
-  animation-direction: reverse;
+  animation-name: marquee-rtl;
+}
+@keyframes marquee-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(50% + 0.5rem)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
