@@ -219,28 +219,22 @@
   },
   "home": {
     "hero": {
-      "badge": "New",
-      "eyebrow": "The freight marketplace for global trade",
-      "title1": "One request.",
-      "titleHighlight": "Every forwarder competes.",
-      "subtitle": "Describe your shipment once. Verified freight forwarders send you real, all-in quotes — you compare side by side and book the best one. Free for shippers.",
+      "eyebrow": "Free for shippers",
+      "title": "Get freight quotes from verified forwarders",
+      "subtitle": "Enter your route. Forwarders send all-in prices, usually within hours. Compare them and book the best one.",
+      "modeLabel": "Transport mode",
+      "anyMode": "Any transport mode",
       "from": "From country",
       "to": "To country",
       "cta": "Get quotes",
       "trust1": "Free for shippers",
       "trust2": "Verified forwarders only",
-      "trust3": "Quotes within hours"
+      "trust3": "Quotes within hours",
+      "forwarderLink": "Freight forwarder? Join Sokan"
     },
     "visual": {
       "example": "Example",
-      "origin": "Shanghai",
-      "destination": "Hamburg",
-      "commodity": "Furniture",
-      "best": "Best price",
-      "voyage": "Plotted voyage",
-      "log": "Quote log",
-      "mapLabel": "Chart of a voyage from Shanghai to Hamburg",
-      "live": "Live"
+      "mapLabel": "Chart of a voyage from Shanghai to Hamburg"
     },
     "live": {
       "title": "Live requests on Sokan",

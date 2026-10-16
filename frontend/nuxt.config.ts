@@ -133,7 +133,7 @@ export default defineNuxtConfig({
     // Forwarder slugs live in Frappe. Deliberately not under /api — the proxy
     // rule above would swallow it.
     sources: ['/__sitemap__/urls'],
-    exclude: ['/account/**', '/partner/**', '/admin', '/admin/**', '/login', '/register/**', '/forgot-password', '/reset-password'],
+    exclude: ['/account/**', '/partner/**', '/admin', '/admin/**', '/login', '/register/**', '/forgot-password', '/reset-password', '/verify-email'],
   },
 
   robots: {
