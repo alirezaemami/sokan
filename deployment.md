@@ -236,15 +236,23 @@ Sign in at `https://www.sokan.net/login` as the manager from step 1, then work t
 
 **Email** (nothing is sent without it): sign in to Desk at `https://api.sokan.net/app/email-account/new` as Administrator. Create an account with *Enable Outgoing* and *Default Outgoing* ticked, sending from something like `no-reply@sokan.net`. Add SPF, DKIM and DMARC records for that domain at your DNS host, or password-reset and booking emails will land in spam.
 
-If `sokan-check` reports a slow mail server sign-in (several seconds or more), the mail server is usually stalling on the server's reverse DNS. Mail servers look up the name behind the connecting IP (the PTR record) and check that the name points back to the same IP. A missing or mismatched record makes some servers wait or slow down. Users don't notice, because mail goes out from a background worker, but every email arrives that much later. Check it:
+If `sokan-check` reports a slow mail server sign-in (several seconds or more), one of the mail server's addresses is usually unreachable from your hosting network. Each connection picks one address at random, and a dead one costs a long timeout before the next is tried. Users don't wait on it, because mail goes out from a background worker, but the email arrives late, or fails after 2 minutes. Test each address:
 
 ```bash
-IP=$(curl -s https://api.ipify.org); echo "$IP"
-dig +short -x "$IP"                 # the PTR name
-dig +short "$(dig +short -x "$IP")" # must print $IP again
+for ip in $(dig +short smtp.mail.us-east-1.awsapps.com); do
+  nc -4 -vz -w 5 "$ip" 465
+done
 ```
 
-If the second line is empty or prints a different IP, ask your hosting provider to set the PTR record for that IP to `api.sokan.net`, which already points to it. Then run `bench --site api.sokan.net sokan-check` again.
+If one times out, pin the mail server name to the addresses that answer, then check again:
+
+```bash
+echo "3.212.83.50 smtp.mail.us-east-1.awsapps.com
+54.85.227.150 smtp.mail.us-east-1.awsapps.com" | sudo tee -a /etc/hosts
+bench --site api.sokan.net sokan-check   # sign-in now takes a second or two
+```
+
+Use the addresses that worked in your own test. Pinned addresses don't follow Amazon's changes, so re-run the test if mail stops; `sokan-check` reports a failed sign-in.
 
 **Sokan settings**: `https://www.sokan.net/admin/settings`
 

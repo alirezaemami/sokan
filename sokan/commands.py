@@ -91,7 +91,7 @@ def run_checks() -> list[tuple[str, str, str]]:
 				seconds < 5,
 				"Mail server speed",
 				f"signing in took {detail}. Mail still goes out (from a worker), just late. Usually the "
-				"server's reverse DNS (PTR) is missing or doesn't match its IP; see deployment.md, Email.",
+				"mail server has an address this network can't reach; see deployment.md, Email.",
 				"WARN",
 			)
 

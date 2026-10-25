@@ -210,15 +210,15 @@ def forgot_password(email: str, captcha: str | None = None):
 	be used to find out which addresses have accounts."""
 	_check_captcha(captcha)
 	email = (email or "").strip().lower()
-	user = frappe.db.get_value("User", {"name": email, "enabled": 1}, ["name", "user_type"], as_dict=True)
-	# Desk users (Administrator, system users) reset through Frappe itself.
-	if user and user.name not in ("Administrator", "Guest") and user.user_type == "Website User":
-		link = frappe.get_doc("User", user.name)._reset_password(send_email=False)
+	user = frappe.db.get_value("User", {"name": email, "enabled": 1}, "name")
+	# Managers set up in Desk are System Users; the link goes to their inbox either way.
+	if user and user not in ("Administrator", "Guest"):
+		link = frappe.get_doc("User", user)._reset_password(send_email=False)
 		key = link.split("key=", 1)[1].split("&", 1)[0]
 		seconds = frappe.utils.cint(frappe.get_system_settings("reset_password_link_expiry_duration")) or 1200
 		from sokan.notifications import notify_password_reset
 
-		notify_password_reset(user.name, key, max(seconds // 60, 1))
+		notify_password_reset(user, key, max(seconds // 60, 1))
 	return {"ok": True}
 
 
