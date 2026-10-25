@@ -71,43 +71,50 @@ def run_checks() -> list[tuple[str, str, str]]:
 		"WARN",
 	)
 
-	account = frappe.get_all(
-		"Email Account",
-		{"enable_outgoing": 1, "default_outgoing": 1},
-		["email_id", "smtp_server", "smtp_port", "use_ssl", "use_tls"],
-	)
+	account = frappe.get_all("Email Account", {"enable_outgoing": 1, "default_outgoing": 1}, pluck="name")
 	check(
 		bool(account),
 		"Default outgoing email account",
 		"is missing. No email is sent at all: welcome, password reset, leads, bookings.",
 	)
 	if account:
-		acc = account[0]
-		port = cint(acc.smtp_port) or (465 if acc.use_ssl else 587 if acc.use_tls else 25)
-		reached = _reachable(acc.smtp_server, port)
+		acc = frappe.get_doc("Email Account", account[0])
+		ok, detail = _smtp_login(acc)
 		check(
-			reached is True,
-			f"Mail server reachable ({acc.smtp_server}:{port})",
-			f"can't be reached from this server: {reached}. Many hosts block outgoing mail ports; "
-			"ask the provider to open it, or use your mail provider's port 2525 if it offers one.",
+			ok,
+			f"Mail server sign-in ({acc.smtp_server}:{acc.smtp_port or 'default'})",
+			f"failed: {detail}. Fix the account in Desk → Email Account → {acc.name}.",
 		)
-		# Port 465 speaks TLS from the first byte; a plain connection to it just waits for a
-		# greeting that never comes, so every send hangs until Frappe's 2-minute timeout.
-		mismatch = (port == 465 and not acc.use_ssl and "port 465 needs Use SSL ticked") or (
-			port == 587 and not acc.use_tls and not acc.use_ssl and "port 587 needs Use TLS ticked"
-		)
-		check(
-			not mismatch,
-			"Mail server encryption",
-			f"doesn't match the port: {mismatch}. Fix it in Desk → Email Account → {acc.email_id}.",
-		)
-		failed = frappe.db.count("Email Queue", {"status": "Error"})
-		check(
-			not failed,
-			"Email queue",
-			f"has {failed} email(s) that failed to send. Desk → Email Queue shows the SMTP error on each.",
-			"WARN",
-		)
+		if ok and detail:
+			out.append(("OK", f"  … connected and signed in in {detail}", ""))
+
+	from frappe.utils.background_jobs import get_workers
+
+	try:
+		workers = len(get_workers(queue="short"))
+	except Exception:
+		workers = 0
+	check(
+		workers > 0,
+		"Background workers",
+		"none is running. Verification codes and reset links are sent by a worker; "
+		"check sudo supervisorctl status (frappe-bench-workers).",
+	)
+	failed = frappe.db.count("Email Queue", {"status": "Error"})
+	stuck = frappe.db.count(
+		"Email Queue",
+		{
+			"status": ("in", ("Not Sent", "Sending")),
+			"creation": ("<", frappe.utils.add_to_date(None, minutes=-15)),
+		},
+	)
+	check(
+		not failed and not stuck,
+		"Email queue",
+		f"{failed} failed and {stuck} waiting for over 15 minutes. "
+		"Desk → Email Queue shows the SMTP error on each; Retry sends them again.",
+		"WARN",
+	)
 
 	sys_currency = frappe.db.get_single_value("System Settings", "currency")
 	check(
@@ -208,14 +215,20 @@ def go_live_check(context):
 commands = [add_manager, go_live_check]
 
 
-def _reachable(host: str | None, port: int) -> bool | str:
-	"""True if a TCP connection to the mail server opens within 5 seconds, else the reason."""
-	import socket
+def _smtp_login(account) -> tuple[bool, str]:
+	"""Open a real SMTP session the way Frappe sends (SSL/STARTTLS + login), with a short
+	timeout. Returns (ok, how long it took) or (False, the reason). Sends nothing."""
+	import time
 
-	if not host:
-		return "no SMTP server set"
+	import frappe
+	from frappe.email.smtp import SMTPServer
+
+	started = time.monotonic()
 	try:
-		with socket.create_connection((host, port), timeout=5):
-			return True
-	except OSError as e:
-		return str(e) or e.__class__.__name__
+		server = SMTPServer(**account.sendmail_config(), timeout=20)
+		server.session.quit()
+	except Exception as e:
+		frappe.clear_messages()
+		reason = str(e).strip() or e.__class__.__name__
+		return False, f"{e.__class__.__name__}: {reason} (after {time.monotonic() - started:.1f}s)"
+	return True, f"{time.monotonic() - started:.1f}s"
