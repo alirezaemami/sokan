@@ -85,13 +85,21 @@ def run_checks() -> list[tuple[str, str, str]]:
 			f"Mail server sign-in ({acc.smtp_server}:{acc.smtp_port or 'default'})",
 			f"failed: {detail}. Fix the account in Desk → Email Account → {acc.name}.",
 		)
-		if ok and detail:
-			out.append(("OK", f"  … connected and signed in in {detail}", ""))
+		if ok:
+			seconds = float(detail.rstrip("s"))
+			check(
+				seconds < 5,
+				"Mail server speed",
+				f"signing in took {detail}. Mail still goes out (from a worker), just late. Usually the "
+				"server's reverse DNS (PTR) is missing or doesn't match its IP; see deployment.md, Email.",
+				"WARN",
+			)
 
 	from frappe.utils.background_jobs import get_workers
 
 	try:
-		workers = len(get_workers(queue="short"))
+		# Queue names carry the bench id ("<bench>:short"); count workers serving short.
+		workers = sum(any(q.split(":")[-1] == "short" for q in w.queue_names()) for w in get_workers())
 	except Exception:
 		workers = 0
 	check(
