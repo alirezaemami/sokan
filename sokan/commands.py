@@ -71,12 +71,43 @@ def run_checks() -> list[tuple[str, str, str]]:
 		"WARN",
 	)
 
-	account = frappe.get_all("Email Account", {"enable_outgoing": 1, "default_outgoing": 1}, pluck="email_id")
+	account = frappe.get_all(
+		"Email Account",
+		{"enable_outgoing": 1, "default_outgoing": 1},
+		["email_id", "smtp_server", "smtp_port", "use_ssl", "use_tls"],
+	)
 	check(
 		bool(account),
 		"Default outgoing email account",
 		"is missing. No email is sent at all: welcome, password reset, leads, bookings.",
 	)
+	if account:
+		acc = account[0]
+		port = cint(acc.smtp_port) or (465 if acc.use_ssl else 587 if acc.use_tls else 25)
+		reached = _reachable(acc.smtp_server, port)
+		check(
+			reached is True,
+			f"Mail server reachable ({acc.smtp_server}:{port})",
+			f"can't be reached from this server: {reached}. Many hosts block outgoing mail ports; "
+			"ask the provider to open it, or use your mail provider's port 2525 if it offers one.",
+		)
+		# Port 465 speaks TLS from the first byte; a plain connection to it just waits for a
+		# greeting that never comes, so every send hangs until Frappe's 2-minute timeout.
+		mismatch = (port == 465 and not acc.use_ssl and "port 465 needs Use SSL ticked") or (
+			port == 587 and not acc.use_tls and not acc.use_ssl and "port 587 needs Use TLS ticked"
+		)
+		check(
+			not mismatch,
+			"Mail server encryption",
+			f"doesn't match the port: {mismatch}. Fix it in Desk → Email Account → {acc.email_id}.",
+		)
+		failed = frappe.db.count("Email Queue", {"status": "Error"})
+		check(
+			not failed,
+			"Email queue",
+			f"has {failed} email(s) that failed to send. Desk → Email Queue shows the SMTP error on each.",
+			"WARN",
+		)
 
 	sys_currency = frappe.db.get_single_value("System Settings", "currency")
 	check(
@@ -175,3 +206,16 @@ def go_live_check(context):
 
 
 commands = [add_manager, go_live_check]
+
+
+def _reachable(host: str | None, port: int) -> bool | str:
+	"""True if a TCP connection to the mail server opens within 5 seconds, else the reason."""
+	import socket
+
+	if not host:
+		return "no SMTP server set"
+	try:
+		with socket.create_connection((host, port), timeout=5):
+			return True
+	except OSError as e:
+		return str(e) or e.__class__.__name__

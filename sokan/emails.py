@@ -10,7 +10,7 @@ the HTML, so user-supplied text (company names, comments, reasons) can never
 inject markup; only the catalogue's own ``<b>`` tags survive.
 
 Sending is fire-and-forget: a mail failure is logged and never rolls back the
-business action that triggered it.
+business action that triggered it, and no request ever waits on the mail server.
 """
 
 from urllib.parse import urlparse
@@ -993,16 +993,33 @@ def send(
 			subject, html = render(
 				event, lang, ctx or {}, facts, path, prefs=audience.startswith("forwarder")
 			)
-			frappe.sendmail(
+			q = frappe.sendmail(
 				recipients=addresses,
 				subject=subject,
 				message=html,
 				reply_to=reply_to or get_settings().support_email or None,
-				# Security mail goes out immediately; everything else rides the queue.
-				now=now,
-				delayed=not now,
 				header=None,
 				with_container=False,
 			)
+			# Codes and reset links can't wait for the scheduled queue run, but they
+			# must not be sent inside the request either: a slow or unreachable mail
+			# server would hold it for Frappe's 2-minute SMTP timeout (nginx answers
+			# 504 long before). A worker sends them right after the commit instead.
+			if now and q:
+				frappe.enqueue(
+					"sokan.emails.deliver",
+					queue="short",
+					name=q.name,
+					enqueue_after_commit=True,
+				)
 		except Exception:
 			frappe.log_error(title=f"Sokan email failed: {event}")
+
+
+def deliver(name: str):
+	"""Background job: send one queued email now. Failures stay on the Email Queue
+	record (status Error, with the SMTP message) and the scheduler retries them."""
+	from frappe.email.doctype.email_queue.email_queue import EmailQueue
+
+	if record := EmailQueue.find(name):
+		record.send()
