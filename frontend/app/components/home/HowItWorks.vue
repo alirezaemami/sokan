@@ -12,16 +12,16 @@ const steps = {
   ],
   forwarders: [
     { icon: 'inbox', key: 'f1' },
-    { icon: 'lock-open', key: 'f2' },
-    { icon: 'receipt', key: 'f3' },
-    { icon: 'trending-up', key: 'f4' },
+    { icon: 'receipt', key: 'f2' },
+    { icon: 'badge-check', key: 'f3' },
+    { icon: 'handshake', key: 'f4' },
   ],
 }
 </script>
 
 <template>
   <section id="how" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-    <SectionHeading :eyebrow="$t('home.how.eyebrow')" :title="$t('home.how.title')" :subtitle="$t('home.how.subtitle')" />
+    <SectionHeading :eyebrow="$t('home.how.eyebrow')" :title="$t('home.how.title')" />
 
     <div class="mt-10 flex justify-center">
       <div class="relative inline-grid grid-cols-2 rounded-full border border-line-strong bg-surface p-1" role="tablist">
@@ -44,7 +44,13 @@ const steps = {
       </div>
     </div>
 
-    <div class="relative mt-14">
+    <Transition mode="out-in" enter-active-class="transition duration-300" enter-from-class="opacity-0" leave-active-class="transition duration-150" leave-to-class="opacity-0">
+      <p :key="tab" class="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-muted sm:text-lg">
+        {{ $t(tab === 'shippers' ? 'home.how.subShippers' : 'home.how.subForwarders') }}
+      </p>
+    </Transition>
+
+    <div class="relative mt-12">
       <!-- The route the waypoints sit on (desktop: horizontal, phone: vertical) -->
       <div class="absolute inset-x-[12%] top-6 hidden border-t-2 border-dashed border-sea/35 lg:block" />
       <div class="absolute inset-y-6 start-6 border-s-2 border-dashed border-sea/35 lg:hidden" />
@@ -66,7 +72,7 @@ const steps = {
 
     <div class="mt-12 flex justify-center">
       <AppButton v-if="tab === 'shippers'" to="/get-quote" variant="primary" size="lg" icon-end="arrow-right">{{ $t('home.how.ctaShipper') }}</AppButton>
-      <AppButton v-else to="/register/forwarder" variant="primary" size="lg" icon-end="arrow-right">{{ $t('home.how.ctaForwarder') }}</AppButton>
+      <AppButton v-else to="/for-forwarders" variant="primary" size="lg" icon-end="arrow-right">{{ $t('home.how.ctaForwarder') }}</AppButton>
     </div>
   </section>
 </template>

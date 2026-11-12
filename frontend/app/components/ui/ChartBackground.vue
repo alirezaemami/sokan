@@ -5,10 +5,12 @@
  * page (no canvas, no JS on the client) and the swell drift is CSS only,
  * frozen under prefers-reduced-motion.
  */
-const props = withDefaults(defineProps<{ tone?: 'paper' | 'night'; compass?: boolean; density?: number }>(), {
+const props = withDefaults(defineProps<{ tone?: 'paper' | 'night'; compass?: boolean; density?: number; soundings?: boolean }>(), {
   tone: 'paper',
   compass: false,
   density: 16,
+  // Depth numbers; turn off where they would land on text (e.g. the hero).
+  soundings: true,
 })
 
 const W = 1440
@@ -27,7 +29,7 @@ const lines = computed(() =>
   }),
 )
 
-const soundings = [
+const marks = [
   [140, 160, '12'], [410, 300, '27'], [690, 120, '34'], [980, 380, '48'], [1260, 220, '55'],
   [260, 620, '19'], [620, 700, '41'], [1120, 640, '63'], [860, 540, '38'],
 ] as const
@@ -37,8 +39,8 @@ const soundings = [
   <div class="pointer-events-none absolute inset-0 overflow-hidden" :class="tone === 'night' ? 'text-tide/15' : 'text-contour'" aria-hidden="true">
     <svg class="animate-swell absolute -inset-[4%] h-[108%] w-[108%]" :viewBox="`0 0 ${W} ${H}`" preserveAspectRatio="xMidYMid slice" fill="none">
       <path v-for="(d, i) in lines" :key="i" :d="d" stroke="currentColor" :stroke-width="i % 4 === 0 ? 1.4 : 0.9" />
-      <g fill="currentColor" font-family="Martian Mono, monospace" font-size="11">
-        <text v-for="([x, y, t], i) in soundings" :key="`s${i}`" :x="x" :y="y">{{ t }}</text>
+      <g v-if="soundings" fill="currentColor" font-family="Martian Mono, monospace" font-size="11">
+        <text v-for="([x, y, t], i) in marks" :key="`s${i}`" :x="x" :y="y">{{ t }}</text>
       </g>
     </svg>
 

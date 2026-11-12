@@ -1,8 +1,8 @@
 {
   "seo": {
     "brand": "Sokan",
-    "homeTitle": "Sokan — Compare freight quotes from verified providers",
-    "homeDescription": "Post one shipment request and receive competing quotes from verified freight providers for sea, air, road and rail. Free for customers.",
+    "homeTitle": "Sokan — Get freight quotes from verified providers",
+    "homeDescription": "Describe your shipment once and receive itemised freight quotes from verified providers. Free for customers.",
     "defaultDescription": "Sokan is the freight marketplace where customers post one request and verified providers compete with real quotes."
   },
   "nav": {
@@ -23,7 +23,7 @@
     "logout": "Sign out",
     "dashboard": "Dashboard",
     "account": "My shipments",
-    "partner": "Partner portal",
+    "partner": "Provider portal",
     "menu": "Open menu",
     "theme": "Toggle dark mode",
     "admin": "Manage"
@@ -223,13 +223,13 @@
     "hero": {
       "eyebrow": "Free for customers",
       "title": "Get freight quotes from verified providers",
-      "subtitle": "Enter your route. Providers send all-in prices, usually within hours. Compare them and book the best one.",
+      "subtitle": "Enter your route. Providers send itemised, all-in prices. Compare them and choose the best one.",
       "modeLabel": "Transport mode",
       "anyMode": "Any transport mode",
       "from": "From country",
       "to": "To country",
       "cta": "Get quotes",
-      "trust1": "Free for customers",
+      "trust1": "Itemised, all-in prices",
       "trust2": "Verified providers only",
       "trust3": "Quotes within hours",
       "forwarderLink": "Freight provider? Join Sokan"
@@ -248,22 +248,22 @@
       "requests": "Shipments requested",
       "quotes": "Quotes delivered",
       "countries": "Countries served",
-      "costForShippers": "Cost for customers, always",
+      "costForShippers": "Cost for customers",
       "modes": "Transport modes covered",
       "alwaysOn": "Requests go out instantly",
-      "private": "Your contact details stay private"
+      "private": "Your contact details stay private",
+      "privateText": "Shared only with the provider you choose."
     },
     "how": {
       "eyebrow": "How it works",
       "title": "From request to booking in four steps",
-      "subtitle": "No more emailing ten providers and chasing replies. Sokan does the legwork.",
       "tab": {
         "shippers": "For customers",
         "forwarders": "For providers"
       },
       "s1": {
         "title": "Describe your shipment",
-        "text": "Route, cargo and dates in a two-minute guided form."
+        "text": "Route, cargo and dates in a guided form."
       },
       "s2": {
         "title": "Providers are notified",
@@ -271,30 +271,32 @@
       },
       "s3": {
         "title": "Compare quotes",
-        "text": "All-in prices, transit times and ratings, side by side."
+        "text": "All-in prices and transit times, side by side."
       },
       "s4": {
         "title": "Book with confidence",
-        "text": "Accept the best offer and get the provider's direct contact."
+        "text": "Choose the offers you like to see who's behind them and get their direct contact."
       },
       "f1": {
         "title": "Receive matching requests",
-        "text": "Only shipments on your modes and lanes reach your inbox."
+        "text": "Requests on your modes and lanes reach your inbox with route, cargo and dates."
       },
       "f2": {
-        "title": "Unlock what you want",
-        "text": "Preview for free, pay a small fee only to open full details."
+        "title": "Send a priced quote",
+        "text": "Build a clear, itemised all-in quote in under a minute. Quoting is free."
       },
       "f3": {
-        "title": "Send a priced quote",
-        "text": "Build a clean, itemised quote in under a minute."
+        "title": "Get picked",
+        "text": "Customers compare quotes anonymously. When one chooses yours, you're connected, and only then you pay a small fee."
       },
       "f4": {
-        "title": "Win new customers",
-        "text": "Accepted quotes become bookings and lasting relationships."
+        "title": "Win the booking",
+        "text": "Talk directly with the customer and confirm the shipment."
       },
       "ctaShipper": "Start a request",
-      "ctaForwarder": "Join as a provider"
+      "ctaForwarder": "Join as a provider",
+      "subShippers": "Describe once. Compare quotes. Choose who to talk to.",
+      "subForwarders": "Quote for free. Pay only when a customer picks you."
     },
     "modes": {
       "eyebrow": "Every mode",
@@ -307,53 +309,53 @@
       "title": "Built to make freight buying fair and fast",
       "subtitle": "Transparency for customers, qualified demand for providers.",
       "compare": {
-        "title": "Real quotes, compared side by side",
+        "title": "Quotes, compared side by side",
         "text": "Every offer shows the all-in price, a full charge breakdown, transit time and validity — so you compare like for like.",
         "quote": "Quote {n}",
         "best": "Best",
-        "label": "Shanghai → Hamburg · 3 quotes"
+        "label": "Shanghai → Bandar Abbas · 3 quotes"
       },
       "verified": {
         "title": "Verified network",
-        "text": "Providers are reviewed before they can quote, and rated by real customers."
+        "text": "Providers are reviewed before they can quote. Customers can rate them after the shipment."
       },
       "private": {
         "title": "Private by default",
-        "text": "Your identity is shared only with providers who commit to your request."
+        "text": "Your contact details are shared only with the provider you choose."
       },
       "fast": {
         "title": "Quotes in hours",
-        "text": "Requests reach every matching provider the moment you publish."
+        "text": "Requests reach every matching provider the moment you submit."
       },
       "reviews": {
         "title": "Honest reviews",
-        "text": "Only customers who booked can rate a provider."
+        "text": "Only customers who worked with a provider can rate them."
       },
       "free": {
-        "title": "Free for customers",
-        "text": "No fees, no commission, no catch. Providers fund the platform."
+        "title": "No commission, no catch",
+        "text": "Free for customers. Providers fund the platform."
       }
     },
     "featured": {
-      "eyebrow": "Top rated",
-      "title": "Providers customers trust"
+      "eyebrow": "Verified providers",
+      "title": "Providers on Sokan"
     },
     "forwarders": {
       "eyebrow": "For freight providers",
-      "title": "A steady flow of real shipments",
-      "subtitle": "Stop cold-calling. Get qualified requests on your lanes, quote in a minute and win customers who are ready to book.",
-      "cta": "Join the network",
+      "title": "Real requests on your lanes",
+      "subtitle": "Stop cold-calling. Get qualified requests on your lanes, quote for free in a minute, and pay only when a customer picks you.",
+      "cta": "Join as a provider",
       "p1": {
         "title": "Qualified demand",
-        "text": "Real shipments with real dates."
+        "text": "Real requests with real dates."
       },
       "p2": {
         "title": "Your lanes only",
         "text": "Filter by mode and country coverage."
       },
       "p3": {
-        "title": "Pay per lead",
-        "text": "Free previews, small fee to unlock."
+        "title": "Pay when you're picked",
+        "text": "Quoting is free. A small fee applies only when a customer chooses your quote."
       },
       "p4": {
         "title": "Build reputation",
@@ -362,31 +364,26 @@
     },
     "final": {
       "title1": "Your next shipment,",
-      "title2": "better priced.",
-      "subtitle": "It takes two minutes to post a request. Quotes start arriving soon after.",
+      "title2": "clearly priced.",
+      "subtitle": "It takes a few minutes to post a request. Quotes start arriving soon after.",
       "forwarder": "I'm a provider",
       "photoLabel": "Port of loading"
-    },
-    "reel": {
-      "eyebrow": "Sea · Air · Road · Rail",
-      "title": "Every mode. Every lane.",
-      "subtitle": "Containers, pallets, parcels or heavy lift: one request reaches the providers who move it."
     },
     "story": {
       "eyebrow": "Why customers use Sokan",
       "title": "Freight pricing without the chasing",
-      "subtitle": "No more emailing ten providers and waiting. Here is what changes.",
+      "subtitle": "Here is what changes when you use Sokan.",
       "s1": {
         "title": "All-in prices, line by line",
-        "text": "Every quote breaks down freight, origin, destination and surcharges, so you compare like with like and nothing appears on the invoice later."
+        "text": "Every quote breaks down freight, origin charges, destination charges and surcharges, so you can compare like with like."
       },
       "s2": {
         "title": "Only checked providers",
-        "text": "We review each company before it can quote. Ratings come only from customers who actually booked them."
+        "text": "We review each company before it can quote. Customers can rate providers after working with them."
       },
       "s3": {
-        "title": "Book in one tap",
-        "text": "Accept the offer that fits. You both get each other's details at once, and the other offers close automatically."
+        "title": "Choose in one tap",
+        "text": "Pick the offer that fits to see who is behind it and get their direct contact."
       },
       "card": {
         "quote": "Quote breakdown",
@@ -395,9 +392,15 @@
         "docs": "Documents",
         "total": "Total",
         "verified": "Verified provider",
-        "booked": "Booked with BlueWake Freight",
-        "bookedText": "Contact details shared with both sides"
+        "booked": "Connected with Example Provider",
+        "bookedText": "Contact details shared with both sides",
+        "destination": "Destination charges",
+        "surcharges": "Surcharges",
+        "provider": "Example Provider"
       }
+    },
+    "trust": {
+      "title": "Talk to us"
     }
   },
   "faq": {
@@ -410,27 +413,27 @@
       "items": [
         {
           "q": "Is Sokan really free for customers?",
-          "a": "Yes. Posting requests, receiving quotes and booking are free for customers. Providers pay a small fee to access requests, which is how Sokan is funded."
+          "a": "Yes. Posting requests, receiving quotes and choosing a provider are free for customers. Providers quote for free and pay a small fee only when a customer chooses their quote, which is how Sokan is funded."
         },
         {
           "q": "Who sees my request?",
-          "a": "Verified providers who handle your transport mode and lane see the route and cargo summary. Your name, company and contact details are only revealed to providers who unlock the request."
+          "a": "Verified providers who handle your transport mode and lane see the route and cargo summary. Your name, company and contact details are shared only with the provider you choose."
         },
         {
           "q": "How quickly will I get quotes?",
-          "a": "Requests are sent to matching providers the moment you publish. Most customers receive their first quotes within a few hours."
+          "a": "Requests are sent to matching providers as soon as you submit them. Response times vary by route and cargo."
         },
         {
           "q": "Am I obliged to accept a quote?",
-          "a": "No. You can compare quotes, ask questions and decide not to book. Unused requests simply expire."
+          "a": "No. You can compare quotes and decide not to choose any of them. Unused requests simply expire."
         },
         {
           "q": "Are the prices final?",
-          "a": "Quotes are itemised and include a validity date. Final pricing can depend on exact cargo details and carrier rates — always confirm inclusions with the provider before shipping."
+          "a": "Quotes are itemised and include a validity date. Final pricing can depend on exact cargo details and carrier rates, so always confirm inclusions with the provider before shipping."
         },
         {
           "q": "What can I ship?",
-          "a": "Anything legal: general cargo, dangerous goods, temperature-controlled, oversized and project cargo, vehicles and more, by sea, air, road, rail or courier."
+          "a": "Most cargo types, including general cargo, dangerous goods, temperature-controlled, oversized and project cargo, and vehicles, by sea, air, road, rail or courier. Acceptance depends on the provider and on applicable laws and regulations."
         }
       ]
     },

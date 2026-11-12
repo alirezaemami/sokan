@@ -350,3 +350,14 @@ export interface AdminReports {
   modes: { mode: string; requests: number; booked: number }[]
   top_forwarders: { name: string; company_name: string; country: string; quotes: number; won: number; unlocks: number; fees: number }[]
 }
+
+/** One block of the home-page stats band (see app.config.ts). */
+export interface HomeStat {
+  key: string
+  text?: string
+  value?: number | 'modes'
+  fallback?: number
+  suffix?: string
+  icon?: string
+  textKey?: string
+}

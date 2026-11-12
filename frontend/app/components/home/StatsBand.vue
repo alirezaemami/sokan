@@ -1,29 +1,17 @@
 <script setup lang="ts">
-import type { HomePayload } from '~/types/sokan'
-
 /**
- * Network numbers once they're impressive; until then, product facts. A
- * young marketplace showing "3 forwarders" would hurt more than help.
+ * Four facts under the hero, read from app.config (`home.stats`) so they can
+ * be swapped for real network numbers without touching this component.
  */
-const props = defineProps<{ stats: HomePayload['stats']; modeCount: number }>()
+const props = defineProps<{ modeCount: number }>()
+const config = useAppConfig()
 
-const items = computed(() => {
-  const s = props.stats
-  const mature = s.forwarders >= 25 && s.requests >= 100
-  return mature
-    ? [
-        { value: s.forwarders, suffix: '+', key: 'home.stats.forwarders' },
-        { value: s.requests, suffix: '+', key: 'home.stats.requests' },
-        { value: s.quotes, suffix: '+', key: 'home.stats.quotes' },
-        { value: s.countries, suffix: '', key: 'home.stats.countries' },
-      ]
-    : [
-        { value: 0, suffix: '', key: 'home.stats.costForShippers', text: '$0' },
-        { value: props.modeCount || 8, suffix: '', key: 'home.stats.modes' },
-        { value: 24, suffix: '/7', key: 'home.stats.alwaysOn' },
-        { value: 100, suffix: '%', key: 'home.stats.private' },
-      ]
-})
+const items = computed(() =>
+  config.home.stats.map((s) => ({
+    ...s,
+    value: s.value === 'modes' ? props.modeCount || s.fallback || 0 : s.value,
+  })),
+)
 </script>
 
 <template>
@@ -37,9 +25,13 @@ const items = computed(() => {
         :class="[i % 2 === 0 && 'border-e', i < 2 && 'border-b lg:border-b-0', i === 1 && 'lg:border-e', i === 2 && 'lg:border-e']"
       >
         <dt class="chart-label text-muted">{{ $t(it.key) }}</dt>
-        <dd class="font-display mt-3 text-4xl text-ink sm:text-5xl">
+        <dd v-if="it.icon" class="mt-3 flex items-start gap-3 text-ink">
+          <AppIcon :name="it.icon" :size="30" class="shrink-0 text-sea" />
+          <span v-if="it.textKey" class="text-sm leading-snug text-ink-soft">{{ $t(it.textKey) }}</span>
+        </dd>
+        <dd v-else class="font-display mt-3 text-4xl text-ink sm:text-5xl">
           <template v-if="it.text">{{ it.text }}</template>
-          <CountUp v-else :to="it.value" :suffix="it.suffix" />
+          <CountUp v-else :to="Number(it.value) || 0" :suffix="it.suffix || ''" />
         </dd>
       </div>
     </dl>

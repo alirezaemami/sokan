@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * Three reasons shippers use Sokan, told against photography. On desktop the
+ * Three reasons customers use Sokan, told against photography. On desktop the
  * photo is pinned and crossfades as each reason scrolls into the middle of
  * the screen; on phones every reason carries its own photo inline. All text
  * is in the server markup; only the active highlight needs JS.
@@ -9,7 +9,7 @@ import type { PhotoKey } from '~/utils/photos'
 
 const fmt = useFormat()
 const steps: { key: 's1' | 's2' | 's3'; photo: PhotoKey; icon: string }[] = [
-  { key: 's1', photo: 'warehouse', icon: 'receipt' },
+  { key: 's1', photo: 'port', icon: 'receipt' },
   { key: 's2', photo: 'contract', icon: 'shield-check' },
   { key: 's3', photo: 'ship', icon: 'handshake' },
 ]
@@ -29,10 +29,13 @@ onMounted(() => {
 })
 onBeforeUnmount(() => observer?.disconnect())
 
-// Example figures for the floating cards (labelled as an example).
+// Example figures for the floating cards (labelled as an example) until the
+// client sends the real sample amounts. The total is always the sum.
 const lines = [
   { k: 'freight', v: 2100 },
   { k: 'origin', v: 180 },
+  { k: 'destination', v: 220 },
+  { k: 'surcharges', v: 95 },
   { k: 'docs', v: 45 },
 ]
 const total = lines.reduce((a, l) => a + l.v, 0)
@@ -84,7 +87,7 @@ const total = lines.reduce((a, l) => a + l.v, 0)
 
             <!-- Floating example card for the current reason -->
             <Transition mode="out-in" enter-active-class="transition duration-500 ease-[var(--ease-spring)]" enter-from-class="opacity-0 translate-y-4" leave-active-class="transition duration-200" leave-to-class="opacity-0">
-              <div :key="active" class="glass absolute inset-x-5 bottom-5 rounded-2xl p-4 shadow-xl">
+              <div :key="active" class="absolute inset-x-5 bottom-5 rounded-2xl border border-line bg-surface p-4 text-ink shadow-xl">
                 <template v-if="active === 0">
                   <p class="chart-label text-faint">{{ $t('home.story.card.quote') }}</p>
                   <dl class="mt-2 space-y-1 text-sm">
@@ -93,10 +96,10 @@ const total = lines.reduce((a, l) => a + l.v, 0)
                   </dl>
                 </template>
                 <div v-else-if="active === 1" class="flex items-center gap-3">
-                  <span class="font-display grid size-11 shrink-0 place-items-center rounded-full bg-sea/12 text-lg text-sea">B</span>
+                  <span class="font-display grid size-11 shrink-0 place-items-center rounded-full bg-sea/12 text-lg text-sea">E</span>
                   <div class="min-w-0 flex-1">
-                    <p class="flex items-center gap-1.5 font-semibold">BlueWake Freight <AppIcon name="badge-check" :size="16" class="text-sea" /></p>
-                    <p class="text-xs text-muted">{{ $t('home.story.card.verified') }} · ★ {{ fmt.number(4.8, 1) }}</p>
+                    <p class="flex items-center gap-1.5 font-semibold">{{ $t('home.story.card.provider') }} <AppIcon name="badge-check" :size="16" class="text-sea" /></p>
+                    <p class="text-xs text-muted">{{ $t('home.story.card.verified') }}</p>
                   </div>
                 </div>
                 <div v-else class="flex items-center gap-3">

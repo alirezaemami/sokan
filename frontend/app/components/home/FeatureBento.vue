@@ -21,7 +21,10 @@ const bars = [
       <div v-reveal class="card relative overflow-hidden p-7 sm:col-span-2 sm:p-9 lg:row-span-2">
         <ChartBackground :density="8" />
         <div class="relative">
-          <p class="chart-label text-sea">{{ $t('home.features.compare.label') }}</p>
+          <p class="flex flex-wrap items-center gap-2">
+            <span class="chart-label text-sea">{{ $t('home.features.compare.label') }}</span>
+            <span class="chart-label rounded-full bg-sunken px-2 py-0.5 text-faint">{{ $t('home.visual.example') }}</span>
+          </p>
           <h3 class="font-display mt-3 text-3xl text-ink">{{ $t('home.features.compare.title') }}</h3>
           <p class="mt-3 max-w-md text-muted">{{ $t('home.features.compare.text') }}</p>
           <div class="mt-8 space-y-4">

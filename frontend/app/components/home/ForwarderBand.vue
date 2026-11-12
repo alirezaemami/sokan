@@ -1,5 +1,5 @@
 <script setup lang="ts">
-/** Night-chart band pitching the supply side, over a container terminal at night. */
+/** Night-chart band pitching the provider side, over a container terminal at night. */
 const band = ref<HTMLElement | null>(null)
 useParallax(band, 50)
 const points = [
@@ -22,7 +22,7 @@ const points = [
         <div>
           <SectionHeading light align="start" :eyebrow="$t('home.forwarders.eyebrow')" :title="$t('home.forwarders.title')" :subtitle="$t('home.forwarders.subtitle')" />
           <div class="mt-8 flex flex-wrap gap-3">
-            <AppButton to="/register/forwarder" variant="accent" size="lg" icon-end="arrow-right">{{ $t('home.forwarders.cta') }}</AppButton>
+            <AppButton to="/for-forwarders" variant="accent" size="lg" icon-end="arrow-right">{{ $t('home.forwarders.cta') }}</AppButton>
             <AppButton to="/for-forwarders" variant="night" size="lg">{{ $t('common.learnMore') }}</AppButton>
           </div>
         </div>

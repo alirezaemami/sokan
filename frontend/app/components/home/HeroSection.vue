@@ -11,7 +11,7 @@ defineProps<{ modes: TransportMode[] }>()
 <template>
   <!-- Clip only sideways: the country lists must be free to drop below the hero. -->
   <section class="relative z-10 overflow-x-clip pt-[72px]">
-    <ChartBackground :density="8" />
+    <ChartBackground :density="8" :soundings="false" />
     <div class="relative mx-auto max-w-5xl px-4 pt-14 pb-16 text-center sm:px-6 lg:pt-24 lg:pb-24">
       <p class="rise inline-flex items-center gap-2 rounded-full bg-starboard/10 px-3.5 py-1.5 text-sm font-semibold text-starboard">
         <AppIcon name="circle-check" :size="16" /> {{ $t('home.hero.eyebrow') }}

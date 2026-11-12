@@ -32,9 +32,10 @@ def get_home():
 			"featured": _cards(
 				frappe.get_all(
 					"Sokan Forwarder",
-					filters={"status": "Active"},
+					# Home shows verified, public (active) providers only.
+					filters={"status": "Active", "is_verified": 1},
 					fields=FORWARDER_CARD_FIELDS,
-					order_by="is_featured desc, is_verified desc, rating desc, quotes_won desc",
+					order_by="is_featured desc, rating desc, quotes_won desc",
 					limit=8,
 				)
 			),
