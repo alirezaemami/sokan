@@ -12,12 +12,14 @@ const route = useRoute()
 const night = computed(() => route.meta.headerTone === 'night' && !scrolled.value)
 const { isLoggedIn, homePath, me } = useAuth()
 
+// Tools and Knowledge base join this list once their pages exist.
 const links = [
   { to: '/how-it-works', key: 'nav.howItWorks' },
-  { to: '/forwarders', key: 'nav.forwarders' },
-  { to: '/for-forwarders', key: 'nav.forForwarders' },
-  { to: '/pricing', key: 'nav.pricing' },
+  { to: '/forwarders', key: 'nav.findProvider' },
 ]
+const joinLink = { to: '/for-forwarders', key: 'nav.joinProvider' }
+// A signed-in provider has already joined.
+const showJoin = computed(() => !me.value?.forwarder)
 
 watch(() => route.fullPath, () => (menu.value = false))
 watch(menu, (v) => {
@@ -54,6 +56,11 @@ onBeforeUnmount(() => {
           <ThemeToggle :light="night" />
         </div>
         <!-- Visibility lives on wrappers: AppButton's own inline-flex would beat a passed-in `hidden`. -->
+        <ClientOnly>
+          <div v-if="showJoin" class="hidden lg:block">
+            <AppButton :to="joinLink.to" :variant="night ? 'night' : 'ghost'" size="sm">{{ $t(joinLink.key) }}</AppButton>
+          </div>
+        </ClientOnly>
         <div class="hidden sm:block">
           <ClientOnly>
             <AppButton v-if="isLoggedIn" :to="homePath" :variant="night ? 'night' : 'secondary'" size="sm" icon="dashboard">
@@ -98,7 +105,7 @@ onBeforeUnmount(() => {
           </div>
           <nav class="relative flex flex-1 flex-col px-6 pt-6">
             <Motion
-              v-for="(l, i) in [{ to: '/', key: 'nav.home' }, ...links, { to: '/about', key: 'nav.about' }, { to: '/contact', key: 'nav.contact' }]"
+              v-for="(l, i) in [{ to: '/', key: 'nav.home' }, ...links, ...(showJoin ? [joinLink] : []), { to: '/about', key: 'nav.about' }, { to: '/contact', key: 'nav.contact' }]"
               :key="l.to"
               as="div"
               :initial="{ opacity: 0, x: 24 }"
