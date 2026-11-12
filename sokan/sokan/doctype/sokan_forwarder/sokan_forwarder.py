@@ -33,7 +33,7 @@ class SokanForwarder(Document):
 				"parent",
 			)
 			if other:
-				frappe.throw(_("{0} already belongs to forwarder {1}.").format(m.user, other))
+				frappe.throw(_("{0} already belongs to provider {1}.").format(m.user, other))
 
 	def on_update(self):
 		for m in self.members:

@@ -278,7 +278,7 @@ def publish_request(name: str):
 def leave_review(request: str, rating: int, comment: str | None = None):
 	req = _own_request(request)
 	if req.status != "Booked" or not req.accepted_quote:
-		frappe.throw(_("You can review a forwarder after booking them."))
+		frappe.throw(_("You can review a provider after booking them."))
 	forwarder = frappe.db.get_value("Freight Quote", req.accepted_quote, "forwarder")
 	existing = frappe.db.get_value("Sokan Review", {"request": request}, "name")
 	doc = frappe.get_doc("Sokan Review", existing) if existing else frappe.new_doc("Sokan Review")
