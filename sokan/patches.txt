@@ -6,3 +6,4 @@
 # Patches added in this section will be executed after doctypes are migrated
 sokan.patches.v1.review_moderation
 sokan.patches.v1.email_verification
+sokan.patches.v1.rename_forwarder_to_provider

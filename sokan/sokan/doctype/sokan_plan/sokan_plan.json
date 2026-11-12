@@ -43,7 +43,7 @@
   {
    "fieldname": "is_default",
    "fieldtype": "Check",
-   "label": "Default for New Forwarders",
+   "label": "Default for New Providers",
    "in_list_view": 1
   },
   {
@@ -74,7 +74,7 @@
    "fieldname": "sb_fees",
    "fieldtype": "Section Break",
    "label": "Fees",
-   "description": "All fees are debited from the forwarder's prepaid wallet."
+   "description": "All fees are debited from the provider's prepaid wallet."
   },
   {
    "fieldname": "monthly_fee",
@@ -90,7 +90,7 @@
    "label": "Request Unlock Fee",
    "options": "currency",
    "in_list_view": 1,
-   "description": "Charged once when the forwarder opens a request's full details."
+   "description": "Charged once when the provider opens a request's full details."
   },
   {
    "fieldname": "quote_fee",
@@ -140,7 +140,7 @@
  ],
  "index_web_pages_for_search": 0,
  "links": [],
- "modified": "2026-10-10 00:00:00.000000",
+ "modified": "2026-11-12 14:04:52.598569",
  "modified_by": "Administrator",
  "module": "Sokan",
  "name": "Sokan Plan",
