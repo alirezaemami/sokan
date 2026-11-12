@@ -1,7 +1,7 @@
 {
   "name": "Sokan",
   "short_name": "Sokan",
-  "description": "Freight quotes from verified forwarders, compared side by side.",
+  "description": "Freight quotes from verified providers, compared side by side.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#e7eff0",

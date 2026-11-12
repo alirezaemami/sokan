@@ -73,7 +73,7 @@ PLANS = [
 		"free_views_per_month": 250,
 		"free_quotes_per_month": 1000,
 		"priority_listing": 1,
-		"description": "For networks and multi-branch forwarders.",
+		"description": "For networks and multi-branch providers.",
 		"features": [
 			"250 free unlocks / month",
 			"Unlimited free quotes",

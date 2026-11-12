@@ -246,7 +246,7 @@ def _services_for(names: list[str]) -> dict[str, list[str]]:
 def get_forwarder(slug: str):
 	name = frappe.db.get_value("Sokan Forwarder", {"slug": slug, "status": "Active"}, "name")
 	if not name:
-		raise frappe.DoesNotExistError(_("Forwarder not found"))
+		raise frappe.DoesNotExistError(_("Provider not found"))
 	f = frappe.get_doc("Sokan Forwarder", name)
 	data = forwarder_card(f)
 	data.update(

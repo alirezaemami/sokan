@@ -82,7 +82,7 @@
    "label": "Default Unlock Fee",
    "options": "default_currency",
    "default": "2",
-   "description": "Used when the forwarder's plan does not set one."
+   "description": "Used when the provider's plan does not set one."
   },
   {
    "fieldname": "default_quote_fee",
@@ -101,7 +101,7 @@
    "label": "Signup Bonus Credit",
    "options": "default_currency",
    "default": "10",
-   "description": "Credited once when a forwarder is first activated."
+   "description": "Credited once when a provider is first activated."
   },
   {
    "fieldname": "low_balance_threshold",
@@ -125,7 +125,7 @@
    "fieldname": "topup_instructions",
    "fieldtype": "Text Editor",
    "label": "Bank Transfer Instructions",
-   "description": "Shown to forwarders on the wallet page."
+   "description": "Shown to providers on the wallet page."
   },
   {
    "fieldname": "tab_dist",
@@ -135,13 +135,13 @@
   {
    "fieldname": "match_transport_mode",
    "fieldtype": "Check",
-   "label": "Only Send Requests Matching a Forwarder's Modes",
+   "label": "Only Send Requests Matching a Provider's Modes",
    "default": "1"
   },
   {
    "fieldname": "match_coverage",
    "fieldtype": "Check",
-   "label": "Respect Forwarder Country Coverage",
+   "label": "Respect Provider Country Coverage",
    "default": "1"
   },
   {
@@ -157,7 +157,7 @@
   {
    "fieldname": "auto_approve_forwarders",
    "fieldtype": "Check",
-   "label": "Activate New Forwarders Automatically",
+   "label": "Activate New Providers Automatically",
    "default": "0"
   },
   {
@@ -176,7 +176,7 @@
  ],
  "index_web_pages_for_search": 0,
  "links": [],
- "modified": "2026-10-10 00:00:00.000000",
+ "modified": "2026-11-12 14:04:52.598569",
  "modified_by": "Administrator",
  "module": "Sokan",
  "name": "Sokan Settings",

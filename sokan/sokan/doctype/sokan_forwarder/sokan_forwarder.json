@@ -154,7 +154,7 @@
    "fieldtype": "Table MultiSelect",
    "label": "Transport Modes",
    "options": "Sokan Forwarder Service",
-   "description": "Requests in these modes are sent to this forwarder."
+   "description": "Requests in these modes are sent to this provider."
   },
   {
    "fieldname": "coverage",
@@ -391,7 +391,7 @@
  ],
  "index_web_pages_for_search": 0,
  "links": [],
- "modified": "2026-10-10 00:00:00.000000",
+ "modified": "2026-11-12 14:04:52.598569",
  "modified_by": "Administrator",
  "module": "Sokan",
  "name": "Sokan Forwarder",

@@ -377,7 +377,7 @@
   {
    "fieldname": "notes",
    "fieldtype": "Small Text",
-   "label": "Notes for Forwarders"
+   "label": "Notes for Providers"
   },
   {
    "fieldname": "attachment",
@@ -419,7 +419,7 @@
   {
    "fieldname": "contact_note",
    "fieldtype": "HTML",
-   "options": "<p class='text-muted small'>Contact details are only revealed to forwarders who unlock the request.</p>"
+   "options": "<p class='text-muted small'>Contact details are only revealed to providers who unlock the request.</p>"
   },
   {
    "fieldname": "tab_activity",
@@ -435,7 +435,7 @@
   {
    "fieldname": "leads_sent",
    "fieldtype": "Int",
-   "label": "Forwarders Notified",
+   "label": "Providers Notified",
    "read_only": 1,
    "in_list_view": 1
   },
@@ -478,7 +478,7 @@
  ],
  "index_web_pages_for_search": 0,
  "links": [],
- "modified": "2026-10-10 00:00:00.000000",
+ "modified": "2026-11-12 14:04:52.598569",
  "modified_by": "Administrator",
  "module": "Sokan",
  "name": "Freight Request",
