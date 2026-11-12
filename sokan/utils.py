@@ -45,7 +45,7 @@ def forwarder_for_user(user: str | None = None, *, required: bool = True) -> str
 		"Sokan Forwarder Member", {"user": user, "parenttype": "Sokan Forwarder"}, "parent"
 	)
 	if not name and required:
-		frappe.throw(_("Your account is not linked to a forwarder company."), frappe.PermissionError)
+		frappe.throw(_("Your account is not linked to a provider company."), frappe.PermissionError)
 	return name
 
 

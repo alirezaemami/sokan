@@ -50,7 +50,7 @@ export default defineNuxtConfig({
     url: siteUrl,
     name: 'Sokan',
     description:
-      'Sokan is the freight marketplace where shippers post one request and verified forwarders compete with real quotes for sea, air, road and rail.',
+      'Sokan is the freight marketplace where customers post one request and verified providers compete with real quotes for sea, air, road and rail.',
     defaultLocale: 'en',
   },
 

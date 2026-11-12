@@ -33,8 +33,8 @@ MESSAGES: dict[str, dict] = {
 			"eyebrow": "Your account",
 			"heading": "Welcome aboard, {first_name}",
 			"body": [
-				"Your Sokan account is ready. Describe a shipment once and every matching, verified forwarder sends you an all-in price.",
-				"It's free for shippers, always. You only compare and book.",
+				"Your Sokan account is ready. Describe a shipment once and every matching, verified provider sends you an all-in price.",
+				"It's free for customers, always. You only compare and book.",
 			],
 			"cta": "Post your first request",
 		},
@@ -43,8 +43,8 @@ MESSAGES: dict[str, dict] = {
 			"eyebrow": "حساب کاربری",
 			"heading": "{first_name}، خوش آمدید",
 			"body": [
-				"حساب سکان شما آماده است. یک بار محموله‌تان را شرح دهید تا همه فورواردرهای تأییدشده و مرتبط، قیمت کامل برایتان بفرستند.",
-				"استفاده از سکان برای صاحبان کالا همیشه رایگان است. شما فقط مقایسه و رزرو می‌کنید.",
+				"حساب سکان شما آماده است. یک بار محموله‌تان را شرح دهید تا همه شرکت‌های حمل‌ونقل تأییدشده و مرتبط، قیمت کامل برایتان بفرستند.",
+				"استفاده از سکان برای مشتریان همیشه رایگان است. شما فقط مقایسه و رزرو می‌کنید.",
 			],
 			"cta": "ثبت اولین درخواست",
 		},
@@ -57,7 +57,7 @@ MESSAGES: dict[str, dict] = {
 			"heading": "Thanks for joining Sokan",
 			"body": [
 				"<b>{company}</b> is now in our review queue. We check every company before it can quote, usually within one business day.",
-				"We'll email you the moment you're approved. Meanwhile, completing your company profile helps shippers choose you.",
+				"We'll email you the moment you're approved. Meanwhile, completing your company profile helps customers choose you.",
 			],
 			"cta": "Complete your profile",
 		},
@@ -67,7 +67,7 @@ MESSAGES: dict[str, dict] = {
 			"heading": "از پیوستن شما به سکان سپاسگزاریم",
 			"body": [
 				"<b>{company}</b> در صف بررسی ماست. هر شرکت پیش از ارسال قیمت بررسی می‌شود؛ معمولاً ظرف یک روز کاری.",
-				"به محض تأیید به شما ایمیل می‌زنیم. تا آن زمان، تکمیل پروفایل شرکت به صاحبان کالا کمک می‌کند شما را انتخاب کنند.",
+				"به محض تأیید به شما ایمیل می‌زنیم. تا آن زمان، تکمیل پروفایل شرکت به مشتریان کمک می‌کند شما را انتخاب کنند.",
 			],
 			"cta": "تکمیل پروفایل",
 		},
@@ -180,15 +180,15 @@ MESSAGES: dict[str, dict] = {
 		"en": {
 			"subject": "Your request is live: {title}",
 			"eyebrow": "Request {request}",
-			"heading": "Forwarders are on it",
+			"heading": "Providers are on it",
 			"body": [
 				{
 					"if": "count",
-					"text": "We sent your request to <b>{count} matching forwarders</b>. You'll get an email as each quote arrives.",
+					"text": "We sent your request to <b>{count} matching providers</b>. You'll get an email as each quote arrives.",
 				},
 				{
 					"if": "none",
-					"text": "No forwarder covers this lane and mode yet. Your request stays open, and companies that join before it closes will see it.",
+					"text": "No provider covers this lane and mode yet. Your request stays open, and companies that join before it closes will see it.",
 				},
 			],
 			"cta": "View your request",
@@ -196,15 +196,15 @@ MESSAGES: dict[str, dict] = {
 		"fa": {
 			"subject": "درخواست شما منتشر شد: {title}",
 			"eyebrow": "درخواست {request}",
-			"heading": "فورواردرها در جریان هستند",
+			"heading": "شرکت‌های حمل‌ونقل در جریان هستند",
 			"body": [
 				{
 					"if": "count",
-					"text": "درخواست شما برای <b>{count} فورواردر مرتبط</b> ارسال شد. با رسیدن هر قیمت ایمیل دریافت می‌کنید.",
+					"text": "درخواست شما برای <b>{count} شرکت حمل‌ونقل مرتبط</b> ارسال شد. با رسیدن هر قیمت ایمیل دریافت می‌کنید.",
 				},
 				{
 					"if": "none",
-					"text": "هنوز فورواردری این مسیر و روش حمل را پوشش نمی‌دهد. درخواست شما باز می‌ماند و شرکت‌هایی که تا پایان مهلت بپیوندند آن را می‌بینند.",
+					"text": "هنوز شرکت حمل‌ونقلی این مسیر و روش حمل را پوشش نمی‌دهد. درخواست شما باز می‌ماند و شرکت‌هایی که تا پایان مهلت بپیوندند آن را می‌بینند.",
 				},
 			],
 			"cta": "مشاهده درخواست",
@@ -263,7 +263,7 @@ MESSAGES: dict[str, dict] = {
 				"Here's how to reach them directly:",
 			],
 			"cta": "View booking",
-			"note": "Once the shipment is done, a short review helps other shippers choose.",
+			"note": "Once the shipment is done, a short review helps other customers choose.",
 		},
 		"fa": {
 			"subject": "رزرو شد: {title} با {forwarder}",
@@ -274,7 +274,7 @@ MESSAGES: dict[str, dict] = {
 				"راه‌های تماس مستقیم با آن‌ها:",
 			],
 			"cta": "مشاهده رزرو",
-			"note": "پس از انجام حمل، ثبت یک نظر کوتاه به دیگر صاحبان کالا در انتخاب کمک می‌کند.",
+			"note": "پس از انجام حمل، ثبت یک نظر کوتاه به دیگر مشتریان در انتخاب کمک می‌کند.",
 		},
 	},
 	"request_expired": {
@@ -290,7 +290,7 @@ MESSAGES: dict[str, dict] = {
 				},
 				{
 					"if": "none",
-					"text": "{title} closed without quotes. Widening the dates or adding cargo details often helps; new forwarders join every week.",
+					"text": "{title} closed without quotes. Widening the dates or adding cargo details often helps; new providers join every week.",
 				},
 			],
 			"cta": "Post a new request",
@@ -306,7 +306,7 @@ MESSAGES: dict[str, dict] = {
 				},
 				{
 					"if": "none",
-					"text": "{title} بدون قیمت بسته شد. گسترده‌تر کردن تاریخ‌ها یا افزودن جزئیات بار معمولاً کمک می‌کند؛ هر هفته فورواردرهای جدیدی می‌پیوندند.",
+					"text": "{title} بدون قیمت بسته شد. گسترده‌تر کردن تاریخ‌ها یا افزودن جزئیات بار معمولاً کمک می‌کند؛ هر هفته شرکت‌های حمل‌ونقل جدیدی می‌پیوندند.",
 				},
 			],
 			"cta": "ثبت درخواست جدید",
@@ -344,7 +344,7 @@ MESSAGES: dict[str, dict] = {
 			"eyebrow": "Thank you",
 			"heading": "Your review is published",
 			"body": [
-				"Your review of <b>{forwarder}</b> is now on their public profile, helping other shippers choose with confidence."
+				"Your review of <b>{forwarder}</b> is now on their public profile, helping other customers choose with confidence."
 			],
 			"cta": "See it on their profile",
 		},
@@ -353,7 +353,7 @@ MESSAGES: dict[str, dict] = {
 			"eyebrow": "سپاسگزاریم",
 			"heading": "نظر شما منتشر شد",
 			"body": [
-				"نظر شما درباره <b>{forwarder}</b> اکنون روی پروفایل عمومی آن‌ها نمایش داده می‌شود و به دیگر صاحبان کالا کمک می‌کند."
+				"نظر شما درباره <b>{forwarder}</b> اکنون روی پروفایل عمومی آن‌ها نمایش داده می‌شود و به دیگر مشتریان کمک می‌کند."
 			],
 			"cta": "مشاهده در پروفایل",
 		},
@@ -442,7 +442,7 @@ MESSAGES: dict[str, dict] = {
 			"eyebrow": "New lead",
 			"heading": "A shipment needs a price",
 			"body": [
-				"A shipper on your lanes is collecting quotes. The summary is free to view; unlock it for the full details and to send your price."
+				"A customer on your lanes is collecting quotes. The summary is free to view; unlock it for the full details and to send your price."
 			],
 			"cta": "View request",
 		},
@@ -451,7 +451,7 @@ MESSAGES: dict[str, dict] = {
 			"eyebrow": "سرنخ جدید",
 			"heading": "یک محموله منتظر قیمت است",
 			"body": [
-				"یک صاحب کالا در مسیرهای شما در حال دریافت قیمت است. خلاصه رایگان است؛ برای جزئیات کامل و ارسال قیمت آن را باز کنید."
+				"یک مشتری در مسیرهای شما در حال دریافت قیمت است. خلاصه رایگان است؛ برای جزئیات کامل و ارسال قیمت آن را باز کنید."
 			],
 			"cta": "مشاهده درخواست",
 		},
@@ -463,7 +463,7 @@ MESSAGES: dict[str, dict] = {
 			"eyebrow": "Quote accepted",
 			"heading": "Your quote was accepted",
 			"body": [
-				"The shipper accepted your quote of <b>{amount}</b> for {title}. Get in touch to arrange the shipment:"
+				"The customer accepted your quote of <b>{amount}</b> for {title}. Get in touch to arrange the shipment:"
 			],
 			"cta": "Open booking",
 		},
@@ -472,7 +472,7 @@ MESSAGES: dict[str, dict] = {
 			"eyebrow": "قیمت پذیرفته شد",
 			"heading": "قیمت شما پذیرفته شد",
 			"body": [
-				"صاحب کالا قیمت <b>{amount}</b> شما برای {title} را پذیرفت. برای هماهنگی حمل تماس بگیرید:"
+				"مشتری قیمت <b>{amount}</b> شما برای {title} را پذیرفت. برای هماهنگی حمل تماس بگیرید:"
 			],
 			"cta": "مشاهده رزرو",
 		},
@@ -482,9 +482,9 @@ MESSAGES: dict[str, dict] = {
 		"en": {
 			"subject": "Update on {title}",
 			"eyebrow": "Quote {quote}",
-			"heading": "The shipper chose another offer",
+			"heading": "The customer chose another offer",
 			"body": [
-				"Thanks for quoting <b>{amount}</b> for {title}. The shipper went with a different offer this time.",
+				"Thanks for quoting <b>{amount}</b> for {title}. The customer went with a different offer this time.",
 				{"if": "reason", "text": "Their note: {reason}"},
 			],
 			"cta": "See new requests",
@@ -492,10 +492,10 @@ MESSAGES: dict[str, dict] = {
 		"fa": {
 			"subject": "به‌روزرسانی درباره {title}",
 			"eyebrow": "قیمت {quote}",
-			"heading": "صاحب کالا پیشنهاد دیگری را انتخاب کرد",
+			"heading": "مشتری پیشنهاد دیگری را انتخاب کرد",
 			"body": [
-				"از ارسال قیمت <b>{amount}</b> برای {title} سپاسگزاریم. این بار صاحب کالا پیشنهاد دیگری را انتخاب کرد.",
-				{"if": "reason", "text": "یادداشت صاحب کالا: {reason}"},
+				"از ارسال قیمت <b>{amount}</b> برای {title} سپاسگزاریم. این بار مشتری پیشنهاد دیگری را انتخاب کرد.",
+				{"if": "reason", "text": "یادداشت مشتری: {reason}"},
 			],
 			"cta": "مشاهده درخواست‌های جدید",
 		},
@@ -507,7 +507,7 @@ MESSAGES: dict[str, dict] = {
 			"eyebrow": "Request {request}",
 			"heading": "This request was cancelled",
 			"body": [
-				"The shipper cancelled {title}, so it no longer accepts quotes.",
+				"The customer cancelled {title}, so it no longer accepts quotes.",
 				{"if": "refund", "text": "We refunded your unlock fee of <b>{refund}</b> to your wallet."},
 			],
 			"cta": "See other requests",
@@ -517,7 +517,7 @@ MESSAGES: dict[str, dict] = {
 			"eyebrow": "درخواست {request}",
 			"heading": "این درخواست لغو شد",
 			"body": [
-				"صاحب کالا {title} را لغو کرد و دیگر قیمتی نمی‌پذیرد.",
+				"مشتری {title} را لغو کرد و دیگر قیمتی نمی‌پذیرد.",
 				{"if": "refund", "text": "کارمزد باز کردن به مبلغ <b>{refund}</b> به کیف پول شما برگشت."},
 			],
 			"cta": "مشاهده درخواست‌های دیگر",
@@ -678,14 +678,14 @@ MESSAGES: dict[str, dict] = {
 		"en": {
 			"subject": "New {rating}★ review for {company}",
 			"eyebrow": "Review",
-			"heading": "A shipper reviewed you",
+			"heading": "A customer reviewed you",
 			"body": ["{author} rated <b>{company}</b> {stars}", {"if": "comment", "text": "“{comment}”"}],
 			"cta": "See your profile",
 		},
 		"fa": {
 			"subject": "نظر جدید {rating} ستاره برای {company}",
 			"eyebrow": "نظر",
-			"heading": "یک صاحب کالا به شما امتیاز داد",
+			"heading": "یک مشتری به شما امتیاز داد",
 			"body": [
 				"{author} به <b>{company}</b> امتیاز {stars} داد",
 				{"if": "comment", "text": "«{comment}»"},
@@ -697,16 +697,16 @@ MESSAGES: dict[str, dict] = {
 	"admin_new_forwarder": {
 		"audience": "manager",
 		"en": {
-			"subject": "New forwarder to approve: {company}",
+			"subject": "New provider to approve: {company}",
 			"eyebrow": "Approval needed",
-			"heading": "A forwarder signed up",
+			"heading": "A provider signed up",
 			"body": ["<b>{company}</b> registered and is waiting for approval."],
 			"cta": "Review company",
 		},
 		"fa": {
-			"subject": "فورواردر جدید برای تأیید: {company}",
+			"subject": "شرکت حمل‌ونقل جدید برای تأیید: {company}",
 			"eyebrow": "نیاز به تأیید",
-			"heading": "یک فورواردر ثبت‌نام کرد",
+			"heading": "یک شرکت حمل‌ونقل ثبت‌نام کرد",
 			"body": ["<b>{company}</b> ثبت‌نام کرده و منتظر تأیید است."],
 			"cta": "بررسی شرکت",
 		},
@@ -716,14 +716,14 @@ MESSAGES: dict[str, dict] = {
 		"en": {
 			"subject": "Top-up to check: {amount} from {company}",
 			"eyebrow": "Payment to confirm",
-			"heading": "A forwarder requested a top-up",
+			"heading": "A provider requested a top-up",
 			"body": ["Check the payment arrived, then approve it to credit the wallet."],
 			"cta": "Review top-ups",
 		},
 		"fa": {
 			"subject": "شارژ برای بررسی: {amount} از {company}",
 			"eyebrow": "پرداخت برای تأیید",
-			"heading": "یک فورواردر درخواست شارژ داد",
+			"heading": "یک شرکت حمل‌ونقل درخواست شارژ داد",
 			"body": ["پس از اطمینان از رسیدن وجه، آن را تأیید کنید تا کیف پول شارژ شود."],
 			"cta": "بررسی شارژها",
 		},
@@ -797,7 +797,7 @@ LABELS = {
 	"commodity": ("Commodity", "کالا"),
 	"ready": ("Cargo ready", "آمادگی بار"),
 	"valid_until": ("Accepting quotes until", "دریافت قیمت تا"),
-	"forwarder": ("Forwarder", "فورواردر"),
+	"forwarder": ("Provider", "شرکت حمل‌ونقل"),
 	"total": ("Total", "مبلغ کل"),
 	"transit": ("Transit time", "زمان ترانزیت"),
 	"quote_valid": ("Quote valid until", "اعتبار قیمت تا"),
@@ -827,7 +827,7 @@ COMMON = {
 			"account": "You're receiving this because you created a Sokan account.",
 			"security": "We send security emails to keep your account safe.",
 			"shipper": "You're receiving this about a shipment you posted on Sokan.",
-			"forwarder": "You're receiving this as a member of a forwarder on Sokan.",
+			"forwarder": "You're receiving this as a member of a provider company on Sokan.",
 			"forwarder_leads": "You're receiving new-request alerts for your company on Sokan.",
 			"forwarder_quotes": "You're receiving quote updates for your company on Sokan.",
 			"manager": "You're receiving this as a Sokan manager.",
@@ -842,7 +842,7 @@ COMMON = {
 			"account": "این ایمیل را دریافت می‌کنید چون در سکان حساب کاربری ساخته‌اید.",
 			"security": "ایمیل‌های امنیتی را برای حفاظت از حساب شما می‌فرستیم.",
 			"shipper": "این ایمیل درباره محموله‌ای است که در سکان ثبت کرده‌اید.",
-			"forwarder": "این ایمیل را به عنوان عضو یک شرکت فورواردر در سکان دریافت می‌کنید.",
+			"forwarder": "این ایمیل را به عنوان عضو یک شرکت حمل‌ونقل در سکان دریافت می‌کنید.",
 			"forwarder_leads": "هشدار درخواست‌های جدید شرکت شما در سکان فعال است.",
 			"forwarder_quotes": "اطلاع‌رسانی قیمت‌های شرکت شما در سکان فعال است.",
 			"manager": "این ایمیل را به عنوان مدیر سکان دریافت می‌کنید.",
